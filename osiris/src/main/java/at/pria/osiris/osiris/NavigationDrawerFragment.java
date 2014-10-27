@@ -249,7 +249,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (item.getItemId() == R.id.start_test) {
             Toast.makeText(getActivity(), "Running test...", Toast.LENGTH_SHORT).show();
-
+            Demo.getInstance().showSomething();
+            Toast.makeText(getActivity(), "Running test...", Toast.LENGTH_SHORT).show();
             return true;
         }
 
