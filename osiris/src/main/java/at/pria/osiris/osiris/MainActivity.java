@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.*;
 import android.support.v4.widget.DrawerLayout;
-import at.pria.osiris.osiris.network.RemoteRobotarm;
 
 
 public class MainActivity extends ActionBarActivity
@@ -43,15 +42,21 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        if(position+1==1) {//controller
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ControllerFragment.getInstance(position + 1))
+                    .commit();
+        }else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
+        }
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.control);
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
