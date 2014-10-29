@@ -27,6 +27,7 @@ Clone this repo.
 Step 3: Project Setup
 ---------------------
 Create a file called local.properties in the project root and fill in the path to your SDK dir.
+
 Alternatively you could set your ANDROID_HOME variable to this path.
 
 `local.properties`
@@ -39,6 +40,7 @@ How to Compile:
 ---------------
 
 This project uses Gradle to compile, run assembleRelease to create the apk.
+
 Run installDebug to install this app on your device (You need to start it manually)
 
 
@@ -47,7 +49,8 @@ Intellij
 
 Follow the 3 setup steps.
 
-Import project -> Select the project destination
+Import project -> Select the project destination.
+
 Make sure "foo\osiris\build.gradle" is selected, and not "foo\osiris\gradle"
 
 You are done!
