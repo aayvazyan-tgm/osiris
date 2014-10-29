@@ -20,8 +20,16 @@ public class RemoteRobotarm implements Robotarm{
 	
 	private Socket socket;
 	private ObjectOutputStream oos;
-	
-	public RemoteRobotarm(){
+
+    private static RemoteRobotarm INSTANCE;
+    public static RemoteRobotarm getInstance() {
+        if(INSTANCE==null){
+            INSTANCE=new RemoteRobotarm();
+        }
+        return INSTANCE;
+    }
+
+    private RemoteRobotarm(){
 		try {
 			//Strict mode ... dirty dirty
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
