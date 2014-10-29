@@ -20,16 +20,31 @@ public class Demo{
     }
     public static Demo getInstance(){
         if(demo==null) {
-            RemoteRobotarm rm = new RemoteRobotarm();
+            RemoteRobotarm rm = RemoteRobotarm.getInstance();
             demo = new Demo(rm);
         }
         return demo;
     }
     public void showSomething() {
         try {
+            //Axis 2
+            //forth
             robotarm.turnAxis(Axis.AXISTWO, power);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             robotarm.stopAxis(Axis.AXISTWO);
+            //back
+            robotarm.turnAxis(Axis.AXISTWO, -power);
+            Thread.sleep(500);
+            robotarm.stopAxis(Axis.AXISTWO);
+            //Axis 1
+            //forth
+            robotarm.turnAxis(Axis.AXISONE, power);
+            Thread.sleep(500);
+            robotarm.stopAxis(Axis.AXISONE);
+            //back
+            robotarm.turnAxis(Axis.AXISONE, -power);
+            Thread.sleep(500);
+            robotarm.stopAxis(Axis.AXISONE);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
