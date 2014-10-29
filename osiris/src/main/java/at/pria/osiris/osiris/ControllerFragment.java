@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import at.pria.osiris.osiris.api.Axis;
+import at.pria.osiris.osiris.network.RemoteRobotarm;
+
+import java.io.IOException;
 
 /**
  * @author Ari Michael Ayvazyan
@@ -68,10 +72,20 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
     }
 
     public void positivePower(View view) {
+        try {
+            RemoteRobotarm.getInstance().turnAxis(Axis.AXISTWO,100,500);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(getActivity(), "Pew Pew", Toast.LENGTH_SHORT).show();
     }
 
     public void negativePower(View view) {
+        try {
+            RemoteRobotarm.getInstance().turnAxis(Axis.AXISTWO,-100,500);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(getActivity(), "Pow Pow", Toast.LENGTH_SHORT).show();
     }
 
