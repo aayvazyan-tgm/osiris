@@ -57,16 +57,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Negative Power"
-            android:id="@+id/negativePower" android:layout_below="@+id/motorSelectionSpinner"
-            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+            android:id="@+id/negativePower"
             android:layout_toStartOf="@+id/editText2"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            android:layout_below="@+id/positivePower"
+            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/connect" android:layout_alignEnd="@+id/connect"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Positive Power"
             android:id="@+id/positivePower"
-            android:layout_toEndOf="@+id/negativePower" android:layout_below="@+id/negativePower"
+            android:layout_toEndOf="@+id/negativePower"
+            android:layout_below="@+id/motorSelectionSpinner"
             android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            android:layout_alignRight="@+id/connect" android:layout_alignEnd="@+id/connect"/>
 </RelativeLayout>
