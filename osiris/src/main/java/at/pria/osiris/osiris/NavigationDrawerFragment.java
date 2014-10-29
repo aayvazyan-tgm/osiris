@@ -22,6 +22,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -249,8 +251,12 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (item.getItemId() == R.id.start_test) {
             Toast.makeText(getActivity(), "Running test...", Toast.LENGTH_SHORT).show();
-            Demo.getInstance().showSomething();
-            Toast.makeText(getActivity(), "Running test...", Toast.LENGTH_SHORT).show();
+            try {
+                Demo.getInstance().showSomething();
+                Toast.makeText(getActivity(), "Test done...", Toast.LENGTH_SHORT).show();
+            }catch (IOException e){
+                Toast.makeText(getActivity(), "Error connecting", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 

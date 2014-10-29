@@ -23,24 +23,19 @@ public class RemoteRobotarm implements Robotarm{
 	private ObjectOutputStream oos;
 
     private static RemoteRobotarm INSTANCE;
-    public static RemoteRobotarm getInstance() {
+    public static RemoteRobotarm getInstance() throws IOException {
         if(INSTANCE==null){
             INSTANCE=new RemoteRobotarm();
         }
         return INSTANCE;
     }
 
-    private RemoteRobotarm(){
-		try {
-			//Strict mode ... dirty dirty
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-			socket = SocketFactory.getDefault().createSocket(this.linkip, this.linkport);
-			oos = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    private RemoteRobotarm() throws IOException {
+        //Strict mode ... dirty dirty
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        socket = SocketFactory.getDefault().createSocket(this.linkip, this.linkport);
+        oos = new ObjectOutputStream(socket.getOutputStream());
 	}
 	
 	@Override

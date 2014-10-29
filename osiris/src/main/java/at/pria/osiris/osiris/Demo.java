@@ -6,6 +6,8 @@ import at.pria.osiris.osiris.api.Axis;
 import at.pria.osiris.osiris.api.Robotarm;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 
+import java.io.IOException;
+
 /**
  * @author Ari Ayvazyan
  * @version 27.10.2014
@@ -18,7 +20,7 @@ public class Demo{
     public Demo(Robotarm robotarm){
         this.robotarm = robotarm;
     }
-    public static Demo getInstance(){
+    public static Demo getInstance() throws IOException {
         if(demo==null) {
             RemoteRobotarm rm = RemoteRobotarm.getInstance();
             demo = new Demo(rm);
