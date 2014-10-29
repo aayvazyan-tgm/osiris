@@ -4,6 +4,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import at.pria.osiris.osiris.api.*;
 
+import javax.net.SocketFactory;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -34,7 +35,7 @@ public class RemoteRobotarm implements Robotarm{
 			//Strict mode ... dirty dirty
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
-			socket = new Socket(this.linkip, this.linkport);
+			socket = SocketFactory.getDefault().createSocket(this.linkip, this.linkport);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
