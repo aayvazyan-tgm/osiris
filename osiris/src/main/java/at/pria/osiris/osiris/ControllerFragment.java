@@ -45,7 +45,7 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_controll, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_control, container, false);
         //Button actionListeners
         final Button buttonPositivePower = (Button) rootView.findViewById(R.id.positivePower);
         buttonPositivePower.setOnTouchListener(new View.OnTouchListener() {
