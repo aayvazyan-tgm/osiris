@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -47,15 +48,27 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         View rootView = inflater.inflate(R.layout.fragment_controll, container, false);
         //Button actionListeners
         final Button buttonPositivePower = (Button) rootView.findViewById(R.id.positivePower);
-        buttonPositivePower.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                positivePower(v);
+        buttonPositivePower.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    positivePower(v);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    stopPower(v);
+                }
+                return false;
             }
         });
         final Button buttonNegativePower = (Button) rootView.findViewById(R.id.negativePower);
-        buttonNegativePower.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                negativePower(v);
+        buttonNegativePower.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    negativePower(v);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    stopPower(v);
+                }
+                return false;
             }
         });
         //Axis selection
@@ -104,25 +117,34 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         ((MainActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
-
+    public void stopPower(View view){
+        try {
+            RoboArmConfig cfg = RoboArmConfig.getInstance();
+            RemoteRobotarm.getInstance().stopAxis(RoboArmConfig.getInstance().getSelectedAxis());
+        } catch (IOException e) {
+            Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
+    }
     public void positivePower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)), 500);
+            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)));
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(), "Pew Pew", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "Pew Pew", Toast.LENGTH_SHORT).show();
     }
 
     public void negativePower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)-RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)), 500);
+            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)-RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)));
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getActivity(), "Pow Pow", Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "Pow Pow", Toast.LENGTH_SHORT).show();
     }
 
     @Override
