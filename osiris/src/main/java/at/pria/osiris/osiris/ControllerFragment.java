@@ -19,7 +19,7 @@ import java.io.IOException;
  * @author Ari Michael Ayvazyan
  * @version 29.10.2014
  */
-public class ControllerFragment extends Fragment implements View.OnClickListener {
+public class ControllerFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -52,7 +52,7 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    positivePower(v);
+                    doPower(v,true);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopPower(v);
                 }
@@ -64,7 +64,7 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    negativePower(v);
+                    doPower(v,false);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopPower(v);
                 }
@@ -74,7 +74,7 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         //Axis selection
         Axis.values();
         final Spinner motorSpinner = (Spinner) rootView.findViewById(R.id.motorSelectionSpinner);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EnumUtil.getEnumNames(Axis.class));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(Axis.class));
         motorSpinner.setAdapter(spinnerArrayAdapter);
         motorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,40 +126,21 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         }
         Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
     }
-    public void positivePower(View view) {
+    public void doPower(View view,boolean positive) {
+        int direction=1;
+        if(!positive)direction=-1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)));
+            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(),
+                    direction*
+                            ((int)(
+                                (double)RemoteRobotarm.MAX_POWER *
+                                ((double)cfg.getPercentPower()/100d)
+                            ))
+            );
         } catch (IOException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(view.getContext(), "Pew Pew", Toast.LENGTH_SHORT).show();
-    }
-
-    public void negativePower(View view) {
-        try {
-            RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)-RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
-        }
-        Toast.makeText(view.getContext(), "Pow Pow", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View view) {
-        final Button buttonPositivePower = (Button) getActivity().findViewById(R.id.positivePower);
-        buttonPositivePower.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                positivePower(v);
-            }
-        });
-        final Button buttonNegativePower = (Button) getActivity().findViewById(R.id.negativePower);
-        buttonNegativePower.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                negativePower(v);
-            }
-        });
     }
 }
