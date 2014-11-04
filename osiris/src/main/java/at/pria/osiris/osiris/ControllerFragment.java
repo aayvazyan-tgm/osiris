@@ -82,6 +82,7 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 RoboArmConfig.getInstance().setPercentPower(i);
+                Toast.makeText(getActivity(), "Power at :" +i+"%!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
