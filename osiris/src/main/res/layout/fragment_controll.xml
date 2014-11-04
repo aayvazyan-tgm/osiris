@@ -5,21 +5,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Controll"
-            android:id="@+id/controll" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
-    <TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="IP-Address"
             android:id="@+id/ipAddress"
-            android:layout_toStartOf="@+id/controll"
-            android:layout_below="@+id/controll" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:gravity="left|center"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +42,7 @@
             android:id="@+id/powerText"
             android:layout_alignBottom="@+id/seekBar" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" android:layout_alignTop="@+id/seekBar"
-            android:gravity="center"/>
+            android:gravity="left|center"/>
     <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +89,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Port"
                 android:id="@+id/portText" android:layout_below="@+id/ipAddressInput"
-                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
                 android:layout_above="@+id/seekBar" android:layout_toLeftOf="@+id/portNumberInput"
-                android:layout_toStartOf="@+id/portNumberInput" android:gravity="center"/>
+                android:layout_toStartOf="@+id/portNumberInput" android:gravity="left|center"
+                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"/>
 </RelativeLayout>
