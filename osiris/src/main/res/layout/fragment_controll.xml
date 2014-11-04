@@ -38,7 +38,8 @@
             android:id="@+id/seekBar" android:layout_below="@+id/connect"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" android:progress="50"
-            android:layout_toEndOf="@+id/powerText" android:layout_toRightOf="@+id/powerText"/>
+            android:layout_toEndOf="@+id/powerText" android:layout_toRightOf="@+id/powerText"
+            android:indeterminate="false"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

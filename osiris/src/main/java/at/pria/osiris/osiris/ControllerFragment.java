@@ -61,14 +61,14 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         //Axis selection
         Axis.values();
         final Spinner motorSpinner = (Spinner) rootView.findViewById(R.id.motorSelectionSpinner);
-        ArrayAdapter<String> spinnerArrayAdapter= new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, EnumUtil.getEnumNames(Axis.class));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EnumUtil.getEnumNames(Axis.class));
         motorSpinner.setAdapter(spinnerArrayAdapter);
         motorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedItem=(String)adapterView.getItemAtPosition(i);
+                String selectedItem = (String) adapterView.getItemAtPosition(i);
                 RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
-                Toast.makeText(getActivity(), "Selected: "+selectedItem, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -76,6 +76,25 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
             }
         });
+        //ProgressBar
+        final SeekBar seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                RoboArmConfig.getInstance().setPercentPower(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         return rootView;
     }
 
@@ -88,7 +107,8 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
 
     public void positivePower(View view) {
         try {
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), 100, 500);
+            RoboArmConfig cfg = RoboArmConfig.getInstance();
+            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)), 500);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,7 +117,8 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
 
     public void negativePower(View view) {
         try {
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), -100, 500);
+            RoboArmConfig cfg = RoboArmConfig.getInstance();
+            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(), (int)((double)-RemoteRobotarm.MAX_POWER * ((double)cfg.getPercentPower()/100d)), 500);
         } catch (IOException e) {
             e.printStackTrace();
         }

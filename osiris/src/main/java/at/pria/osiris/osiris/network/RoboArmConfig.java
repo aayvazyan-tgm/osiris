@@ -10,6 +10,7 @@ public class RoboArmConfig {
     Object lockSelectedAxis = new Object();
     private Axis selectedAxis;
     private static RoboArmConfig INSTANCE = new RoboArmConfig();
+    private int percentPower=0;
 
     private RoboArmConfig() {
     }
@@ -34,5 +35,13 @@ public class RoboArmConfig {
         synchronized (lockSelectedAxis) {
             this.selectedAxis = Axis.valueOf(selectedAxis);
         }
+    }
+
+    public int getPercentPower() {
+        return percentPower;
+    }
+
+    public void setPercentPower(int percentPower) {
+        this.percentPower = percentPower;
     }
 }
