@@ -122,10 +122,10 @@ public class ControllerFragment extends Fragment {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
             RemoteRobotarm.getInstance().stopAxis(RoboArmConfig.getInstance().getSelectedAxis());
+            Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
     }
 
     public void doPower(View view, boolean positive) {
@@ -143,6 +143,5 @@ public class ControllerFragment extends Fragment {
         } catch (IOException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(view.getContext(), "Pew Pew", Toast.LENGTH_SHORT).show();
     }
 }
