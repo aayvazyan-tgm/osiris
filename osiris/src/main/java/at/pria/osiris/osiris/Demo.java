@@ -2,8 +2,8 @@ package at.pria.osiris.osiris;
 
 import android.view.MotionEvent;
 import android.view.View;
-import at.pria.osiris.osiris.api.Axis;
-import at.pria.osiris.osiris.api.Robotarm;
+import api.Axis;
+import api.Robotarm;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 
 import java.io.IOException;

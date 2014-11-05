@@ -2,7 +2,7 @@ package at.pria.osiris.osiris.network;
 
 import android.os.StrictMode;
 import android.util.Log;
-import at.pria.osiris.osiris.api.*;
+import api.*;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class RemoteRobotarm implements Robotarm {
     }
 
     @Override
-    public boolean moveTo(int x, int y, int z) {
+    public boolean moveTo(double x, double y, double z) {
         sendMessage("moveto/" + x + "/" + y + "/" + z);
         return true;
     }

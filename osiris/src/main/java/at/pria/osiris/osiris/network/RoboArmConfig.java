@@ -1,6 +1,6 @@
 package at.pria.osiris.osiris.network;
 
-import at.pria.osiris.osiris.api.Axis;
+import api.Axis;
 
 /**
  * @author Ari Michael Ayvazyan

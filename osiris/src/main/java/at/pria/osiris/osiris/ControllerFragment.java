@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import at.pria.osiris.osiris.api.Axis;
+import api.Axis;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 import at.pria.osiris.osiris.network.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
