@@ -11,6 +11,4 @@ subprojects {
     version = "r${revision}.${hash}"
 
     group = 'at.pria.osiris'
-
-    sourceCompatibility = 1.6
 }
