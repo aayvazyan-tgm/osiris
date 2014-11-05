@@ -256,6 +256,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), "Test done...", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "Error connecting", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
             return true;
         }

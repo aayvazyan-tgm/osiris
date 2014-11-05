@@ -1,1 +1,1 @@
-include ':osiris'
+include ':osiris', ':desktopApp', ':api', 'linker'

@@ -1,0 +1,1 @@
+You need to add the linkjvm.jar manually to the libs folder.
