@@ -36,10 +36,24 @@ Alternatively you could set your ANDROID_HOME variable to this path.
 sdk.dir=E:\\Android\\sdk\\
 ```
 
-How to Compile:
----------------
+How to Compile a project:
+=========================
+This project uses Gradle as a build file.
 
-This project uses Gradle to compile, run assembleRelease to create the apk.
+The easiest way is to use the inbuilt function of your IDE/a gradle plugin for your IDE if it does not support gradle by default
+Generate Jars:
+--------------
+gradlew :desktopApp:jar
+
+Desktop App:
+------------
+
+gradlew :desktopApp:run to run the Application
+
+Android Project:
+----------------
+
+Run assembleRelease to build the .apk
 
 Run installDebug to install this app on your device (You need to start it manually)
 
