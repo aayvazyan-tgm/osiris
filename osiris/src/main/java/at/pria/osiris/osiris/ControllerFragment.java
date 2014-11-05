@@ -51,8 +51,8 @@ public class ControllerFragment extends Fragment {
         buttonPositivePower.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    doPower(v,true);
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    doPower(v, true);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopPower(v);
                 }
@@ -64,7 +64,7 @@ public class ControllerFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    doPower(v,false);
+                    doPower(v, false);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopPower(v);
                 }
@@ -104,7 +104,7 @@ public class ControllerFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getActivity(), "Power at :" +seekBar.getProgress()+"%!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Power at :" + seekBar.getProgress() + "%!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,7 +117,8 @@ public class ControllerFragment extends Fragment {
         ((MainActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
-    public void stopPower(View view){
+
+    public void stopPower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
             RemoteRobotarm.getInstance().stopAxis(RoboArmConfig.getInstance().getSelectedAxis());
@@ -126,16 +127,17 @@ public class ControllerFragment extends Fragment {
         }
         Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
     }
-    public void doPower(View view,boolean positive) {
-        int direction=1;
-        if(!positive)direction=-1;
+
+    public void doPower(View view, boolean positive) {
+        int direction = 1;
+        if (!positive) direction = -1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
             RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(),
-                    direction*
-                            ((int)(
-                                (double)RemoteRobotarm.MAX_POWER *
-                                ((double)cfg.getPercentPower()/100d)
+                    direction *
+                            ((int) (
+                                    (double) RemoteRobotarm.MAX_POWER *
+                                            ((double) cfg.getPercentPower() / 100d)
                             ))
             );
         } catch (IOException e) {

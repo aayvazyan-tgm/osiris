@@ -10,7 +10,7 @@ public class RoboArmConfig {
     Object lockSelectedAxis = new Object();
     private Axis selectedAxis;
     private static RoboArmConfig INSTANCE = new RoboArmConfig();
-    private int percentPower=0;
+    private int percentPower = 0;
 
     private RoboArmConfig() {
     }

@@ -12,21 +12,23 @@ import java.io.IOException;
  * @author Ari Ayvazyan
  * @version 27.10.2014
  */
-public class Demo{
+public class Demo {
     private int power = 100;
     private static Demo demo;
     private Robotarm robotarm;
 
-    public Demo(Robotarm robotarm){
+    public Demo(Robotarm robotarm) {
         this.robotarm = robotarm;
     }
+
     public static Demo getInstance() throws IOException {
-        if(demo==null) {
+        if (demo == null) {
             RemoteRobotarm rm = RemoteRobotarm.getInstance();
             demo = new Demo(rm);
         }
         return demo;
     }
+
     public void showSomething() {
         try {
             //Axis 2
