@@ -52,7 +52,7 @@ This project uses Gradle as a build file.
 The easiest way is to use the inbuilt function of your IDE/a gradle plugin for your IDE if it does not support gradle by default
 Generate Jars:
 --------------
-gradlew :desktopApp:jar
+gradlew :subProjectName:jar
 
 Desktop App:
 ------------
