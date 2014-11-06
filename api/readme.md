@@ -1,0 +1,1 @@
+This api defines the Interface that is used to communicate with the robot arm (linker)
