@@ -42,7 +42,7 @@ Alternatively you could set your ANDROID_HOME variable to this path.
 `local.properties`
 
 ```
-sdk.dir=E:\\Android\\sdk\\
+sdk.dir=E\:\\Android\\sdk\\
 ```
 
 How to Compile a project:
