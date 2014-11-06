@@ -1,7 +1,5 @@
 package at.pria.osiris.osiris;
 
-import android.view.MotionEvent;
-import android.view.View;
 import api.Axis;
 import api.Robotarm;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
@@ -13,8 +11,8 @@ import java.io.IOException;
  * @version 27.10.2014
  */
 public class Demo {
-    private int power = 100;
     private static Demo demo;
+    private int power = 100;
     private Robotarm robotarm;
 
     public Demo(Robotarm robotarm) {

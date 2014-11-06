@@ -7,9 +7,9 @@ import api.Axis;
  * @version 04.11.2014
  */
 public class RoboArmConfig {
+    private static RoboArmConfig INSTANCE = new RoboArmConfig();
     Object lockSelectedAxis = new Object();
     private Axis selectedAxis;
-    private static RoboArmConfig INSTANCE = new RoboArmConfig();
     private int percentPower = 0;
 
     private RoboArmConfig() {
@@ -25,15 +25,15 @@ public class RoboArmConfig {
         }
     }
 
-    public void setSelectedAxis(Axis selectedAxis) {
-        synchronized (lockSelectedAxis) {
-            this.selectedAxis = selectedAxis;
-        }
-    }
-
     public void setSelectedAxis(String selectedAxis) {
         synchronized (lockSelectedAxis) {
             this.selectedAxis = Axis.valueOf(selectedAxis);
+        }
+    }
+
+    public void setSelectedAxis(Axis selectedAxis) {
+        synchronized (lockSelectedAxis) {
+            this.selectedAxis = selectedAxis;
         }
     }
 

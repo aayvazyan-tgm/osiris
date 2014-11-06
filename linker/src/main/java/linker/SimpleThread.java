@@ -17,7 +17,7 @@ public class SimpleThread implements Runnable, Stoppable {
     private RobotarmImpl robotarm;
     private boolean running;
 
-    public SimpleThread(ObjectOutputStream oos, RobotarmImpl ra){
+    public SimpleThread(ObjectOutputStream oos, RobotarmImpl ra) {
         this.oos = oos;
         this.robotarm = ra;
         running = true;
@@ -25,7 +25,7 @@ public class SimpleThread implements Runnable, Stoppable {
 
     @Override
     public void run() {
-        while(running) {
+        while (running) {
             try {
                 Thread.sleep(10);
                 try {

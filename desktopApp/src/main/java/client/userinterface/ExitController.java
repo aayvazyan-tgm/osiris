@@ -7,56 +7,57 @@ import java.awt.event.WindowListener;
 
 /**
  * Controller for the close event
+ *
  * @author Helmuth Brunner
  * @version Oct 27, 2014
- * Current project: 00SIRISPrototype01
+ *          Current project: 00SIRISPrototype01
  */
 public class ExitController implements WindowListener {
 
-	private RemoteRobotarm robot;
-	
-	public ExitController(RemoteRobotarm robot) {
-		this.robot= robot;
-	}
-	
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    private RemoteRobotarm robot;
 
-	@Override
-	public void windowClosing(WindowEvent e) {
-		robot.exit();
-	}
+    public ExitController(RemoteRobotarm robot) {
+        this.robot = robot;
+    }
 
-	@Override
-	public void windowClosed(WindowEvent e) {
-		robot.exit();
-	}
+    @Override
+    public void windowOpened(WindowEvent e) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowClosing(WindowEvent e) {
+        robot.exit();
+    }
 
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowClosed(WindowEvent e) {
+        robot.exit();
+    }
 
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void windowIconified(WindowEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

@@ -2,7 +2,8 @@ package at.pria.osiris.osiris.network;
 
 import android.os.StrictMode;
 import android.util.Log;
-import api.*;
+import api.Axis;
+import api.Robotarm;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
@@ -17,20 +18,12 @@ import java.net.Socket;
  */
 public class RemoteRobotarm implements Robotarm {
 
+    public static final int MAX_POWER = 100;
+    private static RemoteRobotarm INSTANCE;
     private final String linkip = "192.168.43.241";        //IP of the JVM-Link-Controller
     private final int linkport = 8889;                    //Port of the Server-program running on the Controller
-    public static final int MAX_POWER = 100;
     private Socket socket;
     private ObjectOutputStream oos;
-
-    private static RemoteRobotarm INSTANCE;
-
-    public static RemoteRobotarm getInstance() throws IOException {
-        if (INSTANCE == null) {
-            INSTANCE = new RemoteRobotarm();
-        }
-        return INSTANCE;
-    }
 
     private RemoteRobotarm() throws IOException {
         //Strict mode ... dirty dirty
@@ -38,6 +31,13 @@ public class RemoteRobotarm implements Robotarm {
         StrictMode.setThreadPolicy(policy);
         socket = SocketFactory.getDefault().createSocket(this.linkip, this.linkport);
         oos = new ObjectOutputStream(socket.getOutputStream());
+    }
+
+    public static RemoteRobotarm getInstance() throws IOException {
+        if (INSTANCE == null) {
+            INSTANCE = new RemoteRobotarm();
+        }
+        return INSTANCE;
     }
 
     @Override
