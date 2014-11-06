@@ -26,6 +26,15 @@ Clone this repo.
 
 Step 3: Project Setup
 ---------------------
+
+Dependencies
+------------
+To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
+
+osiris/linker/libs/linkjvm.jar.
+
+Android sdk path
+----------------
 Create a file called local.properties in the project root and fill in the path to your SDK dir.
 
 Alternatively you could set your ANDROID_HOME variable to this path.
