@@ -2,9 +2,6 @@
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-/* Test coverage */
-apply plugin: "jacoco"
-
 subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
