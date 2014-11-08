@@ -117,9 +117,9 @@ You need to connect the first motor(base motor) on the port M0 of the controller
 The sensor from the base-motor has to be plugged into the port 0 of the controller.
 (WARNING: Be very careful with choosing the correct sensor. A wrong sensor hinders the software from preventing positions, which might damage the robot.
 
-The same goes with the motor of the first axis. This motor has to be plugged into the port M1 of the controller and his senso into port 1.
+The same goes with the motor of the first axis. This motor has to be plugged into the port M1 and his sensor into port 1 of the controller.
 
-This goes on with the remaining motors
+The same goes for the remaining motors and sensors.
 
 Axis2 motor = M2
 Sensor of Axis2 motor = 2
