@@ -1,14 +1,17 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'gradle-one-jar'
 
 sourceCompatibility = 1.6
 mainClassName = 'client.ClientStarter'
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'client.ClientStarter'
-    }
-}
 
 repositories {
     mavenCentral()
@@ -19,3 +22,7 @@ dependencies {
     compile project(':api')
 }
 
+
+task packJarWithLibs(type: OneJar) {
+    mainClass = 'client.ClientStarter'
+}
