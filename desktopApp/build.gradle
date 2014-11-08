@@ -25,5 +25,5 @@ dependencies {
 
 task packJarWithLibs(type: OneJar) {
     mainClass = 'client.ClientStarter'
-    archiveName = "DesktopApp".concat(archiveName.toString().minus("-standalone").minus("desktopApp"))
+    archiveName = "DesktopApp".concat(archiveName.toString().minus("desktopApp"))
 }
