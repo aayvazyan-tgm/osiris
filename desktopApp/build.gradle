@@ -2,6 +2,13 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 sourceCompatibility = 1.6
+mainClassName = 'client.ClientStarter'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'client.ClientStarter'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -12,4 +19,3 @@ dependencies {
     compile project(':api')
 }
 
-mainClassName = 'client.ClientStarter'
