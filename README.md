@@ -77,3 +77,25 @@ Import project -> Select the project destination.
 Make sure "foo\osiris\build.gradle" is selected, and not "foo\osiris\gradle"
 
 You are done!
+
+Eclipse
+--------
+Do not use the android adt plugin, a default eclipse with the gradle plugin should work.
+
+- Install the Gradle Plugin for Eclipse.
+- Pull the project
+- Create the following file in the project, to the android-sdk
+
+`local.properties`
+
+```
+sdk.dir=E\:\\Android\\sdk\\
+```
+- In Eclipse, Import > Gradle Project
+- Select the path to the project and press the "Build Model" button
+- Make sure that auto-select subprojects is marked.
+- To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
+
+    osiris/linker/libs/linkjvm.jar.
+
+- Finished
