@@ -17,7 +17,7 @@ android {
     buildToolsVersion "19.1.0"
     signingConfigs {
         debug {
-            storeFile file("osirisDebugKeyStore.jks")
+            storeFile = file("osirisDebugKeyStore.jks")
             storePassword = 'mydebug'
             keyAlias = 'debug'
             keyPassword ='mydebug'
@@ -26,10 +26,11 @@ android {
             File propFile = file("${projectDir}${File.separator}signing.properties")
 
             if(propFile.exists()) {
-                println 'RootDir signing.properties exists, use this'
-                logger.info 'RootDir signing.properties exists, use this'
+                println 'RootDir signing.properties exists'
+                logger.info 'RootDir signing.properties exists'
             } else {
                 logger.info "signing.properties does not exist in ${projectDir.toString()}${File.separator}signing.properties"
+                println "signing.properties does not exist in ${projectDir.toString()}${File.separator}signing.properties"
             }
             if (propFile.exists()) {
                 def Properties props = new Properties()
@@ -41,8 +42,8 @@ android {
                     keyAlias = props['KEY_ALIAS']
                     keyPassword = props['KEY_PASSWORD']
                 } else {
-                    println 'signing.properties property not set'
-                    logger.info 'signing.properties some property noe set'
+                    println 'signing.properties a property is not set'
+                    logger.info 'signing.properties a property is not set'
                 }
             }
         }
@@ -56,6 +57,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
