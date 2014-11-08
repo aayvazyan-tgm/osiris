@@ -77,3 +77,7 @@ Import project -> Select the project destination.
 Make sure "foo\osiris\build.gradle" is selected, and not "foo\osiris\gradle"
 
 You are done!
+
+Eclipse
+--------
+Do not use the android adt plugin, a default eclipse with the gradle plugin should work.
