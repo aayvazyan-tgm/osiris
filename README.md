@@ -82,21 +82,19 @@ Eclipse
 --------
 Do not use the android adt plugin, a default eclipse with the gradle plugin should work.
 
-1. Install the Gradle Plugin for Eclipse.
-2. Pull the project
-3. Create the following file in the project, to the android-sdk
-
+- Install the Gradle Plugin for Eclipse.
+- Pull the project
+- Create the following file in the project, to the android-sdk
 `local.properties`
 
 ```
 sdk.dir=E\:\\Android\\sdk\\
 ```
-
-3. In Eclipse, Import > Gradle Project
-4. Select the path to the project and press the "Build Model" button
-5. Make sure that auto-select subprojects is marked.
-6. To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
+- In Eclipse, Import > Gradle Project
+- Select the path to the project and press the "Build Model" button
+- Make sure that auto-select subprojects is marked.
+- To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
 
     osiris/linker/libs/linkjvm.jar.
 
-6. Finished
+- Finished
