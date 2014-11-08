@@ -11,7 +11,6 @@ apply plugin: 'java'
 apply plugin: 'gradle-one-jar'
 
 sourceCompatibility = 1.6
-mainClassName = 'client.ClientStarter'
 
 repositories {
     mavenCentral()
