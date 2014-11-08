@@ -122,6 +122,9 @@ The same goes with the motor of the first axis. This motor has to be plugged int
 The same goes for the remaining motors and sensors.
 
 Axis2 motor = M2
+
 Sensor of Axis2 motor = 2
+
 Axis3 motor = M3
+
 ...
