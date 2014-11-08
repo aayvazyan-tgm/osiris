@@ -85,6 +85,7 @@ Do not use the android adt plugin, a default eclipse with the gradle plugin shou
 - Install the Gradle Plugin for Eclipse.
 - Pull the project
 - Create the following file in the project, to the android-sdk
+
 `local.properties`
 
 ```
