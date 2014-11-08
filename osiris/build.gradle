@@ -15,6 +15,7 @@ repositories {
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
+
     signingConfigs {
         debug {
             storeFile = file("osirisDebugKeyStore.jks")
@@ -48,6 +49,7 @@ android {
             }
         }
     }
+
     defaultConfig {
         applicationId "at.pria.osiris.osiris"
         minSdkVersion 10
@@ -55,11 +57,17 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                def file = variant.outputFile
+                def fileName = "Osiris-App_" + version + ".apk";
+                variant.outputFile = new File(file.parent, fileName);
+            }
         }
     }
 }
