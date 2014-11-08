@@ -21,12 +21,12 @@ android {
             storeFile = file("osirisDebugKeyStore.jks")
             storePassword = 'mydebug'
             keyAlias = 'debug'
-            keyPassword ='mydebug'
+            keyPassword = 'mydebug'
         }
-        release{
+        release {
             File propFile = file("${projectDir}${File.separator}signing.properties")
 
-            if(propFile.exists()) {
+            if (propFile.exists()) {
                 println 'RootDir signing.properties exists'
                 logger.info 'RootDir signing.properties exists'
             } else {
@@ -58,16 +58,24 @@ android {
         versionName "1.0"
     }
 
+    applicationVariants.all { variant ->
+
+        def apk = variant.outputFile;
+        def newName;
+
+        newName = apk.name.replace(".apk", version + ".apk");
+
+        newName = newName
+                //.replace("BUILD_TYPE", variant.buildType.name)
+                .replace(project.name, "Osiris-App");
+        variant.outputFile = new File(apk.parentFile, newName);
+    }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                def file = variant.outputFile
-                def fileName = "Osiris-App_" + version + ".apk";
-                variant.outputFile = new File(file.parent, fileName);
-            }
         }
     }
 }
