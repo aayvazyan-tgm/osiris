@@ -100,3 +100,6 @@ tmp/**/*
 # PDT-specific
 .buildpath
 
+
+signing.properties
+osirisKeyStore.jks
