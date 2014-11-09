@@ -4,9 +4,11 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.0'
+        classpath 'com.novoda:gradle-android-command-plugin:1.2.1'
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'android-command'
 
 repositories {
     jcenter()
@@ -81,8 +83,4 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile project(':api')
-}
-
-task runAndInstall(type: Exec, dependsOn: 'installDebug') {
-    "adb shell am start -n ${group}/.MainActivity".execute()
 }
