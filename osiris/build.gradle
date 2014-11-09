@@ -62,7 +62,7 @@ android {
 
         def apk = variant.outputFile;
         def newName;
-
+        version='git describe --tags'.execute().text.trim()
         newName = apk.name.replace(".apk", version + ".apk");
 
         newName = newName

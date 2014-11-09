@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris;
+package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import api.Axis;
+import at.pria.osiris.osiris.MainActivity;
+import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 import at.pria.osiris.osiris.network.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
+import at.pria.osiris.osiris.view.elements.ButtonVisualiser;
 
 import java.io.IOException;
 
@@ -26,6 +29,8 @@ public class ControllerFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static ControllerFragment INSTANCE;
+    private ButtonVisualiser buttonPositivePowerVisualiser;
+    private ButtonVisualiser buttonNegativePowerVisualiser;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -48,25 +53,27 @@ public class ControllerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
         //Button actionListeners
         final Button buttonPositivePower = (Button) rootView.findViewById(R.id.positivePower);
+        this.buttonPositivePowerVisualiser = new ButtonVisualiser(buttonPositivePower);
         buttonPositivePower.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    doPower(v, true);
+                    doPower(v, true, buttonPositivePowerVisualiser);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopPower(v);
+                    stopPower(v, buttonPositivePowerVisualiser);
                 }
                 return false;
             }
         });
         final Button buttonNegativePower = (Button) rootView.findViewById(R.id.negativePower);
+        this.buttonNegativePowerVisualiser = new ButtonVisualiser(buttonNegativePower);
         buttonNegativePower.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    doPower(v, false);
+                    doPower(v, false, buttonNegativePowerVisualiser);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    stopPower(v);
+                    stopPower(v, buttonNegativePowerVisualiser);
                 }
                 return false;
             }
@@ -118,14 +125,26 @@ public class ControllerFragment extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
+    public void stopPower(View view, ButtonVisualiser triggeringButton) {
+        triggeringButton.stopVisualise();
+        stopPower(view);
+    }
+
     public void stopPower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().stopAxis(RoboArmConfig.getInstance().getSelectedAxis());
-            Toast.makeText(view.getContext(), "Stop the engines!", Toast.LENGTH_SHORT).show();
+            RemoteRobotarm robotArm = RemoteRobotarm.getInstance();
+
+            robotArm.stopAxis(cfg.getSelectedAxis());
+
         } catch (IOException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void doPower(View view, boolean positive, ButtonVisualiser triggeringButton) {
+        triggeringButton.startVisualise();
+        doPower(view, positive);
     }
 
     public void doPower(View view, boolean positive) {
@@ -133,7 +152,9 @@ public class ControllerFragment extends Fragment {
         if (!positive) direction = -1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm.getInstance().turnAxis(RoboArmConfig.getInstance().getSelectedAxis(),
+            RemoteRobotarm robotArm = RemoteRobotarm.getInstance();
+
+            robotArm.turnAxis(cfg.getSelectedAxis(),
                     direction *
                             ((int) (
                                     (double) RemoteRobotarm.MAX_POWER *

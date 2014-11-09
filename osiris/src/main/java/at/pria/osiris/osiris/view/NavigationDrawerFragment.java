@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris;
+package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import at.pria.osiris.osiris.Demo;
+import at.pria.osiris.osiris.R;
 
 import java.io.IOException;
 
