@@ -1,7 +1,6 @@
 00siris
 ======
-[![Build Status](http://aayvazyan.bitnamiapp.com/jenkins/buildStatus/icon?job=osiris/default)](http://aayvazyan.bitnamiapp.com/jenkins/job/osiris/default/)
-
+[![Build Status](http://aayvazyan.bitnamiapp.com/jenkins/job/osiris/badge/icon)](http://aayvazyan.bitnamiapp.com/jenkins/job/osiris/)
 Our matriculation project. TODO: describe
 
 Development
