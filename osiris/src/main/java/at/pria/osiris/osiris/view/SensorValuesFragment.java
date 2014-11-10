@@ -39,7 +39,7 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static SensorValuesFragment INSTANCE;
-    private SensorRefresher sensorRefresher;
+    private Thread sensorRefresher;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -56,7 +56,8 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         try {
-            fragment.sensorRefresher=new SensorRefresher(RemoteRobotarm.getInstance(),fragment);
+            fragment.sensorRefresher=new Thread(new SensorRefresher(RemoteRobotarm.getInstance(),fragment));
+            fragment.sensorRefresher.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
