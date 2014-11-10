@@ -10,26 +10,26 @@ import at.pria.osiris.osiris.network.RemoteRobotarm;
 /**
  * Created by helmuthbrunner on 10/11/14.
  */
-public class SensorRefresher implements Runnable, Stoppable{
+public class SensorRefresher implements Runnable, Stoppable {
 
-    private RemoteRobotarm remoteRobotarm ;
+    private RemoteRobotarm remoteRobotarm;
     private SensorRefreshable sensorRefreshable;
     private boolean running;
 
     public SensorRefresher(RemoteRobotarm remoteRobotarm, SensorRefreshable sensorRefreshable) {
-        this.remoteRobotarm= remoteRobotarm;
+        this.remoteRobotarm = remoteRobotarm;
         this.sensorRefreshable = sensorRefreshable;
-        running= true;
+        running = true;
     }
 
     @Override
     public void run() {
-        DirtyClientMessageProcessor cmp = new DirtyClientMessageProcessor(remoteRobotarm,this);
-        while(running) {
+        DirtyClientMessageProcessor cmp = new DirtyClientMessageProcessor(remoteRobotarm, this);
+        while (running) {
             //convert ObjectInputStream object to String
             String message = "failmessage";
+            ObjectInputStream ois = remoteRobotarm.getOis();
             try {
-                ObjectInputStream ois=remoteRobotarm.getOis();
                 message = (String) ois.readObject();
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -37,7 +37,7 @@ public class SensorRefresher implements Runnable, Stoppable{
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Closing connection...");
-                running=false;
+                running = false;
             }
             System.out.println("Message Received: " + message);
 
@@ -47,7 +47,7 @@ public class SensorRefresher implements Runnable, Stoppable{
 
     @Override
     public void stop() {
-
+        running = false;
     }
 
     public void refresh(String s) {

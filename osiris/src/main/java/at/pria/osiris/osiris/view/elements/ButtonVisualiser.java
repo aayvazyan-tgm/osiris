@@ -42,11 +42,11 @@ public class ButtonVisualiser implements VisualisingActivity {
     @Override
     public synchronized void startVisualise() {
         if (!isVisualising()) {
-            isVisualising=true;
+            isVisualising = true;
             this.backgroundBefore = this.button.getBackground();
 
             int sdk = android.os.Build.VERSION.SDK_INT;
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 //noinspection deprecation
                 this.button.setBackgroundDrawable(this.backgroundDisplayingActivity);
             } else {
@@ -65,11 +65,11 @@ public class ButtonVisualiser implements VisualisingActivity {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public synchronized void stopVisualise() {
-        if(isVisualising){
-            isVisualising=false;
+        if (isVisualising) {
+            isVisualising = false;
 
             int sdk = android.os.Build.VERSION.SDK_INT;
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 //noinspection deprecation
                 this.button.setBackgroundDrawable(this.backgroundBefore);
             } else {

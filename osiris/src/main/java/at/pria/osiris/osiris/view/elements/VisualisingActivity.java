@@ -6,5 +6,6 @@ package at.pria.osiris.osiris.view.elements;
  */
 public interface VisualisingActivity {
     public void startVisualise();
+
     public void stopVisualise();
 }
