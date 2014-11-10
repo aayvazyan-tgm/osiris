@@ -1,5 +1,6 @@
 package at.pria.osiris.osiris.network;
 
+import android.util.Log;
 import api.Robotarm;
 import at.pria.osiris.osiris.sensors.SensorRefresher;
 
@@ -23,6 +24,7 @@ public class DirtyClientMessageProcessor {
      * @param message the message
      */
     public void callMethod(String message) {
+        Log.d("OSIRIS_DEBUG_MESSAGES","Reached callMethod "+message);
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
             System.out.println("Splitted" + i + ": " + splitted[i]);

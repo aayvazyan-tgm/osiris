@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,6 @@ import at.pria.osiris.osiris.sensors.SensorRefresher;
  * Activities that contain this fragment must implement the
  * {@link SensorValuesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SensorValuesFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     // TODO: Rename parameter arguments, choose names that match
@@ -40,29 +39,7 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static SensorValuesFragment INSTANCE;
     private Thread sensorRefresher;
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SensorValuesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SensorValuesFragment newInstance(String param1, String param2) {
-        SensorValuesFragment fragment = new SensorValuesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        try {
-            fragment.sensorRefresher=new Thread(new SensorRefresher(RemoteRobotarm.getInstance(),fragment));
-            fragment.sensorRefresher.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return fragment;
-    }
+    private TextView textView;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -74,7 +51,13 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
-
+            try {
+                fragment.sensorRefresher=new Thread(new SensorRefresher(RemoteRobotarm.getInstance(),fragment));
+                fragment.sensorRefresher.start();
+                Log.d("OSIRIS_DEBUG_MESSAGES", "Thread started");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             INSTANCE = fragment;
         }
         return INSTANCE;
@@ -96,8 +79,10 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_sensor_values, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sensor_values, container, false);
+        this.textView = (TextView) view.findViewById(R.id.sensor01Value);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -124,9 +109,13 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     }
 
     @Override
-    public void refresh(double newValue) {
-        final TextView textView = (TextView) getView().findViewById(R.id.sensor01Value);
-        textView.setText(""+ newValue);
+    public void refresh(final double newValue) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText("" + newValue);
+            }
+        });
     }
 
     /**
