@@ -71,7 +71,7 @@ public class Joint {
      * @param power range -100 , 100
      * @return
      */
-    public boolean moveToAngle(int angle, int power) {
+    public boolean moveToAngle(double angle, int power) {
         return moveToPosition(transATS(angle), power);
     }
 
@@ -81,7 +81,7 @@ public class Joint {
      *
      * @param aValue The specific angle, which should be converted
      */
-    public int transATS(int aValue) {
+    public int transATS(double aValue) {
         //1 degree equals to 5.1 in the sensor value
         double sValue = aValue * 5.1;
         return (int) sValue;

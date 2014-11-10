@@ -96,11 +96,6 @@ public class RobotarmImpl implements Robotarm {
         return null;
     }
 
-    /*
-     * TODO:
-     * Allow movements that move back inside the minimum/maximum range
-     * by defining positive power-direction and negative power-direction or using the Joint Object
-     */
     @Override
     public void turnAxis(Axis axis, int power) {
         switch (axis) {
@@ -163,11 +158,11 @@ public class RobotarmImpl implements Robotarm {
         double delta = beta + Math.toDegrees(Math.atan(z / c));
         double eta = 90 - delta;
 
-        System.out.println("Angles: BASE(" + phi + "�) AXISONE(" + eta + "*) AXISTWO(" + gamma + "�)");
+        System.out.println("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
 
 //		base.moveToDegree(phi);
-//		axis1.moveToDegree(eta);
-//		axis2.moveToDegree(gamma);
+		axis1.moveToAngle(92-eta, 100);
+		axis2.moveToAngle(8+gamma, 75);
 
         return true;
     }
