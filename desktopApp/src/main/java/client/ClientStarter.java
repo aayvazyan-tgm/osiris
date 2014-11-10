@@ -1,5 +1,6 @@
 package client;
 
+import client.model.Vendor;
 import client.network.RemoteRobotarm;
 import client.userinterface.ExitController;
 import client.userinterface.UserInterface;
@@ -7,6 +8,7 @@ import client.userinterface.control.ClientMessageProcessor;
 import client.userinterface.control.KeyInput;
 
 import javax.swing.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -21,15 +23,14 @@ public class ClientStarter {
 
     public static void main(String[] args) {
 
-        RemoteRobotarm ra = new RemoteRobotarm();
+        RemoteRobotarm ra = Vendor.get().getRobotarm();
         ObjectInputStream ois = ra.getOis();
 
-
         //Key input
-        KeyInput ki = new KeyInput(ra);
+        KeyInput ki = new KeyInput();
 
         //Close Controller
-        ExitController ec = new ExitController(ra);
+        ExitController ec = new ExitController();
 
         UserInterface ui = new UserInterface();
 
@@ -51,7 +52,7 @@ public class ClientStarter {
             //convert ObjectInputStream object to String
             String message = "failmessage";
             try {
-                    message = (String) ois.readObject();
+                message = (String) ois.readObject();
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -60,7 +61,7 @@ public class ClientStarter {
                 System.out.println("Closing connection...");
                 running=false;
             }
-            System.out.println("Message Received: " + message);
+            //System.out.println("Message Received: " + message);
 
             cmp.callMethod(message);
         }

@@ -1,8 +1,13 @@
 package client.userinterface;
 
 import javax.swing.*;
+
+import client.model.Vendor;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import api.Robotarm;
 
 /**
  * A controller for the Button
@@ -15,9 +20,11 @@ public class ButtonController implements ActionListener {
 
     private JTextField x, y, z;
     private JFrame f;
+    private Robotarm robotarm;
 
     public ButtonController(JFrame f) {
         this.f = f;
+        robotarm = Vendor.get().getRobotarm();
     }
 
     public ButtonController(JTextField x, JTextField y, JTextField z, JFrame f) {
@@ -25,6 +32,7 @@ public class ButtonController implements ActionListener {
         this.y = y;
         this.z = z;
         this.f = f;
+        robotarm = Vendor.get().getRobotarm();
     }
 
     @Override
@@ -35,6 +43,8 @@ public class ButtonController implements ActionListener {
 
             System.out.println("x: " + x.getText() + "\ny: " + y.getText() + "\nz: " + z.getText());
 
+            robotarm.moveTo(Integer.parseInt(x.getText()),Integer.parseInt(y.getText()),Integer.parseInt(z.getText()));
+            
             f.requestFocus();
         }
 

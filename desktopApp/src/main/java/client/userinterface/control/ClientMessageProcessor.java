@@ -25,7 +25,7 @@ public class ClientMessageProcessor {
     public void callMethod(String message) {
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
-            System.out.println("Splitted" + i + ": " + splitted[i]);
+            //System.out.println("Splitted" + i + ": " + splitted[i]);
         }
         if (splitted[0].equals("sensor0") && splitted.length == 2) {
             try {
@@ -43,7 +43,7 @@ public class ClientMessageProcessor {
             }
         } else if (splitted[0].equals("sensor2") && splitted.length == 2) {
             try {
-                System.out.println("sensor " + splitted[0] + " " + splitted[1]);
+                //System.out.println("sensor " + splitted[0] + " " + splitted[1]);
                 userInterface.getV().getSensor2().setText(splitted[1]);
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
@@ -51,21 +51,21 @@ public class ClientMessageProcessor {
             }
         } else if (splitted[0].equals("sensor3") && splitted.length == 2) {
             try {
-                System.out.println("sensor " + splitted[0] + " " + splitted[1]);
+                //System.out.println("sensor " + splitted[0] + " " + splitted[1]);
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("sensor4") && splitted.length == 2) {
             try {
-                System.out.println("sensor " + splitted[0] + " " + splitted[1]);
+                //System.out.println("sensor " + splitted[0] + " " + splitted[1]);
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("sensor5") && splitted.length == 2) {
             try {
-                System.out.println("sensor " + splitted[0] + " " + splitted[1]);
+                //System.out.println("sensor " + splitted[0] + " " + splitted[1]);
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();

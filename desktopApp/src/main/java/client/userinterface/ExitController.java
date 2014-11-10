@@ -1,6 +1,7 @@
 package client.userinterface;
 
-import client.network.RemoteRobotarm;
+import api.Robotarm;
+import client.model.Vendor;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -14,10 +15,10 @@ import java.awt.event.WindowListener;
  */
 public class ExitController implements WindowListener {
 
-    private RemoteRobotarm robot;
+    private Robotarm robot;
 
-    public ExitController(RemoteRobotarm robot) {
-        this.robot = robot;
+    public ExitController() {
+        robot = Vendor.get().getRobotarm();
     }
 
     @Override
