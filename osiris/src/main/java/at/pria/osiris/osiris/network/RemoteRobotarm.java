@@ -7,6 +7,7 @@ import api.Robotarm;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -24,6 +25,7 @@ public class RemoteRobotarm implements Robotarm {
     private final int linkport = 8889;                    //Port of the Server-program running on the Controller
     private Socket socket;
     private ObjectOutputStream oos;
+    private ObjectInputStream ois;
 
     private RemoteRobotarm() throws IOException {
         //Strict mode ... dirty dirty
@@ -31,6 +33,7 @@ public class RemoteRobotarm implements Robotarm {
         StrictMode.setThreadPolicy(policy);
         socket = SocketFactory.getDefault().createSocket(this.linkip, this.linkport);
         oos = new ObjectOutputStream(socket.getOutputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
     }
 
     public static RemoteRobotarm getInstance() throws IOException {
@@ -93,5 +96,9 @@ public class RemoteRobotarm implements Robotarm {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public ObjectInputStream getOis() {
+        return ois;
     }
 }

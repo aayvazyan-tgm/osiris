@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import at.pria.osiris.osiris.view.ControllerFragment;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
+import at.pria.osiris.osiris.view.SensorValuesFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -44,7 +45,12 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (position + 1 == 1) {//controller
+
+        if (position + 1 == 2) {//sensorvalues
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
+                    .commit();
+        } else if (position + 1 == 1) {//controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1))
                     .commit();
@@ -61,7 +67,7 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.control);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.sensor_values);
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
