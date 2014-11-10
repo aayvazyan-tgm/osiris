@@ -1,6 +1,7 @@
 package linker;
 
 import linker.control.MessageProcessor;
+import linker.control.SensorMessager;
 import linker.model.RobotarmImpl;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class Starter {
             boolean running = true;
 
             // sends sensordata in ~1s intervall
-            SimpleThread st = new SimpleThread(oos, robotarm);
+            SensorMessager st = new SensorMessager(oos, robotarm);
             t = new Thread(st);
             t.start();
 
