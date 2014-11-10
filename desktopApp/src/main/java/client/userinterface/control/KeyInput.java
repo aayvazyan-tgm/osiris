@@ -6,6 +6,8 @@ import api.Robotarm;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import client.model.Vendor;
+
 /**
  * Keyinput
  *
@@ -18,8 +20,8 @@ public class KeyInput implements KeyListener {
 
     private Robotarm robotarm;
 
-    public KeyInput(Robotarm robotarm) {
-        this.robotarm = robotarm;
+    public KeyInput() {
+        this.robotarm = Vendor.get().getRobotarm();
     }
 
     @Override

@@ -1,6 +1,9 @@
 package client.userinterface;
 
 import javax.swing.*;
+
+import api.Robotarm;
+
 import java.awt.*;
 
 /**
@@ -40,6 +43,7 @@ public class View extends JPanel {
      */
     public View(JFrame f) {
         super();
+        
         this.f = f;
         this.init();
     }

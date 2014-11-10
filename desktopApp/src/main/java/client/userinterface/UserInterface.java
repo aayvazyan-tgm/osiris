@@ -2,6 +2,7 @@ package client.userinterface;
 
 
 import javax.swing.*;
+import api.Robotarm;
 
 /**
  * A GUI

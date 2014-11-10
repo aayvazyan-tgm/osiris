@@ -48,14 +48,17 @@ public class Joint {
     }
 
     public boolean moveToPosition(int pos, int power) {
-        int posmax = pos + ((max * 100) / 5);
-        int posmin = pos - ((max * 100) / 5);
-
+    	if(pos > max || pos < min) return false;
+    	
+        int posmax = (int)((double)pos + ((double)pos * 0.05));
+        int posmin = (int)((double)pos - ((double)pos * 0.05));
+        
         if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
             power = power * (-1);
         }
 
         motor.run(power);
+        System.out.println("Moving to position: " + pos);
         while (posmax < sensor.getValue() || posmin > sensor.getValue()) {
             Botball.msleep(50);
         }

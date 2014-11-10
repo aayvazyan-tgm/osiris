@@ -61,9 +61,9 @@ public class MessageProcessor {
         } else if (splitted[0].equals("moveto") && splitted.length == 4) {
             try {
                 System.out.println("moveto");
-                robotarm.moveTo(Integer.parseInt(splitted[1]),
-                        Integer.parseInt(splitted[2]),
-                        Integer.parseInt(splitted[3]));
+                robotarm.moveTo(Double.parseDouble(splitted[1]),
+                        Double.parseDouble(splitted[2]),
+                        Double.parseDouble(splitted[3]));
 
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block

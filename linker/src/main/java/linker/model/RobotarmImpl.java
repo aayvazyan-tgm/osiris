@@ -162,7 +162,7 @@ public class RobotarmImpl implements Robotarm {
 
 //		base.moveToDegree(phi);
 		axis1.moveToAngle(92-eta, 100);
-		axis2.moveToAngle(8+gamma, 75);
+		axis2.moveToAngle(8+gamma, 65);
 
         return true;
     }
