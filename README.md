@@ -27,6 +27,10 @@ Clone this repo.
 Step 3: Project Setup
 ---------------------
 
+The following programs should be in your Path variable
+=============================================
+git
+
 Dependencies
 ------------
 To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
