@@ -29,7 +29,7 @@ public class RobotarmSensorWatchdog implements Runnable, Stoppable {
     @Override
     public void run() {
         running = true;
-
+        //TODO this is not the gentleman's way to do it
         while (running) {
 
             // Sensor check

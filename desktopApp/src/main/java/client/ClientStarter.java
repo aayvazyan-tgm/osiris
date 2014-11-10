@@ -40,7 +40,7 @@ public class ClientStarter {
 
         ui.setLocationRelativeTo(null);
         ui.setSize(300, 250);
-        ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ClientMessageProcessor cmp = new ClientMessageProcessor(ra, ui);
 
@@ -51,14 +51,14 @@ public class ClientStarter {
             //convert ObjectInputStream object to String
             String message = "failmessage";
             try {
-                try {
                     message = (String) ois.readObject();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Closing connection...");
+                running=false;
             }
             System.out.println("Message Received: " + message);
 

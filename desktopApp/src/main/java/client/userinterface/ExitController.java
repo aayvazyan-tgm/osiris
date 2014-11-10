@@ -28,7 +28,11 @@ public class ExitController implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        robot.exit();
+        try {
+            robot.exit();
+        }catch (Exception ex){
+            System.err.println(ex);
+        }
     }
 
     @Override

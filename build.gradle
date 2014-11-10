@@ -14,9 +14,9 @@ apply plugin: 'idea'
 subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-    ext.revision = 'git rev-list --count HEAD'.execute().text.trim()
-    ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
-    version = "r${revision}.${hash}"
-
+//    ext.revision = 'git rev-list --count HEAD'.execute().text.trim()
+//    ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
+//    version = "r${revision}.${hash}"
+    version='git describe --tags'.execute().text.trim()
     group = 'at.pria.osiris'
 }

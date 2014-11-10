@@ -4,9 +4,11 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.0'
+        classpath 'com.novoda:gradle-android-command-plugin:1.2.1'
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'android-command'
 
 repositories {
     jcenter()
@@ -16,6 +18,40 @@ android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
 
+    signingConfigs {
+        debug {
+            storeFile = file("osirisDebugKeyStore.jks")
+            storePassword = 'mydebug'
+            keyAlias = 'debug'
+            keyPassword = 'mydebug'
+        }
+        release {
+            File propFile = file("${projectDir}${File.separator}signing.properties")
+
+            if (propFile.exists()) {
+                println 'RootDir signing.properties exists'
+                logger.info 'RootDir signing.properties exists'
+            } else {
+                logger.info "signing.properties does not exist in ${projectDir.toString()}${File.separator}signing.properties"
+                println "signing.properties does not exist in ${projectDir.toString()}${File.separator}signing.properties"
+            }
+            if (propFile.exists()) {
+                def Properties props = new Properties()
+                props.load(new FileInputStream(propFile))
+                if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+                        props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+                    storeFile = file(props['STORE_FILE'])
+                    storePassword = props['STORE_PASSWORD']
+                    keyAlias = props['KEY_ALIAS']
+                    keyPassword = props['KEY_PASSWORD']
+                } else {
+                    println 'signing.properties a property is not set'
+                    logger.info 'signing.properties a property is not set'
+                }
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "at.pria.osiris.osiris"
         minSdkVersion 10
@@ -23,9 +59,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    applicationVariants.all { variant ->
+
+        def apk = variant.outputFile;
+        def newName= apk.name.replace(".apk", version + ".apk")
+        newName = newName
+                //.replace("BUILD_TYPE", variant.buildType.name)
+                .replace(project.name, "Osiris-App");
+        variant.outputFile = new File(apk.parentFile, newName);
+    }
+
     buildTypes {
         release {
-            runProguard false
+            signingConfig signingConfigs.release
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

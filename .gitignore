@@ -100,3 +100,6 @@ local.properties
 # PDT-specific
 .buildpath
 
+
+osiris/osirisKeyStore.jks
+osiris/signing.properties
