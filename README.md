@@ -28,8 +28,8 @@ Step 3: Project Setup
 ---------------------
 
 The following programs should be in your Path variable
-=============================================
-git
+------------------------------------------------------
+- git
 
 Dependencies
 ------------
