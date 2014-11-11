@@ -9,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.io.IOException;
-
-import android.widget.Toast;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 import at.pria.osiris.osiris.sensors.SensorRefresher;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.

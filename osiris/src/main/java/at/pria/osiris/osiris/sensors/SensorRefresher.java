@@ -1,12 +1,12 @@
 package at.pria.osiris.osiris.sensors;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import android.util.Log;
 import api.Stoppable;
 import at.pria.osiris.osiris.network.DirtyClientMessageProcessor;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * Created by helmuthbrunner on 10/11/14.
@@ -33,7 +33,7 @@ public class SensorRefresher implements Runnable, Stoppable {
             try {
                 Log.d("OSIRIS_DEBUG_MESSAGES", "Reached waitForMessage");
                 message = (String) ois.readObject();
-                Log.d("OSIRIS_DEBUG_MESSAGES","Reached gotMessage");
+                Log.d("OSIRIS_DEBUG_MESSAGES", "Reached gotMessage");
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -55,6 +55,6 @@ public class SensorRefresher implements Runnable, Stoppable {
 
     public void refresh(String s) {
         this.sensorRefreshable.refresh(Double.parseDouble(s));
-        Log.d("OSIRIS_DEBUG_MESSAGES","SentRefresh");
+        Log.d("OSIRIS_DEBUG_MESSAGES", "SentRefresh");
     }
 }

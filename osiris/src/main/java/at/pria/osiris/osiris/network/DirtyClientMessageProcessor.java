@@ -24,10 +24,10 @@ public class DirtyClientMessageProcessor {
      * @param message the message
      */
     public void callMethod(String message) {
-        Log.d("OSIRIS_DEBUG_MESSAGES","Reached callMethod "+message);
+        Log.d("OSIRIS_DEBUG_MESSAGES", "Reached callMethod " + message);
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
-            Log.d("OSIRIS_DEBUG_NETWORK","Splitted" + i + ": " + splitted[i]);
+            Log.d("OSIRIS_DEBUG_NETWORK", "Splitted" + i + ": " + splitted[i]);
         }
         if (splitted[0].equals("sensor0") && splitted.length == 2) {
             try {
