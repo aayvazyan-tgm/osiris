@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import android.widget.Toast;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
@@ -24,7 +25,7 @@ import at.pria.osiris.osiris.sensors.SensorRefresher;
  * {@link SensorValuesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class SensorValuesFragment extends Fragment implements SensorRefreshable{
+public class SensorValuesFragment extends Fragment implements SensorRefreshable {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,7 +53,7 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             try {
-                fragment.sensorRefresher=new Thread(new SensorRefresher(RemoteRobotarm.getInstance(),fragment));
+                fragment.sensorRefresher = new Thread(new SensorRefresher(RemoteRobotarm.getInstance(), fragment));
                 fragment.sensorRefresher.start();
                 Log.d("OSIRIS_DEBUG_MESSAGES", "Thread started");
             } catch (IOException e) {
@@ -79,7 +80,7 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_sensor_values, container, false);
+        View view = inflater.inflate(R.layout.fragment_sensor_values, container, false);
         // Inflate the layout for this fragment
         this.textView = (TextView) view.findViewById(R.id.sensor01Value);
         return view;
@@ -102,15 +103,14 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable{
     @Override
     public void onDetach() {
         super.onDetach();
-
-
-
         mListener = null;
     }
 
     @Override
     public void refresh(final double newValue) {
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getActivity();
+        if (activity == null) return; //The activity does not exist before onCreateView
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 textView.setText("" + newValue);
