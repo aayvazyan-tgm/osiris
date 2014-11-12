@@ -1,26 +1,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="at.pria.osiris.osiris.view.SensorValuesFragment">
+                tools:context="at.pria.osiris.osiris.view.SensorValuesFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sensor01"
-            android:id="@+id/sensor01Text"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="1"
+        >
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="0"
-            android:id="@+id/sensor01Value"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/tableRow1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sensor1"
+                android:id="@+id/textView"
+                android:layout_column="1"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/sensor0Value"
+                android:layout_column="5"
+                android:padding="3dip" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/tableRow2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Sensor2"
+                android:id="@+id/textView1"
+                android:layout_column="1"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/sensor1Value"
+                android:layout_column="5"
+                android:layout_span="10"
+                android:padding="3dip" />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

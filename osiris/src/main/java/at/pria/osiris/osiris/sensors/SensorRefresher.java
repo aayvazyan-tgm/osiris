@@ -53,8 +53,8 @@ public class SensorRefresher implements Runnable, Stoppable {
         running = false;
     }
 
-    public void refresh(String s) {
-        this.sensorRefreshable.refresh(Double.parseDouble(s));
+    public void refresh(String s, String sensorname) {
+        this.sensorRefreshable.refresh(Double.parseDouble(s), sensorname);
         Log.d("OSIRIS_DEBUG_MESSAGES", "SentRefresh");
     }
 }

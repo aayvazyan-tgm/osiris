@@ -40,6 +40,8 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable 
     private Thread sensorRefresher;
     private TextView textView;
 
+    private TextView textsensorvalue0, textsensorvalue1;
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -76,11 +78,11 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor_values, container, false);
         // Inflate the layout for this fragment
-        this.textView = (TextView) view.findViewById(R.id.sensor01Value);
+        this.textsensorvalue0= (TextView) view.findViewById(R.id.sensor0Value);
+        this.textsensorvalue1= (TextView) view.findViewById(R.id.sensor1Value);
         return view;
     }
 
@@ -105,13 +107,21 @@ public class SensorValuesFragment extends Fragment implements SensorRefreshable 
     }
 
     @Override
-    public void refresh(final double newValue) {
+    public void refresh(final double newValue, final String sensorname) {
         Activity activity = getActivity();
         if (activity == null) return; //The activity does not exist before onCreateView
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                textView.setText("" + newValue);
+                //textView.setText("" + newValue);
+
+                if (sensorname.equals("sensor1")) {
+                    textsensorvalue0.setText("" + newValue);
+                }
+                if (sensorname.equals("sensor2")) {
+                    textsensorvalue1.setText("" + newValue);
+                }
+
             }
         });
     }
