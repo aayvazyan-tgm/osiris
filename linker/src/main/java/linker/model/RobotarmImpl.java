@@ -17,7 +17,7 @@ public class RobotarmImpl implements Robotarm {
 
     //Constants
     private final double basetoaxisone = 11;
-    private final double axisonetoaxisto = 17;
+    private final double axisonetoaxistwo = 17;
 
     //Joints
     private Joint base;
@@ -148,22 +148,38 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-        double a = basetoaxisone;
-        double b = axisonetoaxisto;
-        double r = Math.sqrt(x * x + y * y);
-        double phi = Math.toDegrees(Math.asin(y / r));
-        double c = Math.sqrt(r * r + z * z);
-        double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c) / (-2 * a * c)));
-        double gamma = Math.toDegrees(Math.acos((c * c - a * a - b * b) / (-2 * a * b)));
-        double delta = beta + Math.toDegrees(Math.atan(z / c));
-        double eta = 90 - delta;
+//        double a = basetoaxisone;
+//        double b = axisonetoaxistwo;
+//        
+//        double r = Math.sqrt(x * x + y * y);
+//        double r = x;
+//        double phi = Math.toDegrees(Math.asin(y / r));
+//        
+//        double c = Math.sqrt(r * r + z * z);
+//        double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c) / (-2 * a * c)));
+//        double gamma = Math.toDegrees(Math.acos((c * c - a * a - b * b) / (-2 * a * b)));
+//        double delta = beta + Math.toDegrees(Math.atan(z / c));
+//        double eta = 90 - delta;
+//
+//        System.out.println("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
+//
+////		base.moveToDegree(phi);
+//		axis1.moveToAngle(92-eta, 100);
+//		axis2.moveToAngle(8+gamma, 65);
 
-        System.out.println("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
-
-//		base.moveToDegree(phi);
-		axis1.moveToAngle(92-eta, 100);
-		axis2.moveToAngle(8+gamma, 65);
-
+    	double a = basetoaxisone;
+    	double b = axisonetoaxistwo;
+    	
+    	double c = Math.sqrt(x * x + y * y);
+    	double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c) / (-2 * a * c)));
+    	double gamma = Math.toDegrees(Math.acos((c * c - a * a - b * b) / (-2 * a * b)));
+    	double alphaone = Math.toDegrees(Math.asin(y/c));
+    	double delta = beta + alphaone;
+    	double eta = 90 - delta;
+    	
+    	axis1.moveToAngle(92-eta, 100);
+    	axis2.moveToAngle(8+gamma, 65);
+    	
         return true;
     }
 
