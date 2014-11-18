@@ -3,6 +3,8 @@ package linker.model;
 import api.Axis;
 import api.Robotarm;
 import linker.control.RobotarmSensorWatchdog;
+import linker.model.kinematics.Kinematics;
+import linker.model.kinematics.ThreeAxisKinematics;
 import linkjvm.Botball;
 import linkjvm.motors.Motor;
 import linkjvm.sensors.analog.AnalogSensor;
@@ -10,77 +12,66 @@ import linkjvm.sensors.analog.AnalogSensor;
 /**
  * Implementation of a robotarm
  *
- * @author Adrian Bergler, Christian Janeczek
- * @version 2014-10-25
+ * @author Adrian Bergler
+ * @version 2014-11-17
  */
 public class RobotarmImpl implements Robotarm {
 
     //Constants
     private final double basetoaxisone = 11;
-    private final double axisonetoaxistwo = 17;
-
-    //Joints
-    private Joint base;
-
-    private Joint axis1;
-
-    private Joint axis2;
-
-
+    private final double axisonetoaxistwo = 17;	
+	private double[][] padding = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0, 0.0, 0.0}};
+	private double[] fragmentlength = {basetoaxisone, axisonetoaxistwo};
+    
+	//Joints
+    private Joint[] joints;
+    
     //Watchdog
     private RobotarmSensorWatchdog rsws1, rsws2;
-
 
     //Threads for Watchdogs
     private Thread watchdogAxis1, watchdogAxis2;
 
-    //TODO
+    //KinematicStategies
+    private Kinematics kinematics;
 
     public RobotarmImpl() {
 
-        base = new Joint(new Motor(0), new AnalogSensor(0), Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
-        axis1 = new Joint(new Motor(1), new AnalogSensor(1), Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
-        axis2 = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
+    	joints = new Joint[3];
+    	
+        joints[0] = new Joint(new Motor(0), new AnalogSensor(0), Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
+        joints[1] = new Joint(new Motor(1), new AnalogSensor(1), Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
+        joints[2] = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
-        //defining the first watchdog. in this case AXISONE with an interval of 200ms
+        kinematics = new ThreeAxisKinematics();
+        
+        //defining the first watchdog. in this case AXISONE with an interval of 50ms
         rsws1 = new RobotarmSensorWatchdog(this, Axis.AXISONE, 50);
         this.watchdogAxis1 = new Thread(rsws1);
         watchdogAxis1.start();
 
-        //defining the first watchdog. in this case AXISTWO with an interval of 200ms
+        //defining the first watchdog. in this case AXISTWO with an interval of 50ms
         rsws2 = new RobotarmSensorWatchdog(this, Axis.AXISTWO, 50);
         this.watchdogAxis2 = new Thread(rsws2);
         watchdogAxis2.start();
     }
 
     public Joint getAxis(Axis axis) {
-        switch (axis) {
-            case BASE:
-                return base;
-
-            case AXISONE:
-                return axis1;
-
-            case AXISTWO:
-                return axis2;
-        }
-        return null;
+        return joints[axis.ordinal()];
     }
 
-    public Joint setAxis(Axis axis, Joint joint) {
-        switch (axis) {
-            case BASE:
-                return base;
-
-            case AXISONE:
-                return axis1;
-
-            case AXISTWO:
-                return axis2;
-        }
-        return null;
+    public void setAxis(Axis axis, Joint joint) {
+        this.joints[axis.ordinal()] = joint;
     }
 
+    public Joint[] getJoints(){
+    	return joints;
+    }
+    
+    public void setJoints(Joint[] joints){
+    	this.joints = joints;
+    }
+    
     public Thread getWatchdogThread(Axis axis) {
         switch (axis) {
             case BASE:
@@ -98,24 +89,8 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public void turnAxis(Axis axis, int power) {
-        switch (axis) {
-            case BASE:
-                if (power >= -100 && power <= 100) {
-                    base.run(power);
-                }
-                break;
-
-            case AXISONE:
-                if (power >= -100 && power <= 100) {
-                    axis1.run(power);
-                }
-                break;
-
-            case AXISTWO:
-                if (power >= -100 && power <= 100) {
-                    axis2.run(power);
-                }
-                break;
+        if (power >= -100 && power <= 100) {
+            joints[axis.ordinal()].run(power);
         }
     }
 
@@ -128,59 +103,13 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public void stopAxis(Axis axis) {
-        switch (axis) {
-            case BASE:
-                System.out.println("Stop Base");
-                base.off();
-                break;
-
-            case AXISONE:
-                System.out.println("Stop Axis One");
-                axis1.off();
-                break;
-
-            case AXISTWO:
-                System.out.println("Stop Axis Two");
-                axis2.off();
-                break;
-        }
+        System.out.println("Stopping " + axis.name());
+        joints[axis.ordinal()].off();
     }
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-//        double a = basetoaxisone;
-//        double b = axisonetoaxistwo;
-//        
-//        double r = Math.sqrt(x * x + y * y);
-//        double r = x;
-//        double phi = Math.toDegrees(Math.asin(y / r));
-//        
-//        double c = Math.sqrt(r * r + z * z);
-//        double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c) / (-2 * a * c)));
-//        double gamma = Math.toDegrees(Math.acos((c * c - a * a - b * b) / (-2 * a * b)));
-//        double delta = beta + Math.toDegrees(Math.atan(z / c));
-//        double eta = 90 - delta;
-//
-//        System.out.println("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
-//
-////		base.moveToDegree(phi);
-//		axis1.moveToAngle(92-eta, 100);
-//		axis2.moveToAngle(8+gamma, 65);
-
-    	double a = basetoaxisone;
-    	double b = axisonetoaxistwo;
-    	
-    	double c = Math.sqrt(x * x + y * y);
-    	double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c) / (-2 * a * c)));
-    	double gamma = Math.toDegrees(Math.acos((c * c - a * a - b * b) / (-2 * a * b)));
-    	double alphaone = Math.toDegrees(Math.asin(y/c));
-    	double delta = beta + alphaone;
-    	double eta = 90 - delta;
-    	
-    	axis1.moveToAngle(92-eta, 100);
-    	axis2.moveToAngle(8+gamma, 65);
-    	
-        return true;
+    	return kinematics.moveTo(x, y, z, joints, fragmentlength, padding);
     }
 
     @Override
@@ -196,9 +125,9 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public void stopAll() {
-        base.off();
-        axis1.off();
-        axis2.off();
+        for(int i = 0; i < joints.length; i++){
+        	joints[i].off();
+        }
     }
 
     @Override
