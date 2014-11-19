@@ -8,28 +8,29 @@ Development
 To start developing, you need to take a few steps.
 
 Step 1: System Setup
---------------------
+===========
 Make sure the following things are set up:
+-----------
 - Your android phone allows adb connection.
-- ADB is installed.
 
 - via the SDK Manager as defined in osiris/build.gradle:
     - Android SDK 17, 19
     - buildToolsVersion 19.1.0
     - support library: appcompat-v7:20.0.0
-    
+
+The following programs should be in your Path variable
+------------------------------------------------------
+- git
+- ADB (Android Debug Bridge)
+
 Step 2: Clone the Repo
-----------------------
+===========
 
 Clone this repo.
 
 
 Step 3: Prepare the Project
----------------------
-
-The following programs should be in your Path variable
-------------------------------------------------------
-- git
+===========
 
 Dependencies
 ------------
@@ -56,7 +57,7 @@ This project uses Gradle as a build file.
 The easiest way is to use the inbuilt function of your IDE/a gradle plugin for your IDE if it does not support gradle by default
 Generate Jars:
 --------------
-gradlew :subProjectName:jar
+gradlew :subProjectName:packJarWithLibs
 
 Desktop App:
 ------------
@@ -92,7 +93,7 @@ Do not use the android adt plugin, a default eclipse with the gradle plugin shou
 - Make sure that auto-select subprojects is marked.
 - You are done!
 
-Setup the controller
+Step 4Setup the controller
 ===========
 
 Instructions
