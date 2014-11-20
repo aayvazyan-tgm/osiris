@@ -15,13 +15,14 @@ targetCompatibility = 1.6
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
+//    flatDir {
+//        dirs 'libs'
+//    }
 }
 
 dependencies {
-    compile name: 'linkjvm'
+//    compile name: 'linkjvm'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':api')
 }
 
