@@ -1,10 +1,11 @@
 package linker.model;
 
+import java.util.List;
+
 import api.Axis;
 import api.Robotarm;
-import linker.control.RobotarmSensorWatchdog;
 import linker.model.kinematics.Kinematics;
-import linker.model.kinematics.ThreeAxisKinematics;
+import linker.model.kinematics.ThreeAxisKinematics2D;
 import linkjvm.Botball;
 import linkjvm.motors.Motor;
 import linkjvm.sensors.analog.AnalogSensor;
@@ -13,7 +14,7 @@ import linkjvm.sensors.analog.AnalogSensor;
  * Implementation of a robotarm
  *
  * @author Adrian Bergler
- * @version 2014-11-17
+ * @version 2014-11-20
  */
 public class RobotarmImpl implements Robotarm {
 
@@ -26,12 +27,6 @@ public class RobotarmImpl implements Robotarm {
 	//Joints
     private Joint[] joints;
     
-    //Watchdog
-    private RobotarmSensorWatchdog rsws1, rsws2;
-
-    //Threads for Watchdogs
-    private Thread watchdogAxis1, watchdogAxis2;
-
     //KinematicStategies
     private Kinematics kinematics;
 
@@ -43,17 +38,7 @@ public class RobotarmImpl implements Robotarm {
         joints[1] = new Joint(new Motor(1), new AnalogSensor(1), Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
         joints[2] = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
-        kinematics = new ThreeAxisKinematics();
-        
-        //defining the first watchdog. in this case AXISONE with an interval of 50ms
-        rsws1 = new RobotarmSensorWatchdog(this, Axis.AXISONE, 50);
-        this.watchdogAxis1 = new Thread(rsws1);
-        watchdogAxis1.start();
-
-        //defining the first watchdog. in this case AXISTWO with an interval of 50ms
-        rsws2 = new RobotarmSensorWatchdog(this, Axis.AXISTWO, 50);
-        this.watchdogAxis2 = new Thread(rsws2);
-        watchdogAxis2.start();
+        kinematics = new ThreeAxisKinematics2D();
     }
 
     public Joint getAxis(Axis axis) {
@@ -72,21 +57,6 @@ public class RobotarmImpl implements Robotarm {
     	this.joints = joints;
     }
     
-    public Thread getWatchdogThread(Axis axis) {
-        switch (axis) {
-            case BASE:
-                return null;    //there is no watchdog for the base
-
-            case AXISONE:
-                return watchdogAxis1;
-
-            case AXISTWO:
-                return watchdogAxis2;
-        }
-
-        return null;
-    }
-
     @Override
     public void turnAxis(Axis axis, int power) {
         if (power >= -100 && power <= 100) {
@@ -109,13 +79,19 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-    	return kinematics.moveTo(x, y, z, joints, fragmentlength, padding);
+    	List<Double> solution = kinematics.moveTo(x, y, z, joints, fragmentlength, padding);
+    	
+    	if(solution == null) return false;
+    	
+    	joints[1].moveToAngle(477 - solution.get(0), 100);
+		joints[2].moveToAngle(30 + solution.get(1), 65);
+		
+    	return true;
     }
 
     @Override
     public void close() {
-        rsws1.stop();
-        rsws2.stop();
+    	//Empty for now
     }
 
     @Override

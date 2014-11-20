@@ -1,12 +1,14 @@
 package linker.model.kinematics;
 
+import java.util.List;
+
 import linker.model.Joint;
 
 /**
  * A kinematic's stategy
  * Contains algorithms for inverse and forward kinematics
  * @author Adrian Bergler
- * @version 2014-11-17
+ * @version 2014-11-20
  */
 public interface Kinematics {
 	
@@ -21,6 +23,6 @@ public interface Kinematics {
 	 * @param padding the distance in between the real joints and the theoretical ones
 	 * @return if the point can be reached
 	 */
-	public boolean moveTo(double x, double y, double z, Joint[] joints, double[] fragmentlengths, double[][] padding);
+	public List<Double> moveTo(double x, double y, double z, Joint[] joints, double[] fragmentlengths, double[][] padding);
 	
 }

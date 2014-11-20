@@ -26,11 +26,11 @@ public class MessageProcessor {
     public void callMethod(String message) {
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
-            System.out.println("Splitted" + i + ": " + splitted[i]);
+//            System.out.println("Splitted" + i + ": " + splitted[i]);
         }
         if (splitted[0].equals("turnaxis") && splitted.length == 3) {
             try {
-                System.out.println("turnaxis1");
+//                System.out.println("turnaxis1");
                 robotarm.turnAxis(Axis.values()[Integer.parseInt(splitted[1])],
                         Integer.parseInt(splitted[2]));
 
@@ -40,7 +40,7 @@ public class MessageProcessor {
             }
         } else if (splitted[0].equals("turnaxis") && splitted.length == 4) {
             try {
-                System.out.println("turnaxis2");
+//                System.out.println("turnaxis2");
                 robotarm.turnAxis(Axis.values()[Integer.parseInt(splitted[1])],
                         Integer.parseInt(splitted[2]),
                         Integer.parseInt(splitted[3]));
@@ -51,7 +51,7 @@ public class MessageProcessor {
             }
         } else if (splitted[0].equals("stopaxis") && splitted.length == 2) {
             try {
-                System.out.println("stopaxis");
+//                System.out.println("stopaxis");
                 robotarm.stopAxis(Axis.values()[Integer.parseInt(splitted[1])]);
 
             } catch (NumberFormatException nfe) {
@@ -60,7 +60,7 @@ public class MessageProcessor {
             }
         } else if (splitted[0].equals("moveto") && splitted.length == 4) {
             try {
-                System.out.println("moveto");
+//                System.out.println("moveto");
                 robotarm.moveTo(Double.parseDouble(splitted[1]),
                         Double.parseDouble(splitted[2]),
                         Double.parseDouble(splitted[3]));
@@ -70,15 +70,15 @@ public class MessageProcessor {
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("stopall") && splitted.length == 1) {
-            System.out.println("stopall");
+//            System.out.println("stopall");
             robotarm.stopAll();
 
         } else if (splitted[0].equals("close") && splitted.length == 1) {
-            System.out.println("close");
+//            System.out.println("close");
             robotarm.close();
 
         } else if (splitted[0].equals("test") && splitted.length == 1) {
-            System.out.println("test");
+//            System.out.println("test");
             robotarm.test();
         }
     }
