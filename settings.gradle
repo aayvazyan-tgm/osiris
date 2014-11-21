@@ -1,3 +1,2 @@
-include 'osiris', 'desktopApp', 'api', 'linker'
-include 'HedgehogCore'
+include 'osiris', 'desktopApp', 'api', 'linker', 'HedgehogCore'
 
