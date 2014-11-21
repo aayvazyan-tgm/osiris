@@ -53,7 +53,7 @@ public class AXCPServer {
     public synchronized void start() throws FileNotFoundException {
         try {
             //Connect to Serial Port
-            serialPort = new SerialPort("ttyAMA0");
+            serialPort = new SerialPort("/dev/ttyAMA0");
             serialPort.openPort();//Open serial port
             serialPort.setParams(SerialPort.BAUDRATE_115200,
                     SerialPort.DATABITS_8,
