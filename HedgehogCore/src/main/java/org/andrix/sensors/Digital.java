@@ -149,10 +149,10 @@ public class Digital {
 
 	private static int getNumberOfDigitals() throws NotConnectedException {
 		if (NUMBER_OF_DIGITALS == 0xFF) {
-			HardwareController type = AXCPAccessor.getInstance().getConnectedHWType();
-			if (type == null)
+			HardwareController hwc = AXCPAccessor.getInstance().getConnectedHWType();
+			if (hwc == null)
 				throw new NotConnectedException();
-			NUMBER_OF_DIGITALS = AXCP.hwTypeToDigitals.get(type);
+			NUMBER_OF_DIGITALS = AXCP.hwTypeToDigitals.get(hwc.type);
 		}
 		return NUMBER_OF_DIGITALS;
 	}

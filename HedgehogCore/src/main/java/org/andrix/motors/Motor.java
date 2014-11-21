@@ -336,10 +336,10 @@ public class Motor {
 	
 	private static int getNumberOfMotors() throws NotConnectedException {
 		if (NUMBER_OF_MOTORS == 0xFF) {
-			HardwareController type = AXCPAccessor.getInstance().getConnectedHWType();
-			if (type == null)
+			HardwareController hwc = AXCPAccessor.getInstance().getConnectedHWType();
+			if (hwc == null)
 				throw new NotConnectedException();
-			NUMBER_OF_MOTORS = AXCP.hwTypeToMotors.get(type);
+			NUMBER_OF_MOTORS = AXCP.hwTypeToMotors.get(hwc.type);
 		}
 		return NUMBER_OF_MOTORS;
 	}

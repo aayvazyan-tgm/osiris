@@ -36,6 +36,7 @@ public class AXCPAccessor {
 		if (instance == null) {
 			try {
 				instance = new AXCPAccessor();
+				instance.connectController(new HardwareController(null, HardwareController.TYPE_V3, "Hedgehog"));
 			} catch (FileNotFoundException e) {
 				throw new RuntimeException("AXCPAccessor not startable: " + e.getMessage());
 			}

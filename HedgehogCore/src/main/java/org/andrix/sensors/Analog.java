@@ -102,7 +102,7 @@ public class Analog {
 	
 	public static void setFloating(Integer... portsEnabled) throws NotConnectedException {
 		List<Integer> l = new ArrayList<Integer>(Arrays.asList(portsEnabled));
-		List<Integer> pullups = new ArrayList<Integer>(NUMBER_OF_ANALOGS - portsEnabled.length);
+		List<Integer> pullups = new ArrayList<Integer>(getNumberOfAnalogs() - portsEnabled.length);
 		for(int i=0; i<NUMBER_OF_ANALOGS; i++)
 			if(!l.contains(i))
 				pullups.add(i);
@@ -125,10 +125,10 @@ public class Analog {
 
 	private static int getNumberOfAnalogs() throws NotConnectedException {
 		if (NUMBER_OF_ANALOGS == 0xFF) {
-			HardwareController type = AXCPAccessor.getInstance().getConnectedHWType();
-			if (type == null)
+			HardwareController hwc = AXCPAccessor.getInstance().getConnectedHWType();
+			if (hwc == null)
 				throw new NotConnectedException();
-			NUMBER_OF_ANALOGS = AXCP.hwTypeToAnalogs.get(type);
+			NUMBER_OF_ANALOGS = AXCP.hwTypeToAnalogs.get(hwc.type);
 		}
 		return NUMBER_OF_ANALOGS;
 	}

@@ -96,10 +96,10 @@ public class Servo {
 
 	private static int getNumberOfServos() throws NotConnectedException {
 		if (NUMBER_OF_SERVOS == 0xFF) {
-			HardwareController type = AXCPAccessor.getInstance().getConnectedHWType();
-			if (type == null)
+			HardwareController hwc = AXCPAccessor.getInstance().getConnectedHWType();
+			if (hwc == null)
 				throw new NotConnectedException();
-			NUMBER_OF_SERVOS = AXCP.hwTypeToServos.get(type);
+			NUMBER_OF_SERVOS = AXCP.hwTypeToServos.get(hwc.type);
 		}
 		return NUMBER_OF_SERVOS;
 	}
