@@ -15,6 +15,9 @@ public class Joint {
     private int min;
     private int max;
 
+    private boolean running = false;
+    
+    
     public Joint(Motor motor, AnalogSensor sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
@@ -27,7 +30,11 @@ public class Joint {
      *
      * @param power The Power in percent
      */
-    public void run(int power) {
+    public synchronized void run(int power) {
+    	if(running) return;
+    	
+    	running = true;
+    	
         if (sensor.getValue() < max && power > 0) {
             motor.run(power);
             System.out.println("Starting Motor with power " + power);
@@ -44,6 +51,7 @@ public class Joint {
 
     public void off() {
         motor.off();
+        running = false;
         System.out.println("Stopping Motor");
     }
 

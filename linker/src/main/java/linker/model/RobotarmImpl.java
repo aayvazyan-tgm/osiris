@@ -39,6 +39,9 @@ public class RobotarmImpl implements Robotarm {
         joints[2] = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
         kinematics = new ThreeAxisKinematics2D();
+        
+        joints[1].moveToPosition(600, 100);
+        joints[2].moveToPosition(350, 40);
     }
 
     public Joint getAxis(Axis axis) {
