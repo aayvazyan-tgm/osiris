@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'gradle-one-jar'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile project(':api')
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.slf4j:slf4j-log4j12:1.7.7'
+}
+
+task packJarWithLibs(type: OneJar) {
+    mainClass = 'at.ari.test.MyMain'
+    archiveName = "Osiris-"+archiveName.toString()
+}
