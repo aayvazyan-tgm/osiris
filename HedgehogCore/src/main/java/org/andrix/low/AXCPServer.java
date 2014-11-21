@@ -8,8 +8,12 @@ package org.andrix.low;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
+import jssc.SerialPort;
+import jssc.SerialPortException;
 import org.andrix.AXCP;
 import org.andrix.listeners.StateListener;
 import org.slf4j.Logger;
@@ -39,8 +43,9 @@ public class AXCPServer {
 //	private DatagramSocket udpSocket = null;
 //	private Socket tcpSocket;
 
-	private FileInputStream communicationInputStream;
-	private FileOutputStream communicationOutputStream;
+//	private FileInputStream communicationInputStream;
+//	private FileOutputStream communicationOutputStream;
+	SerialPort serialPort;
 
 	private boolean stop = false;
 
@@ -61,41 +66,49 @@ public class AXCPServer {
 //		tcpSocket.setReuseAddress(true);
 //		new Thread(new ScanSender()).start();
 //		new Thread(new ScanReceiver()).start();
-		String communicationFileLocation = "/dev/ttyAMA0"; ///dev/tty/AMA0  FLAGS: O_RDWR | O_NOCTTY
-		File communicationFile = new File(communicationFileLocation);
-		communicationInputStream = new FileInputStream(communicationFile);
-		communicationOutputStream = new FileOutputStream(communicationFile);
+//		String communicationFileLocation = "/dev/ttyAMA0"; ///dev/ttyAMA0  FLAGS: O_RDWR | O_NOCTTY
+//		File communicationFile = new File(communicationFileLocation);
+//		communicationInputStream = new FileInputStream(communicationFile);
+//		communicationOutputStream = new FileOutputStream(communicationFile);
+
+		try {
+			//Connect to Serial Port
+			serialPort = new SerialPort("ttyAMA0");
+			serialPort.openPort();//Open serial port
+			serialPort.setParams(SerialPort.BAUDRATE_115200,
+					SerialPort.DATABITS_8,
+					SerialPort.STOPBITS_1,
+					SerialPort.PARITY_NONE);//Set params. Also you can set params by this string: serialPort.setParams(9600, 8, 1, 0);
+		}
+		catch (SerialPortException ex) {
+			System.out.println(ex);
+		}
 	}
 
-	public synchronized void closeCommunicationFile(){
-		try {
-			this.communicationOutputStream.close();
-		} catch (IOException ex) {
-			log.info("Could not close communicationOutputStream.", ex);
-		}
-		try {
-			this.communicationInputStream.close();
-		} catch (IOException ex) {
-			log.info("Could not close communicationInputStream", ex);
-		}
-	}
 	/**
 	 * Stops the server and all threads running with it.
 	 */
-	public synchronized void stop() throws IOException {
+	public synchronized void stop() {
 //		stop = true;
 //		if (udpSocket != null)
 //			udpSocket.close();
 //		if (tcpSocket != null)
 //			tcpSocket.close();
-		if (communicationInputStream != null)
-			communicationInputStream.close();
-		if (communicationOutputStream != null)
-			communicationOutputStream.close();
+//		if (communicationInputStream != null)
+//			communicationInputStream.close();
+//		if (communicationOutputStream != null)
+//			communicationOutputStream.close();
+		if(serialPort!=null) {
+			try {
+				serialPort.closePort();//Close serial port
+			} catch (SerialPortException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	private InputStream input;
-	private OutputStream output;
+//	private InputStream input;
+//	private OutputStream output;
 
 	// private long lastOpcode = 0;
 
@@ -105,24 +118,33 @@ public class AXCPServer {
 	 * @throws IOException
 	 */
 	private boolean fullReceive(byte[] buffer) throws IOException {
-		int read = 0, temp = 0;
-		while (read < buffer.length) {
-			temp = input.read(buffer, read, buffer.length - read);
-			if (temp == -1)
-				throw new IOException("End of Stream");
-			read += temp;
+//		int read = 0, temp = 0;
+		try {
+			System.arraycopy(serialPort.readBytes(buffer.length),0,buffer,0,buffer.length);
+		} catch (SerialPortException e) {
+			throw new IOException(e.getMessage());
 		}
+//		while (read < buffer.length) {
+//			temp = input.read(buffer, read, buffer.length - read);
+//			if (temp == -1)
+//				throw new IOException("End of Stream");
+//			read += temp;
+//		}
 		return true;
 	}
 
 	private void fullSend(byte[] buffer) throws IOException {
-		output.write(buffer);
-		output.flush();
+		try {
+			serialPort.writeBytes(buffer);//Write data to port
+		} catch (SerialPortException e) {
+			throw new IOException(e.getMessage());
+		}
 	}
 
 	private void fullSend(byte[] buffer, int length) throws IOException {
-		output.write(buffer, 0, length);
-		output.flush();
+		byte[] toSend = new byte[length];
+		System.arraycopy(buffer,0,toSend,0,length);
+		fullSend(toSend);
 	}
 
 //	private class ScanSender implements Runnable {
@@ -267,7 +289,7 @@ public class AXCPServer {
 				}
 			} catch (IOException ex) {
 				log.info("Receiver thread shutdown.", ex);
-				closeCommunicationFile();
+				stop();
 				connectionChanged(null);
 			}
 		}
@@ -338,8 +360,8 @@ public class AXCPServer {
 //				log.debug("WiFi connection attempt failed: ", ex);
 //				return false;
 //			}
-			input = communicationInputStream;
-			output = communicationOutputStream;
+//			input = communicationInputStream;
+//			output = communicationOutputStream;
 			connectionChanged(currentDestination);
 			new Thread(new Receiver()).start();
 			return true;
