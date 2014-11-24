@@ -10,8 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:stretchColumns="1"
+        android:id="@+id/tableLayout"
         >
-
+        <!--
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -61,5 +62,6 @@
                 android:layout_span="10"
                 android:padding="3dip" />
         </TableRow>
+        -->
     </TableLayout>
 </RelativeLayout>

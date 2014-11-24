@@ -11,6 +11,7 @@ import android.view.*;
 import at.pria.osiris.osiris.view.ControllerFragment;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.SensorValuesFragment;
+import at.pria.osiris.osiris.view.TableSensorValuesFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -47,8 +48,11 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (position + 1 == 2) {//sensorvalues
+            //fragmentManager.beginTransaction()
+            //        .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
+            //        .commit();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
+                    .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1))
                     .commit();
         } else if (position + 1 == 1) {//controller
             fragmentManager.beginTransaction()
