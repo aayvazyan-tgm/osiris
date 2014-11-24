@@ -30,25 +30,24 @@ public class Demo {
     public void showSomething() {
         try {
             //Forth
-            robotarm.turnAxis(Axis.AXISTWO, power);
             robotarm.turnAxis(Axis.AXISONE, power);
-            robotarm.turnAxis(Axis.BASE, power);
+            robotarm.turnAxis(Axis.AXISTWO, 10);
+            robotarm.turnAxis(Axis.BASE, 70);
             Thread.sleep(500);
             //Stop
             robotarm.stopAxis(Axis.AXISTWO);
-            robotarm.stopAxis(Axis.AXISTWO);
             robotarm.stopAxis(Axis.AXISONE);
+            robotarm.stopAxis(Axis.BASE);
             Thread.sleep(500);
             //Back
             robotarm.turnAxis(Axis.AXISONE, -power);
-            robotarm.turnAxis(Axis.AXISTWO, -power);
-            robotarm.turnAxis(Axis.BASE, -power);
+            robotarm.turnAxis(Axis.AXISTWO, -10);
+            robotarm.turnAxis(Axis.BASE, -70);
             Thread.sleep(500);
             //Stop
             robotarm.stopAxis(Axis.AXISTWO);
-            robotarm.stopAxis(Axis.AXISTWO);
             robotarm.stopAxis(Axis.AXISONE);
-            robotarm.stopAxis(Axis.AXISONE);
+            robotarm.stopAxis(Axis.BASE);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
