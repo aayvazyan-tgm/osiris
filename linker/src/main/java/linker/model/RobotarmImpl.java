@@ -1,7 +1,5 @@
 package linker.model;
 
-import java.util.List;
-
 import api.Axis;
 import api.Robotarm;
 import linker.model.kinematics.Kinematics;
@@ -9,6 +7,8 @@ import linker.model.kinematics.ThreeAxisKinematics2D;
 import linkjvm.Botball;
 import linkjvm.motors.Motor;
 import linkjvm.sensors.analog.AnalogSensor;
+
+import java.util.List;
 
 /**
  * Implementation of a robotarm
@@ -20,26 +20,26 @@ public class RobotarmImpl implements Robotarm {
 
     //Constants
     private final double basetoaxisone = 11;
-    private final double axisonetoaxistwo = 17;	
-	private double[][] padding = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0, 0.0, 0.0}};
-	private double[] fragmentlength = {basetoaxisone, axisonetoaxistwo};
-    
-	//Joints
+    private final double axisonetoaxistwo = 17;
+    private double[][] padding = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
+    private double[] fragmentlength = {basetoaxisone, axisonetoaxistwo};
+
+    //Joints
     private Joint[] joints;
-    
+
     //KinematicStategies
     private Kinematics kinematics;
 
     public RobotarmImpl() {
 
-    	joints = new Joint[3];
-    	
+        joints = new Joint[3];
+
         joints[0] = new Joint(new Motor(0), new AnalogSensor(0), Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
         joints[1] = new Joint(new Motor(1), new AnalogSensor(1), Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
         joints[2] = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
         kinematics = new ThreeAxisKinematics2D();
-        
+
         joints[1].moveToPosition(600, 100);
         joints[2].moveToPosition(350, 40);
     }
@@ -52,14 +52,14 @@ public class RobotarmImpl implements Robotarm {
         this.joints[axis.ordinal()] = joint;
     }
 
-    public Joint[] getJoints(){
-    	return joints;
+    public Joint[] getJoints() {
+        return joints;
     }
-    
-    public void setJoints(Joint[] joints){
-    	this.joints = joints;
+
+    public void setJoints(Joint[] joints) {
+        this.joints = joints;
     }
-    
+
     @Override
     public void turnAxis(Axis axis, int power) {
         if (power >= -100 && power <= 100) {
@@ -82,19 +82,19 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-    	List<Double> solution = kinematics.moveTo(x, y, z, joints, fragmentlength, padding);
-    	
-    	if(solution == null) return false;
-    	
-    	joints[1].moveToAngle(477 - solution.get(0), 100);
-		joints[2].moveToAngle(30 + solution.get(1), 65);
-		
-    	return true;
+        List<Double> solution = kinematics.moveTo(x, y, z, joints, fragmentlength, padding);
+
+        if (solution == null) return false;
+
+        joints[1].moveToAngle(477 - solution.get(0), 100);
+        joints[2].moveToAngle(30 + solution.get(1), 65);
+
+        return true;
     }
 
     @Override
     public void close() {
-    	//Empty for now
+        //Empty for now
     }
 
     @Override
@@ -104,8 +104,8 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public void stopAll() {
-        for(int i = 0; i < joints.length; i++){
-        	joints[i].off();
+        for (int i = 0; i < joints.length; i++) {
+            joints[i].off();
         }
     }
 

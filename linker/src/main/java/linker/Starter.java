@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import api.Axis;
-
 /**
  * Starts the link-controller program
  * Run this on the LinkJVM-Controller
