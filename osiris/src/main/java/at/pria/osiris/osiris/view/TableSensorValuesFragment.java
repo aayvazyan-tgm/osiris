@@ -9,21 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.TableLayout.LayoutParams;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.network.RemoteRobotarm;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 import at.pria.osiris.osiris.sensors.SensorRefresher;
+import at.pria.osiris.osiris.view.elements.SensorRow;
 
 /**
  *
- * Dynamic table
+ * A fragment to which adds dynamic TableRows to the view
  *
  * Created by helmuthbrunner on 17/11/14.
  */
@@ -32,16 +32,17 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     private static TableSensorValuesFragment INSTANCE;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Thread sensorRefresher;
-
     private TableLayout table;
-    private TableRow sensor1, sensor2;
-
-    private TableLayout.LayoutParams sensor1Params, sensor2Params;
-
-    private TextView textsensorvalue1, textsensorvalue2;
+    private HashMap<String, SensorRow> sensorMap;
+    private SensorRow sr;
 
     private OnFragmentInteractionListener mListener;
 
+    /**
+     * Returns a instance from this class
+     * @param sectionNumber the sectionnumber
+     * @return a instance from this class
+     */
     public static TableSensorValuesFragment getInstance(int sectionNumber) {
 
         if (INSTANCE == null) {
@@ -61,39 +62,21 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
         return INSTANCE;
     }
 
+    /**
+     * Constructor
+     */
     public TableSensorValuesFragment() {
         // Required empty public constructor
+
+        sensorMap= new HashMap<String, SensorRow>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor_values, container, false);
-        // Inflate the layout for this fragment
         table= (TableLayout) view.findViewById(R.id.tableLayout);
-
-        sensor1= new TableRow(view.getContext());
-        sensor2= new TableRow(view.getContext());
-
-        textsensorvalue1= new TextView(view.getContext());
-        textsensorvalue2= new TextView(view.getContext());
-
-        sensor1.addView(textsensorvalue1);
-        sensor2.addView(textsensorvalue2);
-
-        table.addView(sensor1, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        table.addView(sensor2, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
-        sensor1Params= new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT);
-
-        sensor2Params= new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT);
-
         return view;
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -116,26 +99,33 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     }
 
     @Override
-    public void refresh(final double newValue, final String sensorname) {
-
-        if(textsensorvalue1==null||textsensorvalue2==null) {
-            Log.d("Osiris", "ist null");
-            return;
-        }
-
+    public void refresh(final double newValue, final String sensorName) {
         Activity activity = getActivity();
         if (activity == null) return; //The activity does not exist before onCreateView
+
+        sr= sensorMap.get(sensorName);
+        // if null new row will be created
+        if(sr==null) {
+
+            sr= new SensorRow(activity.getBaseContext(), sensorName);
+
+            activity.runOnUiThread(new Runnable() {
+
+                public void run() {
+                    table.addView(sr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                }
+
+            });
+
+            sensorMap.put(sensorName, sr);
+        }
+
         activity.runOnUiThread(new Runnable() {
 
             public void run() {
-                if (sensorname.equals("sensor1")) {
-                    textsensorvalue1.setText("" + newValue);
-                }
-
-                if (sensorname.equals("sensor2")) {
-                    textsensorvalue2.setText("" + newValue);
-                }
+                sensorMap.get(sensorName).updateValue(newValue);
             }
+
         });
     }
 
