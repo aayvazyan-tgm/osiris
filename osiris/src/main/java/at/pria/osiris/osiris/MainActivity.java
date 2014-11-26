@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import at.pria.osiris.osiris.view.ControllerFragment;
-import at.pria.osiris.osiris.view.JoystickFragment;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.TableSensorValuesFragment;
 
@@ -58,10 +57,10 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1))
                     .commit();
-        } else if (position + 1 == 0) {// joystickfragment
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, JoystickFragment.getInstance(position + 1))
-                    .commit();
+//        } else if (position + 1 == 0) {// joystickfragment
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, JoystickFragment.getInstance(position + 1))
+//                    .commit();
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))

@@ -31,7 +31,6 @@ public class RemoteRobotarm extends Thread implements Robotarm {
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
-    private ConnectionThread thread;
 
     private RemoteRobotarm() throws IOException {
         //Strict mode ... dirty dirty
