@@ -55,7 +55,7 @@ public class Joint {
         System.out.println("Stopping Motor");
     }
 
-    public boolean moveToPosition(int pos, int power) {
+    public synchronized boolean moveToPosition(int pos, int power) {
     	if(pos > max || pos < min) return false;
     	
         int posmax = (int)((double)pos + ((double)pos * 0.05));
@@ -82,7 +82,7 @@ public class Joint {
      * @param power range -100 , 100
      * @return
      */
-    public boolean moveToAngle(double angle, int power) {
+    public synchronized boolean moveToAngle(double angle, int power) {
         return moveToPosition(transATS(angle), power);
     }
 
