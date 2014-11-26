@@ -58,8 +58,8 @@ public class Joint {
     public synchronized boolean moveToPosition(int pos, int power) {
     	if(pos > max || pos < min) return false;
     	
-        int posmax = (int)((double)pos + ((double)pos * 0.05));
-        int posmin = (int)((double)pos - ((double)pos * 0.05));
+        int posmax = (int)((double)pos + ((double)pos * 0.02));
+        int posmin = (int)((double)pos - ((double)pos * 0.02));
         
         if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
             power = power * (-1);
@@ -72,6 +72,10 @@ public class Joint {
         }
         motor.off();
 
+        Botball.msleep(100);
+        
+        if(posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
+        
         return true;
     }
 
