@@ -1,17 +1,34 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-    }
-}
-
 apply plugin: 'java'
-apply plugin: 'gradle-one-jar'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+}
+group = 'at.pria.hedgehogCore'
+version = 'git describe --tags'.execute().text.trim()
+
+//Ceil the hash if it exists
+int versionStartsAt = version.lastIndexOf("-g")
+if (versionStartsAt > 0) {
+    version = version.substring(0, versionStartsAt)
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'HedgehogCore',
+                'Implementation-Version': version
+    }
+    //baseName = project.name + '-standalone'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
 
 repositories {
     mavenCentral()
@@ -19,13 +36,8 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'lib', include: ['*.jar'])
-    compile project(':api')
-    compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'org.slf4j:slf4j-log4j12:1.7.7'
-    compile 'org.scream3r:jssc:2.8.0'
-}
-
-task packJarWithLibs(type: OneJar) {
-    mainClass = 'at.ari.test.MyMain'
-    archiveName = "Osiris-"+archiveName.toString()
+    //compile project(':api')
+    //compile 'org.slf4j:slf4j-api:1.7.7'
+    //compile 'org.slf4j:slf4j-log4j12:1.7.7'
+    //compile 'org.scream3r:jssc:2.8.0'
 }

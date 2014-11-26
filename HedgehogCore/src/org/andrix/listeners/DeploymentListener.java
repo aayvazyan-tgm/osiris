@@ -11,9 +11,7 @@ public interface DeploymentListener {
 
 	public void compilationResult(Program program, int code, String message);
 
-	public void fetchedProgram(Program program);
+	public void fetchedProgramVersion(Program program, int version);
 
 	public void fetchedProgramsDone();
-
-	public void executionDone(Program program, byte[] result);
 }

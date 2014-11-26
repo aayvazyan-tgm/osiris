@@ -43,28 +43,26 @@ public class Program implements Comparable<Program> {
 
 	private transient ProgramManager programManager;
 
-	private Set<Integer> versions;
-	private transient Map<Integer, Long> versionsLastModified;
-	private final String name;
-	private final String type;
+	Set<Integer> versions;
+	transient Map<Integer, Long> versionsLastModified;
+	final String name;
+	final String type;
 
-	private int currentVersion;
-	private transient String code = null;
+	int currentVersion;
+	transient String code = null;
 
 	private Program(String name, String type) {
 		this.name = name;
 		this.type = type;
 		versionsLastModified = new HashMap<Integer, Long>();
 	}
-	
+
 	Program(String name, String type, ProgramManager programManager) {
 		this.name = name;
 		this.type = type;
 		this.programManager = programManager;
 		versions = new TreeSet<Integer>(Collections.reverseOrder());
 		versionsLastModified = new HashMap<Integer, Long>();
-		currentVersion = 1;
-		versions.add(currentVersion);
 	}
 
 	Program(Program program, String newName) {
@@ -211,7 +209,7 @@ public class Program implements Comparable<Program> {
 		this.code = code;
 		programManager.saveProgram(this);
 		programManager.saveMetadata();
-		for(ProgramListener l : ProgramListener._l_program)
+		for (ProgramListener l : ProgramListener._l_program)
 			l.versionsUpdated(this);
 	}
 
@@ -232,7 +230,7 @@ public class Program implements Comparable<Program> {
 		versionsLastModified.remove(version);
 		programManager.deleteProgram(this, version);
 		programManager.saveMetadata();
-		for(ProgramListener l : ProgramListener._l_program)
+		for (ProgramListener l : ProgramListener._l_program)
 			l.versionsUpdated(this);
 	}
 
@@ -271,10 +269,7 @@ public class Program implements Comparable<Program> {
 	 *             If the connection to the controller fails.
 	 */
 	public synchronized void execute() throws NotConnectedException {
-		try {
-			AXCP.command(AXCP.PROGRAM_EXECUTE_ACTION, name, currentVersion);
-		} catch (RequestTimeoutException ex) {
-		}
+		execute(currentVersion);
 	}
 
 	/**
@@ -305,6 +300,21 @@ public class Program implements Comparable<Program> {
 	public synchronized Compilation compileAndExecute() throws NotConnectedException, RequestTimeoutException {
 		Object[] result = (Object[]) AXCP.command(AXCP.PROGRAM_COMPILE_EXECUTE_REQUEST, name, currentVersion, code);
 		return new Compilation((Integer) result[0], (String) result[1]);
+	}
+
+	/**
+	 * Sends execution data to the SW controller for a specific program in its
+	 * current version. Attention: This method does not check if the program
+	 * currently is executing, nor if it even was deployed!
+	 * 
+	 * @param data
+	 * @throws NotConnectedException
+	 */
+	public synchronized void sendExecutionData(byte[] data) throws NotConnectedException {
+		try {
+			AXCP.command(AXCP.EXECUTION_DATA_EXCHANGE, name, currentVersion, data);
+		} catch (RequestTimeoutException e) {
+		}
 	}
 
 	@Override

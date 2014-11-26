@@ -21,7 +21,7 @@ subprojects {
     //Ceil the hash
     int versionStartsAt = version.lastIndexOf("-g")
     if (versionStartsAt > 0) {
-        version = version.substring(0,versionStartsAt)
+        version = version.substring(0, versionStartsAt)
     }
     group = 'at.pria.osiris'
 }

@@ -15,9 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.andrix.deployment.Program;
+import org.andrix.deployment.ProgramManager;
 import org.andrix.listeners.AXCPListener;
 import org.andrix.listeners.ComponentListener;
 import org.andrix.listeners.DeploymentListener;
+import org.andrix.listeners.ExecutionListener;
 import org.andrix.listeners.StateListener;
 import org.andrix.low.AXCPAccessor;
 import org.andrix.low.HardwareController;
@@ -26,8 +29,12 @@ import org.andrix.low.RequestTimeoutException;
 import org.andrix.motors.Motor;
 import org.andrix.sensors.Analog;
 import org.andrix.sensors.Digital;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AXCP {
+
+	private static final Logger log = LoggerFactory.getLogger(AXCP.class);
 
 	public static final DecimalFormat portFormat = new DecimalFormat("00");
 
@@ -117,6 +124,8 @@ public class AXCP {
 	public final static byte PROGRAMS_FETCH_SUBSCRIPTION = (byte) 155;
 	public final static byte PROGRAMS_FETCH_UPDATE = (byte) 156;
 	public final static byte PROGRAMS_FETCH_DONE_UPDATE = (byte) 157;
+	public final static byte EXECUTION_DONE_ACTION = (byte) 158;
+	public final static byte EXECUTION_DATA_EXCHANGE = (byte) 159;
 	public final static byte EXECUTION_STATE_REQUEST = (byte) 160;
 	public final static byte EXECUTION_STATE_REPLY = (byte) 161;
 	public final static byte EXECUTION_PAUSE_ACTION = (byte) 162;
@@ -264,6 +273,8 @@ public class AXCP {
 		payloadLengths.put(PROGRAMS_FETCH_SUBSCRIPTION, 0);
 		payloadLengths.put(PROGRAMS_FETCH_UPDATE, -1);
 		payloadLengths.put(PROGRAMS_FETCH_DONE_UPDATE, 0);
+		payloadLengths.put(EXECUTION_DONE_ACTION, 38);
+		payloadLengths.put(EXECUTION_DATA_EXCHANGE, -1);
 		payloadLengths.put(EXECUTION_STATE_REQUEST, 0);
 		payloadLengths.put(EXECUTION_STATE_REPLY, -1);
 		payloadLengths.put(EXECUTION_PAUSE_ACTION, 0);
@@ -431,6 +442,8 @@ public class AXCP {
 	 *            name(String); params[1]... version(Integer); params[2]...
 	 *            code(String)<br>
 	 *            PROGRAMS_FETCH_SUBSCRIPTION = 155: no params<br>
+	 *            EXECUTION_DATA_EXCHANGE = 159: params[0]... name(String);
+	 *            params[1]... version(Integer); params[2]... data(byte[])<br>
 	 *            EXECUTION_STATE_REQUEST = 160: no params<br>
 	 * @return ANALOG_SENSOR_REQUEST = 10: sensor value (Integer [0,1023]) <br>
 	 *         DIGITAL_SENSOR_REQUEST = 20: sensor value (Boolean) <br>
@@ -617,8 +630,8 @@ public class AXCP {
 		case MOTOR_POSITION_REQUEST: {
 			paramsCheck(params, 1, Number.class);
 			reply = lowCommand(opcode, ((Number) params[0]).byteValue());
-			return ((reply[1] << 24) & 0xFF000000) | ((reply[2] << 16) % 0xFF0000) | ((reply[3] << 8) & 0xFF00)
-					| (reply[4] & 0xFF);
+			return Integer.valueOf(((reply[1] << 24) & 0xFF000000) | ((reply[2] << 16) % 0xFF0000)
+					| ((reply[3] << 8) & 0xFF00) | (reply[4] & 0xFF));
 		}
 		case MOTOR_POSITION_SUBSCRIPTION: {
 			paramsCheck(params, 2, Map.class, Number.class);
@@ -642,7 +655,7 @@ public class AXCP {
 		case MOTOR_VELOCITY_REQUEST: {
 			paramsCheck(params, 1, Number.class);
 			reply = lowCommand(opcode, ((Number) params[0]).byteValue());
-			return reply[1] % 2 == 1 ? 0x000000FF & (-reply[2]) : 0x000000FF & reply[2];
+			return reply[1] % 2 == 1 ? -Integer.valueOf(0x000000FF & reply[2]) : Integer.valueOf(0x000000FF & reply[2]);
 		}
 		case MOTOR_VELOCITY_SUBSCRIPTION: {
 			paramsCheck(params, 2, Map.class, Number.class);
@@ -742,7 +755,7 @@ public class AXCP {
 			System.arraycopy(code.getBytes(), 0, send, 34, code.length());
 			reply = lowCommand(opcode, send);
 			String compMsg = "";
-			if(reply.length - 1 > 0) {
+			if (reply.length - 1 > 0) {
 				byte[] message = new byte[reply.length - 1];
 				System.arraycopy(reply, 1, message, 0, message.length);
 				compMsg = new String(message);
@@ -778,6 +791,18 @@ public class AXCP {
 		case PROGRAMS_FETCH_SUBSCRIPTION: {
 			lowCommand(opcode);
 			break;
+		}
+		case EXECUTION_DATA_EXCHANGE: {
+			paramsCheck(params, 3, String.class, Integer.class, byte[].class);
+			byte[] data = (byte[]) params[2];
+			byte[] send = new byte[34 + data.length];
+			System.arraycopy(((String) params[0]).getBytes(), 0, send, 0, ((String) params[0]).length());
+			for (int i = ((String) params[0]).length(); i < 32; i++)
+				send[i] = ' ';
+			send[32] = (byte) ((Integer) params[1] >> 8);
+			send[33] = (byte) ((Integer) params[1]).byteValue();
+			System.arraycopy(data, 0, send, 34, data.length);
+			lowCommand(opcode, send);
 		}
 		case EXECUTION_STATE_REQUEST: {
 			reply = lowCommand(opcode);
@@ -968,18 +993,63 @@ public class AXCP {
 				}
 				byte[] name = new byte[32];
 				byte[] code = new byte[payload.length - 34];
+				int version = Integer.valueOf(((payload[32] << 8) & 0xFF00) | (payload[33] & 0xFF));
 				System.arraycopy(payload, 0, name, 0, 32);
 				System.arraycopy(payload, 34, code, 0, code.length);
-				// TODO
-//				for (DeploymentListener l : DeploymentListener._l_deployment)
-//					l.fetchedProgram(new Program_old(new String(name).trim(), Integer.valueOf(((payload[32] << 8) & 0xFF00)
-//							| (payload[33] & 0xFF)), new String(code)));
+				ProgramManager pManager = ProgramManager.fetch();
+				if (pManager == null) {
+					log.warn("ProgramManager not initialized when receiving an EXECUTION_DONE_ACTION!");
+					return;
+				}
+				pManager.programFetched(new String(name).trim(), "c", version, new String(code));
 				break;
 			}
 			case PROGRAMS_FETCH_DONE_UPDATE: {
 				for (DeploymentListener l : DeploymentListener._l_deployment)
 					l.fetchedProgramsDone();
 				break;
+			}
+			case EXECUTION_DONE_ACTION: {
+				byte[] name = new byte[32];
+				System.arraycopy(payload, 0, name, 0, 32);
+				int version = Integer.valueOf(((payload[32] << 8) & 0xFF00) | (payload[33] & 0xFF));
+				int returnValue = Integer.valueOf(((payload[34] << 24) & 0xFF000000) | ((payload[35] << 16) % 0xFF0000)
+						| ((payload[36] << 8) & 0xFF00) | (payload[37] & 0xFF));
+				ProgramManager pManager = ProgramManager.fetch();
+				if (pManager == null) {
+					log.warn("ProgramManager not initialized when receiving an EXECUTION_DONE_ACTION!");
+					return;
+				}
+				Program program = pManager.getProgram(new String(name).trim(), "c");
+				if (program == null) {
+					log.warn("Received an EXECUTION_DONE_ACTION for a program that isn't managed!");
+					return;
+				}
+				for (ExecutionListener l : ExecutionListener._l_exec)
+					l.executionDone(program, version, returnValue);
+			}
+			case EXECUTION_DATA_EXCHANGE: {
+				if (payload.length < 34) {
+					command(ERROR_ACTION, ERRORCODE_PAYLOAD_LENGTH_OUT_OF_RANGE, PROGRAMS_FETCH_UPDATE);
+					return;
+				}
+				byte[] name = new byte[32];
+				byte[] data = new byte[payload.length - 34];
+				int version = Integer.valueOf(((payload[32] << 8) & 0xFF00) | (payload[33] & 0xFF));
+				System.arraycopy(payload, 0, name, 0, 32);
+				System.arraycopy(payload, 34, data, 0, data.length);
+				ProgramManager pManager = ProgramManager.fetch();
+				if (pManager == null) {
+					log.warn("ProgramManager not initialized when receiving an EXECUTION_DATA_EXCHANGE!");
+					return;
+				}
+				Program program = pManager.getProgram(new String(name).trim(), "c");
+				if (program == null) {
+					log.warn("Received an EXECUTION_DATA_EXCHANGE for a program that isn't managed!");
+					return;
+				}
+				for (ExecutionListener l : ExecutionListener._l_exec)
+					l.executionDataRecieved(program, version, data);
 			}
 			default: {
 				// for opcodes this phone cannot handle (but are valid AXCP

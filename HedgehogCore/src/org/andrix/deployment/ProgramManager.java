@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.andrix.json.JSONArray;
+import org.andrix.listeners.DeploymentListener;
 import org.andrix.listeners.ProgramListener;
 import org.andrix.low.FileAccessor;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ public class ProgramManager {
 
 	private static final Logger log = LoggerFactory.getLogger(ProgramManager.class);
 
+	public static final String DEFAULT_PROGRAMS_DIRECTORY = "hedgehog_programs";
 	private static final String NEW_PROGRAM_CODE = "int main(int argc, char** argv) {\n\t//Write your code here\n\t//Library, stdlib, stdio is included\n}";
 	public static final String PROGRAMS_FILE_NAME = ".hedgehog_programs";
 
@@ -50,8 +52,16 @@ public class ProgramManager {
 
 	private static Map<String, ProgramManager> programManagers = new HashMap<String, ProgramManager>();
 
+	public static ProgramManager fetch() {
+		return fetch(DEFAULT_PROGRAMS_DIRECTORY);
+	}
+
 	public static ProgramManager fetch(String workspaceDir) {
 		return programManagers.get(workspaceDir);
+	}
+
+	public static ProgramManager create() throws IOException {
+		return create(DEFAULT_PROGRAMS_DIRECTORY);
 	}
 
 	public static ProgramManager create(String workspaceDir) throws IOException {
@@ -96,7 +106,7 @@ public class ProgramManager {
 			JSONArray jsonPrograms = new JSONArray(programsString);
 			for (int i = 0; i < jsonPrograms.length(); i++) {
 				Program program = Program.fromJSON(jsonPrograms.getJSONObject(i), this);
-				programs.put(program.getName() + "|" + program.getType(), program);
+				programs.put(program.name + "|" + program.type, program);
 			}
 		}
 	}
@@ -113,13 +123,13 @@ public class ProgramManager {
 	/* Only internal methods beyond this point */
 
 	synchronized void saveProgram(Program program) throws IOException {
-		saveProgram(program, program.getCurrentVersion(), program.getCode());
+		saveProgram(program, program.currentVersion, program.code);
 	}
 
 	void saveProgram(Program program, int version, String code) throws FileNotFoundException {
 		// save the actual code
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(workspace,
-				program.getName() + version + "." + program.getType()))));
+				program.name + version + "." + program.type))));
 		out.print(code);
 		out.close();
 		for (ProgramListener listener : ProgramListener._l_program) {
@@ -128,17 +138,17 @@ public class ProgramManager {
 	}
 
 	synchronized void deleteProgram(Program program, int version) {
-		new File(workspace, program.getName() + version + "." + program.getType()).delete();
+		new File(workspace, program.name + version + "." + program.type).delete();
 		for (ProgramListener listener : ProgramListener._l_program) {
 			listener.programUpdated(program);
 		}
 	}
 
 	synchronized void deleteProgram(Program program) {
-		for (Integer version : program.getVersions()) {
-			new File(workspace, program.getName() + version + "." + program.getType()).delete();
+		for (Integer version : program.versions) {
+			new File(workspace, program.name + version + "." + program.type).delete();
 		}
-		programs.remove(program.getName() + "|" + program.getType());
+		programs.remove(program.name + "|" + program.type);
 		for (ProgramListener listener : ProgramListener._l_program) {
 			listener.programDeleted(program);
 		}
@@ -147,9 +157,10 @@ public class ProgramManager {
 	public synchronized Program newProgram(String name, String type) throws IOException {
 		if (programs.get(name + "|" + type) != null)
 			return null;
-
 		Program program = new Program(name, type, this);
 		programs.put(name + "|" + type, program);
+		program.currentVersion = 1;
+		program.versions.add(program.currentVersion);
 		program.setCode(NEW_PROGRAM_CODE);
 		saveMetadata();
 		for (ProgramListener listener : ProgramListener._l_program) {
@@ -168,7 +179,7 @@ public class ProgramManager {
 		Program oldProgram = programs.get(oldName + "|" + type);
 		Program newProgram = new Program(oldProgram, newName);
 		programs.put(newName + "|" + type, newProgram);
-		for (int version : oldProgram.getVersions())
+		for (int version : oldProgram.versions)
 			saveProgram(newProgram, version, oldProgram.getCode(version));
 		saveMetadata();
 		for (ProgramListener listener : ProgramListener._l_program)
@@ -176,12 +187,29 @@ public class ProgramManager {
 		return newProgram;
 	}
 
+	public synchronized void programFetched(String name, String type, int version, String code) throws IOException {
+		Program program;
+		if (programs.get(name + "|" + type) == null) {
+			program = new Program(name, type, this);
+			programs.put(name + "|" + type, program);
+		} else {
+			program = programs.get(name + "|" + type);
+		}
+		program.versions.add(version);
+		saveProgram(program, version, code);
+		if (version > program.currentVersion)
+			program.currentVersion = version;
+		saveMetadata();
+		for (DeploymentListener l : DeploymentListener._l_deployment)
+			l.fetchedProgramVersion(program, version);
+	}
+
 	public synchronized Program getProgram(String name, String type) {
 		return programs.get(name + "|" + type);
 	}
 
 	String loadProgramCode(Program program, int version) throws IOException {
-		File file = new File(workspace, program.getName() + version + "." + program.getType());
+		File file = new File(workspace, program.name + version + "." + program.type);
 		byte[] buf = new byte[(int) file.length()];
 		DataInputStream dis = new DataInputStream(new FileInputStream(file));
 		dis.readFully(buf);
@@ -190,7 +218,7 @@ public class ProgramManager {
 	}
 
 	long loadLastModified(Program program, int version) {
-		return new File(workspace, program.getName() + version + "." + program.getType()).lastModified();
+		return new File(workspace, program.name + version + "." + program.type).lastModified();
 	}
 
 	synchronized void saveMetadata() throws IOException {
