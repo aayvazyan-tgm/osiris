@@ -93,8 +93,8 @@ public class Joint {
      * @param aValue The specific angle, which should be converted
      */
     public int transATS(double aValue) {
-        //1 degree equals to 5.1 in the sensor value
-        double sValue = aValue * 5.1;
+        //1 degree equals to 4.9 in the sensor value
+        double sValue = aValue * 4.9;
         return (int) sValue;
     }
 

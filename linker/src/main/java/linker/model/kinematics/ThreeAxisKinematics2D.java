@@ -27,10 +27,13 @@ public class ThreeAxisKinematics2D implements Kinematics {
 		double alphaone = Math.toDegrees(Math.asin(y / c));
 		double delta = beta + alphaone;
 		double eta = 90 - delta;
-
+		
 		ArrayList<Double> solution = new ArrayList<Double>();
 		solution.add(eta);
 		solution.add(gamma);
+		
+		System.out.println(eta);
+		System.out.println(gamma);
 		
 		return solution;
 	}

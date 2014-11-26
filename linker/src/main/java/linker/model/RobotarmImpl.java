@@ -20,7 +20,7 @@ public class RobotarmImpl implements Robotarm {
 
     //Constants
     private final double basetoaxisone = 11;
-    private final double axisonetoaxistwo = 17;	
+    private final double axisonetoaxistwo = 18;	
 	private double[][] padding = {{0.0, 0.0, 0.0},{0.0, 0.0, 0.0},{0.0, 0.0, 0.0}};
 	private double[] fragmentlength = {basetoaxisone, axisonetoaxistwo};
     
@@ -39,9 +39,6 @@ public class RobotarmImpl implements Robotarm {
         joints[2] = new Joint(new Motor(2), new AnalogSensor(2), Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
         kinematics = new ThreeAxisKinematics2D();
-        
-        joints[1].moveToPosition(600, 100);
-        joints[2].moveToPosition(350, 40);
     }
 
     public Joint getAxis(Axis axis) {
@@ -86,8 +83,8 @@ public class RobotarmImpl implements Robotarm {
     	
     	if(solution == null) return false;
     	
-    	joints[1].moveToAngle(477 - solution.get(0), 100);
-		joints[2].moveToAngle(30 + solution.get(1), 65);
+    	joints[1].moveToAngle((460/5) - solution.get(0), 100);
+		joints[2].moveToAngle((478/5) + solution.get(1), 65);
 		
     	return true;
     }
