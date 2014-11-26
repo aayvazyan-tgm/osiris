@@ -31,6 +31,9 @@ public class ControllerFragment extends Fragment {
     private static ControllerFragment INSTANCE;
     private ButtonVisualiser buttonPositivePowerVisualiser;
     private ButtonVisualiser buttonNegativePowerVisualiser;
+    private EditText xValue;
+    private EditText yValue;
+    private EditText zValue;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -51,7 +54,14 @@ public class ControllerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
-        //Button actionListeners
+        //TextFields
+        xValue = (EditText) rootView.findViewById(R.id.xValue);
+        yValue = (EditText) rootView.findViewById(R.id.yValue);
+        zValue = (EditText) rootView.findViewById(R.id.zValue);
+
+        //Buttons
+        //
+        //Positive Power
         final Button buttonPositivePower = (Button) rootView.findViewById(R.id.positivePower);
         this.buttonPositivePowerVisualiser = new ButtonVisualiser(buttonPositivePower);
         buttonPositivePower.setOnTouchListener(new View.OnTouchListener() {
@@ -65,6 +75,8 @@ public class ControllerFragment extends Fragment {
                 return false;
             }
         });
+
+        //Negative Power
         final Button buttonNegativePower = (Button) rootView.findViewById(R.id.negativePower);
         this.buttonNegativePowerVisualiser = new ButtonVisualiser(buttonNegativePower);
         buttonNegativePower.setOnTouchListener(new View.OnTouchListener() {
@@ -78,6 +90,28 @@ public class ControllerFragment extends Fragment {
                 return false;
             }
         });
+
+        //GoToPosition
+        final Button goToPosition= (Button) rootView.findViewById(R.id.goToPositionButton);
+        goToPosition.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    double xValueActual = Double.parseDouble(xValue.getText().toString());
+                    double yValueActual = Double.parseDouble(yValue.getText().toString());
+                    double zValueActual = Double.parseDouble(zValue.getText().toString());
+                    try {
+                        RemoteRobotarm.getInstance().moveTo(xValueActual, yValueActual, zValueActual);
+                    } catch (IOException e) {
+                        Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return false;
+            }
+        });
+
         //Axis selection
         Axis.values();
         final Spinner motorSpinner = (Spinner) rootView.findViewById(R.id.motorSelectionSpinner);

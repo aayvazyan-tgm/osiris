@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" android:id="@+id/">
 
     <TextView
             android:layout_width="wrap_content"
@@ -94,4 +94,57 @@
             android:layout_above="@+id/seekBar" android:layout_toLeftOf="@+id/portNumberInput"
             android:layout_toStartOf="@+id/portNumberInput" android:gravity="left|center"
             android:layout_alignParentLeft="true" android:layout_alignParentStart="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="X"
+                android:id="@+id/textView2" android:layout_below="@+id/negativePower"
+                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+                android:layout_alignBottom="@+id/xValue"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Y"
+                android:id="@+id/textView3"
+                android:layout_toStartOf="@+id/xValue"
+                android:layout_below="@+id/textView2" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/xValue"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/xValue" android:layout_below="@+id/negativePower"
+                android:layout_toRightOf="@+id/textView2" android:layout_toEndOf="@+id/textView2" android:text="0"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/yValue"
+                android:layout_toEndOf="@+id/textView3"
+                android:text="0"
+                android:layout_alignTop="@+id/textView3" android:layout_below="@+id/xValue"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceLarge" android:text="Z"
+                  android:id="@+id/textView4"
+                  android:layout_below="@+id/yValue" android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true" android:layout_alignBottom="@+id/zValue"
+                  android:layout_toLeftOf="@+id/yValue" android:layout_toStartOf="@+id/yValue"/>
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="number"
+                  android:ems="10" android:id="@+id/zValue"
+                  android:layout_toEndOf="@+id/textView4" android:text="0"
+                  android:layout_below="@+id/yValue" android:layout_alignLeft="@+id/yValue"
+                  android:layout_alignStart="@+id/yValue"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go to Position"
+                android:id="@+id/goToPositionButton"
+                android:layout_toEndOf="@+id/xValue" android:layout_marginLeft="11dp"
+                android:layout_alignBaseline="@+id/yValue" android:layout_alignBottom="@+id/yValue"
+                android:layout_toRightOf="@+id/xValue"/>
 </RelativeLayout>
