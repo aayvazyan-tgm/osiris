@@ -27,7 +27,7 @@ public class DirtyClientMessageProcessor {
         Log.d("OSIRIS_DEBUG_MESSAGES", "Reached callMethod " + message);
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
-            Log.d("OSIRIS_DEBUG_NETWORK", "Splitted" + i + ": " + splitted[i]);
+            //Log.d("OSIRIS_DEBUG_NETWORK", "Splitted" + i + ": " + splitted[i]);
         }
 
         /*

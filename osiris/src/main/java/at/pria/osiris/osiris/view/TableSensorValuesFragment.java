@@ -1,6 +1,7 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TableLayout.LayoutParams;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
@@ -33,8 +35,9 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Thread sensorRefresher;
     private TableLayout table;
-    private HashMap<String, SensorRow> sensorMap;
+    private ConcurrentHashMap<String, SensorRow> sensorMap;
     private SensorRow sr;
+    private Context mycontext;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,6 +52,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
             TableSensorValuesFragment fragment = new TableSensorValuesFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+
             fragment.setArguments(args);
             try {
                 fragment.sensorRefresher = new Thread(new SensorRefresher(RemoteRobotarm.getInstance(), fragment));
@@ -57,6 +61,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             INSTANCE = fragment;
         }
         return INSTANCE;
@@ -68,13 +73,15 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     public TableSensorValuesFragment() {
         // Required empty public constructor
 
-        sensorMap= new HashMap<String, SensorRow>();
+        Log.e("MyOsiris", "new HashMap");
+        sensorMap= new ConcurrentHashMap<String, SensorRow>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor_values, container, false);
         table= (TableLayout) view.findViewById(R.id.tableLayout);
+
         return view;
     }
 
@@ -88,8 +95,9 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
+        mycontext= activity;
+        ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+
     }
 
     @Override
@@ -100,33 +108,44 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
 
     @Override
     public void refresh(final double newValue, final String sensorName) {
-        Activity activity = getActivity();
-        if (activity == null) return; //The activity does not exist before onCreateView
+        final Activity activity = getActivity();
+        //context= activity.getBaseContext();
+        if (activity == null) {
+            Log.e("Osiris", "Actity is null");
+            return; //The activity does not exist before onCreateView
+        } else {
+            Log.e("Osiris", "Actity is NOT null");
+        }
 
         sr= sensorMap.get(sensorName);
         // if null new row will be created
-        if(sr==null) {
-
-            sr= new SensorRow(activity.getBaseContext(), sensorName);
+        if(sr == null) {
 
             activity.runOnUiThread(new Runnable() {
 
                 public void run() {
+                    sr= new SensorRow(getActivity(), sensorName);
                     table.addView(sr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    sr.updateValue(newValue);
+                    sensorMap.put(sensorName, sr);
                 }
 
             });
 
-            sensorMap.put(sensorName, sr);
+            Log.e("MyOsiris","new Sensor added, with name: " + sensorName);
+            //Log.e("Osiris", "sr: " + sr);
+        }else {
+            activity.runOnUiThread(new Runnable() {
+
+                public void run() {
+                    if (sr == null) {
+                        Log.e("Osiris", "srtest is null");
+                    }
+                    sr.updateValue(newValue);
+                }
+
+            });
         }
-
-        activity.runOnUiThread(new Runnable() {
-
-            public void run() {
-                sensorMap.get(sensorName).updateValue(newValue);
-            }
-
-        });
     }
 
     /**
