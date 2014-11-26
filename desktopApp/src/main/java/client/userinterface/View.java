@@ -98,7 +98,7 @@ public class View extends JPanel {
 
         this.b = new JButton("MoveTo");
         this.b.setName("MoveTo");
-        this.b.addActionListener(new ButtonController(xfield, zfield, yfield, f));
+        this.b.addActionListener(new ButtonController(xfield, yfield, zfield, f));
 
         this.refresh = new JButton("EnableKeyInput");
         this.refresh.setName("Refresh");

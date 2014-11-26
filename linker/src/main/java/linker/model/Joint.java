@@ -16,8 +16,8 @@ public class Joint {
     private int max;
 
     private boolean running = false;
-
-
+    
+    
     public Joint(Motor motor, AnalogSensor sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
@@ -31,10 +31,10 @@ public class Joint {
      * @param power The Power in percent
      */
     public synchronized void run(int power) {
-        if (running) return;
-
-        running = true;
-
+    	if(running) return;
+    	
+    	running = true;
+    	
         if (sensor.getValue() < max && power > 0) {
             motor.run(power);
             System.out.println("Starting Motor with power " + power);
@@ -55,12 +55,12 @@ public class Joint {
         System.out.println("Stopping Motor");
     }
 
-    public boolean moveToPosition(int pos, int power) {
-        if (pos > max || pos < min) return false;
-
-        int posmax = (int) ((double) pos + ((double) pos * 0.05));
-        int posmin = (int) ((double) pos - ((double) pos * 0.05));
-
+    public synchronized boolean moveToPosition(int pos, int power) {
+    	if(pos > max || pos < min) return false;
+    	
+        int posmax = (int)((double)pos + ((double)pos * 0.02));
+        int posmin = (int)((double)pos - ((double)pos * 0.02));
+        
         if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
             power = power * (-1);
         }
@@ -72,6 +72,10 @@ public class Joint {
         }
         motor.off();
 
+        Botball.msleep(100);
+        
+        if(posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
+        
         return true;
     }
 
@@ -82,7 +86,7 @@ public class Joint {
      * @param power range -100 , 100
      * @return
      */
-    public boolean moveToAngle(double angle, int power) {
+    public synchronized boolean moveToAngle(double angle, int power) {
         return moveToPosition(transATS(angle), power);
     }
 
@@ -93,8 +97,8 @@ public class Joint {
      * @param aValue The specific angle, which should be converted
      */
     public int transATS(double aValue) {
-        //1 degree equals to 5.1 in the sensor value
-        double sValue = aValue * 5.1;
+        //1 degree equals to 4.8 in the sensor value
+        double sValue = aValue * 4.8;
         return (int) sValue;
     }
 
