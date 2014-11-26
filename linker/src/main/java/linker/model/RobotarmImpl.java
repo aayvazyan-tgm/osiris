@@ -83,8 +83,8 @@ public class RobotarmImpl implements Robotarm {
     	
     	if(solution == null) return false;
     	
-    	joints[1].moveToAngle((460/5) - solution.get(0), 100);
-		joints[2].moveToAngle((478/5) + solution.get(1), 65);
+    	joints[1].moveToAngle((470/4.8) - solution.get(0), 100);
+		joints[2].moveToAngle((478/4.8) + (180 - solution.get(1)), 65);
 		
     	return true;
     }
