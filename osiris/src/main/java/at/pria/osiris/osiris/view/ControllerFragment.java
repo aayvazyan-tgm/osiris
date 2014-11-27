@@ -109,7 +109,16 @@ public class ControllerFragment extends Fragment {
                         break;
                     }
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
-                    remoteRobotarm.stopAll();
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_BUTTON_L1:
+                        case KeyEvent.KEYCODE_BUTTON_R1:
+                            remoteRobotarm.stopAxis(Axis.BASE);
+                            break;
+                        case KeyEvent.KEYCODE_BUTTON_L2:
+                        case KeyEvent.KEYCODE_BUTTON_R2:
+                            remoteRobotarm.stopAxis(Axis.AXISTWO);
+                            break;
+                    }
                 }
                 return true;
             }
