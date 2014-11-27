@@ -35,9 +35,8 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Thread sensorRefresher;
     private TableLayout table;
-    private ConcurrentHashMap<String, SensorRow> sensorMap;
+    final private ConcurrentHashMap<String, SensorRow> sensorMap;
     private SensorRow sr;
-    private Context mycontext;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,7 +72,6 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     public TableSensorValuesFragment() {
         // Required empty public constructor
 
-        Log.e("MyOsiris", "new HashMap");
         sensorMap= new ConcurrentHashMap<String, SensorRow>();
     }
 
@@ -95,7 +93,6 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mycontext= activity;
         ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
 
     }
@@ -109,16 +106,15 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     @Override
     public void refresh(final double newValue, final String sensorName) {
         final Activity activity = getActivity();
-        //context= activity.getBaseContext();
-        if (activity == null) {
-            Log.e("Osiris", "Actity is null");
-            return; //The activity does not exist before onCreateView
-        } else {
-            Log.e("Osiris", "Actity is NOT null");
-        }
+
+        if(activity == null)
+            return;
 
         sr= sensorMap.get(sensorName);
         // if null new row will be created
+        Log.e("Osiris", "SensorName" + sensorName);
+        Log.e("Osiris", "MapSize: " + sensorMap.size());
+
         if(sr == null) {
 
             activity.runOnUiThread(new Runnable() {
@@ -132,15 +128,10 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
 
             });
 
-            Log.e("MyOsiris","new Sensor added, with name: " + sensorName);
-            //Log.e("Osiris", "sr: " + sr);
         }else {
             activity.runOnUiThread(new Runnable() {
 
                 public void run() {
-                    if (sr == null) {
-                        Log.e("Osiris", "srtest is null");
-                    }
                     sr.updateValue(newValue);
                 }
 
