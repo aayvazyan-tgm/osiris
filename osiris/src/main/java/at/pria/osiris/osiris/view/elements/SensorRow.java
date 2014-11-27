@@ -25,7 +25,7 @@ public class SensorRow extends TableRow {
         super(context);
 
         super.setLayoutParams(new LayoutParams(
-                LayoutParams.FILL_PARENT,
+                LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT));
 
         sensorNameView = new TextView(context);
