@@ -54,22 +54,28 @@ public class ControllerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
 
         //KeyListeners
-        View inputListener= rootView.findViewById(R.id.input_fetcher);
+        View inputListener = rootView.findViewById(R.id.input_fetcher);
         inputListener.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Toast.makeText(getActivity(), "onKey: " + keyCode + " II " + event.toString(), Toast.LENGTH_SHORT).show();
-                Log.d("", "onKey: " + keyCode + " II " + event.toString());
-                switch (keyCode) {
-                    //DPAD
-                    case KeyEvent.KEYCODE_DPAD_UP:
-                        break;
-                    case KeyEvent.KEYCODE_DPAD_DOWN:
-                        break;
-                    case KeyEvent.KEYCODE_DPAD_LEFT:
-                        break;
-                    case KeyEvent.KEYCODE_DPAD_RIGHT:
-                        break;
+                RemoteRobotarm remoteRobotarm;
+                try {
+                    remoteRobotarm = RemoteRobotarm.getInstance();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        //DPAD
+                        case KeyEvent.KEYCODE_DPAD_UP:
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_DOWN:
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_LEFT:
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_RIGHT:
+                            break;
 //                    //ARROWS
 //                    case KeyEvent.:
 //                        break;
@@ -79,7 +85,7 @@ public class ControllerFragment extends Fragment {
 //                        break;
 //                    case KeyEvent.:
 //                        break;
-                    //RightButtons
+                        //RightButtons
 //                    case KeyEvent.Butto:
 //                        break;
 //                    case KeyEvent.:
@@ -88,15 +94,22 @@ public class ControllerFragment extends Fragment {
 //                        break;
 //                    case KeyEvent.:
 //                        break;
-                    //Backside Buttons
-                    case KeyEvent.KEYCODE_BUTTON_L1:
+                        //Backside Buttons
+                        case KeyEvent.KEYCODE_BUTTON_L1:
+                            remoteRobotarm.turnAxis(Axis.BASE,100);
                         break;
-                    case KeyEvent.KEYCODE_BUTTON_L2:
+                        case KeyEvent.KEYCODE_BUTTON_R1:
+                            remoteRobotarm.turnAxis(Axis.BASE,-100);
                         break;
-                    case KeyEvent.KEYCODE_BUTTON_R1:
+                        case KeyEvent.KEYCODE_BUTTON_L2:
+                            remoteRobotarm.turnAxis(Axis.AXISTWO,100);
                         break;
-                    case KeyEvent.KEYCODE_BUTTON_R2:
+                        case KeyEvent.KEYCODE_BUTTON_R2:
+                            remoteRobotarm.turnAxis(Axis.AXISTWO,-100);
                         break;
+                    }
+                } else if (event.getAction() == KeyEvent.ACTION_UP) {
+                    remoteRobotarm.stopAll();
                 }
                 return true;
             }
