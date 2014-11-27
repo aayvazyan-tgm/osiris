@@ -3,10 +3,8 @@ package at.pria.osiris.osiris.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.*;
 import android.widget.*;
 import api.Axis;
 import at.pria.osiris.osiris.MainActivity;
@@ -54,7 +52,59 @@ public class ControllerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
+
+        //KeyListeners
+        View inputListener= rootView.findViewById(R.id.input_fetcher);
+        inputListener.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Toast.makeText(getActivity(), "onKey: " + keyCode + " II " + event.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("", "onKey: " + keyCode + " II " + event.toString());
+                switch (keyCode) {
+                    //DPAD
+                    case KeyEvent.KEYCODE_DPAD_UP:
+                        break;
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
+                        break;
+                    case KeyEvent.KEYCODE_DPAD_LEFT:
+                        break;
+                    case KeyEvent.KEYCODE_DPAD_RIGHT:
+                        break;
+//                    //ARROWS
+//                    case KeyEvent.:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+                    //RightButtons
+//                    case KeyEvent.Butto:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+//                    case KeyEvent.:
+//                        break;
+                    //Backside Buttons
+                    case KeyEvent.KEYCODE_BUTTON_L1:
+                        break;
+                    case KeyEvent.KEYCODE_BUTTON_L2:
+                        break;
+                    case KeyEvent.KEYCODE_BUTTON_R1:
+                        break;
+                    case KeyEvent.KEYCODE_BUTTON_R2:
+                        break;
+                }
+                return true;
+            }
+        });
+
         //TextFields
+        //
+        //GoToPosition
         xValue = (EditText) rootView.findViewById(R.id.xValue);
         yValue = (EditText) rootView.findViewById(R.id.yValue);
         zValue = (EditText) rootView.findViewById(R.id.zValue);
@@ -92,7 +142,7 @@ public class ControllerFragment extends Fragment {
         });
 
         //GoToPosition
-        final Button goToPosition= (Button) rootView.findViewById(R.id.goToPositionButton);
+        final Button goToPosition = (Button) rootView.findViewById(R.id.goToPositionButton);
         goToPosition.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
