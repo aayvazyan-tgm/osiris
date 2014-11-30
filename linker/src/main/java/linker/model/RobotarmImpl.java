@@ -1,7 +1,5 @@
 package linker.model;
 
-import java.util.List;
-
 import api.Axis;
 import api.Robotarm;
 import linker.model.kinematics.Kinematics;
@@ -9,6 +7,8 @@ import linker.model.kinematics.ThreeAxisKinematics2D;
 import linkjvm.Botball;
 import linkjvm.motors.Motor;
 import linkjvm.sensors.analog.AnalogSensor;
+
+import java.util.List;
 
 /**
  * Implementation of a robotarm
@@ -18,115 +18,115 @@ import linkjvm.sensors.analog.AnalogSensor;
  */
 public class RobotarmImpl implements Robotarm {
 
-	// Constants
-	private final double basetoaxisone = 11;
-	private final double axisonetoaxistwo = 18;
-	private double[][] padding = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 },
-			{ 0.0, 0.0, 0.0 } };
-	private double[] fragmentlength = { basetoaxisone, axisonetoaxistwo };
+    // Constants
+    private final double basetoaxisone = 11;
+    private final double axisonetoaxistwo = 18;
+    private double[][] padding = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0},
+            {0.0, 0.0, 0.0}};
+    private double[] fragmentlength = {basetoaxisone, axisonetoaxistwo};
 
-	// Joints
-	private Joint[] joints;
+    // Joints
+    private Joint[] joints;
 
-	// KinematicStategies
-	private Kinematics kinematics;
+    // KinematicStategies
+    private Kinematics kinematics;
 
-	public RobotarmImpl() {
+    public RobotarmImpl() {
 
-		joints = new Joint[3];
+        joints = new Joint[3];
 
-		joints[0] = new Joint(new Motor(0), new AnalogSensor(0),
-				Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
-		joints[1] = new Joint(new Motor(1), new AnalogSensor(1),
-				Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
-		joints[2] = new Joint(new Motor(2), new AnalogSensor(2),
-				Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
+        joints[0] = new Joint(new Motor(0), new AnalogSensor(0),
+                Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
+        joints[1] = new Joint(new Motor(1), new AnalogSensor(1),
+                Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
+        joints[2] = new Joint(new Motor(2), new AnalogSensor(2),
+                Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
-		kinematics = new ThreeAxisKinematics2D();
-	}
+        kinematics = new ThreeAxisKinematics2D();
+    }
 
-	public Joint getAxis(Axis axis) {
-		return joints[axis.ordinal()];
-	}
+    public Joint getAxis(Axis axis) {
+        return joints[axis.ordinal()];
+    }
 
-	public void setAxis(Axis axis, Joint joint) {
-		this.joints[axis.ordinal()] = joint;
-	}
+    public void setAxis(Axis axis, Joint joint) {
+        this.joints[axis.ordinal()] = joint;
+    }
 
-	public Joint[] getJoints() {
-		return joints;
-	}
+    public Joint[] getJoints() {
+        return joints;
+    }
 
-	public void setJoints(Joint[] joints) {
-		this.joints = joints;
-	}
+    public void setJoints(Joint[] joints) {
+        this.joints = joints;
+    }
 
-	@Override
-	public void turnAxis(Axis axis, int power) {
-		if (power >= -100 && power <= 100) {
-			joints[axis.ordinal()].run(power);
-		}
-	}
+    @Override
+    public void turnAxis(Axis axis, int power) {
+        if (power >= -100 && power <= 100) {
+            joints[axis.ordinal()].run(power);
+        }
+    }
 
-	@Override
-	public void turnAxis(Axis axis, int power, long timemillis) {
-		turnAxis(axis, power);
-		Botball.msleep(timemillis);
-		stopAxis(axis);
-	}
+    @Override
+    public void turnAxis(Axis axis, int power, long timemillis) {
+        turnAxis(axis, power);
+        Botball.msleep(timemillis);
+        stopAxis(axis);
+    }
 
-	@Override
-	public void stopAxis(Axis axis) {
-		System.out.println("Stopping " + axis.name());
-		joints[axis.ordinal()].off();
-	}
+    @Override
+    public void stopAxis(Axis axis) {
+        System.out.println("Stopping " + axis.name());
+        joints[axis.ordinal()].off();
+    }
 
-	@Override
-	public boolean moveTo(double x, double y, double z) {
-		final List<Double> solution = kinematics.moveTo(x, y, z, joints,
-				fragmentlength, padding);
+    @Override
+    public boolean moveTo(double x, double y, double z) {
+        final List<Double> solution = kinematics.moveTo(x, y, z, joints,
+                fragmentlength, padding);
 
-		if (solution == null)
-			return false;
+        if (solution == null)
+            return false;
 
-		Thread joint1 = new Thread(new Runnable() {
-			public void run() {
-				joints[1].moveToAngle((470 / 4.8) - solution.get(0), 100);
-			}
-		});
-		joint1.start();
-		
-		Thread joint2 = new Thread(new Runnable() {
-			public void run() {
-				joints[2].moveToAngle((478 / 4.8) + (180 - solution.get(1)), 65);
-			}
-		});
-		joint2.start();
+        Thread joint1 = new Thread(new Runnable() {
+            public void run() {
+                joints[1].moveToAngle((470 / 4.8) - solution.get(0), 100);
+            }
+        });
+        joint1.start();
 
-		return true;
-	}
+        Thread joint2 = new Thread(new Runnable() {
+            public void run() {
+                joints[2].moveToAngle((478 / 4.8) + (180 - solution.get(1)), 65);
+            }
+        });
+        joint2.start();
 
-	@Override
-	public void close() {
-		// Empty for now
-	}
+        return true;
+    }
 
-	@Override
-	public void test() {
-		System.out.println("Test successfull");
-	}
+    @Override
+    public void close() {
+        // Empty for now
+    }
 
-	@Override
-	public void stopAll() {
-		for (int i = 0; i < joints.length; i++) {
-			joints[i].off();
-		}
-	}
+    @Override
+    public void test() {
+        System.out.println("Test successfull");
+    }
 
-	@Override
-	public void exit() {
-		stopAll();
-		close();
-	}
+    @Override
+    public void stopAll() {
+        for (int i = 0; i < joints.length; i++) {
+            joints[i].off();
+        }
+    }
+
+    @Override
+    public void exit() {
+        stopAll();
+        close();
+    }
 
 }

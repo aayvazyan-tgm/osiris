@@ -16,8 +16,8 @@ public class Joint {
     private int max;
 
     private boolean running = false;
-    
-    
+
+
     public Joint(Motor motor, AnalogSensor sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
@@ -31,10 +31,10 @@ public class Joint {
      * @param power The Power in percent
      */
     public synchronized void run(int power) {
-    	if(running) return;
-    	
-    	running = true;
-    	
+        if (running) return;
+
+        running = true;
+
         if (sensor.getValue() < max && power > 0) {
             motor.run(power);
             System.out.println("Starting Motor with power " + power);
@@ -56,11 +56,11 @@ public class Joint {
     }
 
     public synchronized boolean moveToPosition(int pos, int power) {
-    	if(pos > max || pos < min) return false;
-    	
-        int posmax = (int)((double)pos + ((double)pos * 0.02));
-        int posmin = (int)((double)pos - ((double)pos * 0.02));
-        
+        if (pos > max || pos < min) return false;
+
+        int posmax = (int) ((double) pos + ((double) pos * 0.02));
+        int posmin = (int) ((double) pos - ((double) pos * 0.02));
+
         if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
             power = power * (-1);
         }
@@ -73,9 +73,9 @@ public class Joint {
         motor.off();
 
         Botball.msleep(100);
-        
-        if(posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
-        
+
+        if (posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
+
         return true;
     }
 
