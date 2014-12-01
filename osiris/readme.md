@@ -1,1 +1,1 @@
-This is a android application to control the robot arm
+This is a android application to control a robot arm, using the andrix/hedgehog controller
