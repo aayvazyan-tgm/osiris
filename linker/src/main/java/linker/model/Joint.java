@@ -39,11 +39,11 @@ public class Joint {
         running = true;
         try {
             if (sensor.getValue() < max && power > 0) {
-                motor.run(power);
+                motor.moveAtPower(power);
                 System.out.println("Starting Motor with power " + power);
             } else {
                 if (sensor.getValue() > min && power < 0) {
-                    motor.run(power);
+                    motor.moveAtPower(power);
                     System.out.println("Starting Motor with power " + power);
                 } else {
                     if (sensor.getValue() > min && power < 0) {
