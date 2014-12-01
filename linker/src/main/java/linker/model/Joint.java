@@ -34,28 +34,32 @@ public class Joint {
      * @param power The Power in percent
      */
     public synchronized void run(int power) {
-    	if(running) return;
-    	
-    	running = true;
-    	try {
+        if (running) return;
+
+        running = true;
+        try {
             if (sensor.getValue() < max && power > 0) {
-                motor.moveAtPower(power);
+                motor.run(power);
                 System.out.println("Starting Motor with power " + power);
             } else {
                 if (sensor.getValue() > min && power < 0) {
-                    motor.moveAtPower(power);
+                    motor.run(power);
                     System.out.println("Starting Motor with power " + power);
                 } else {
-                    System.out.println("You are trying to move outside the threshold!");
+                    if (sensor.getValue() > min && power < 0) {
+                        motor.moveAtPower(power);
+                        System.out.println("Starting Motor with power " + power);
+                    } else {
+                        System.out.println("You are trying to move outside the threshold!");
+                    }
                 }
             }
-        }catch (RequestTimeoutException e) {
+        } catch (RequestTimeoutException e) {
             e.printStackTrace();
         } catch (NotConnectedException e) {
             e.printStackTrace();
         }
     }
-
     public void off() {
         try {
             motor.off();
