@@ -2,6 +2,8 @@ package linker.control;
 
 import api.Stoppable;
 import linker.model.Joint;
+import org.andrix.low.NotConnectedException;
+import org.andrix.low.RequestTimeoutException;
 
 public class JointWatcher implements Runnable, Stoppable {
 
@@ -15,16 +17,28 @@ public class JointWatcher implements Runnable, Stoppable {
 
     private void runPositive() {
         while (running) {
-            if (joint.getMax() < joint.getSensor().getValue()) {
-                joint.off();
+            try {
+                if (joint.getMax() < joint.getSensor().getValue()) {
+                    joint.off();
+                }
+            } catch (NotConnectedException e) {
+                e.printStackTrace();
+            } catch (RequestTimeoutException e) {
+                e.printStackTrace();
             }
         }
     }
 
     private void runNegative() {
         while (running) {
-            if (joint.getMin() > joint.getSensor().getValue()) {
-                joint.off();
+            try {
+                if (joint.getMin() > joint.getSensor().getValue()) {
+                    joint.off();
+                }
+            } catch (NotConnectedException e) {
+                e.printStackTrace();
+            } catch (RequestTimeoutException e) {
+                e.printStackTrace();
             }
         }
     }

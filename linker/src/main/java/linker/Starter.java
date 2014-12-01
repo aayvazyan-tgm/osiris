@@ -3,6 +3,7 @@ package linker;
 import linker.control.MessageProcessor;
 import linker.control.SensorMessager;
 import linker.model.RobotarmImpl;
+import org.andrix.low.AXCPServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,6 +21,8 @@ import java.net.Socket;
 public class Starter {
     public static void main(String[] args) {
         try {
+            AXCPServer.USE_SERIAL_CONNECTION=true;
+            //TODO replace socket connections
             Thread t;
             ServerSocket serverSocket = new ServerSocket(8889);    //Used to speak with the controller
             System.out.println("Waiting for client");

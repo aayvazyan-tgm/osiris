@@ -29,6 +29,8 @@ public class SensorMessager implements Runnable, Stoppable {
             try {
                 Thread.sleep(10);
                 try {
+                    // TODO SEND DATA via:
+                    // AXCP.command(AXCP.EXECUTION_DATA_ACTION, "", 0, data)
                     oos.writeObject("sensor0/" + robotarm.getAxis(Axis.BASE).getSensor().getValue());
                     oos.writeObject("sensor1/" + robotarm.getAxis(Axis.AXISONE).getSensor().getValue());
                     oos.writeObject("sensor2/" + robotarm.getAxis(Axis.AXISTWO).getSensor().getValue());

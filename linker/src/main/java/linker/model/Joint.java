@@ -1,8 +1,11 @@
 package linker.model;
 
-import linkjvm.Botball;
-import linkjvm.motors.Motor;
-import linkjvm.sensors.analog.AnalogSensor;
+
+import org.andrix.low.NotConnectedException;
+import org.andrix.low.RequestTimeoutException;
+import org.andrix.motors.Motor;
+import org.andrix.sensors.Analog;
+import org.andrix.AXCP;
 
 /**
  * @author Christian Janeczek
@@ -11,14 +14,14 @@ import linkjvm.sensors.analog.AnalogSensor;
 public class Joint {
 
     private Motor motor;
-    private AnalogSensor sensor;
+    private Analog sensor;
     private int min;
     private int max;
 
     private boolean running = false;
     
     
-    public Joint(Motor motor, AnalogSensor sensor, int min, int max) {
+    public Joint(Motor motor, Analog sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
         this.min = min;
@@ -34,23 +37,31 @@ public class Joint {
     	if(running) return;
     	
     	running = true;
-    	
-        if (sensor.getValue() < max && power > 0) {
-            motor.run(power);
-            System.out.println("Starting Motor with power " + power);
-        } else {
-            if (sensor.getValue() > min && power < 0) {
-                motor.run(power);
+    	try {
+            if (sensor.getValue() < max && power > 0) {
+                motor.moveAtPower(power);
                 System.out.println("Starting Motor with power " + power);
             } else {
-                System.out.println("You are trying to move outside the threshold!");
+                if (sensor.getValue() > min && power < 0) {
+                    motor.moveAtPower(power);
+                    System.out.println("Starting Motor with power " + power);
+                } else {
+                    System.out.println("You are trying to move outside the threshold!");
+                }
             }
+        }catch (RequestTimeoutException e) {
+            e.printStackTrace();
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void off() {
-        motor.off();
+        try {
+            motor.off();
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
+        }
         running = false;
         System.out.println("Stopping Motor");
     }
@@ -60,22 +71,28 @@ public class Joint {
     	
         int posmax = (int)((double)pos + ((double)pos * 0.02));
         int posmin = (int)((double)pos - ((double)pos * 0.02));
-        
-        if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
-            power = power * (-1);
-        }
+        try {
+            if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
+                power = power * (-1);
+            }
 
-        motor.run(power);
-        System.out.println("Moving to position: " + pos);
-        while (posmax < sensor.getValue() || posmin > sensor.getValue()) {
-            Botball.msleep(50);
-        }
-        motor.off();
+            motor.moveAtPower(power);
+            System.out.println("Moving to position: " + pos);
+            while (posmax < sensor.getValue() || posmin > sensor.getValue()) {
+                Thread.sleep(50);
+            }
+            motor.off();
 
-        Botball.msleep(100);
-        
-        if(posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
-        
+            Thread.sleep(100);
+
+            if (posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
+        } catch (RequestTimeoutException e) {
+            e.printStackTrace();
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -112,11 +129,11 @@ public class Joint {
         this.motor = motor;
     }
 
-    public AnalogSensor getSensor() {
+    public Analog getSensor() {
         return sensor;
     }
 
-    public void setSensor(AnalogSensor sensor) {
+    public void setSensor(Analog sensor) {
         this.sensor = sensor;
     }
 

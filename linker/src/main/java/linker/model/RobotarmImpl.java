@@ -6,9 +6,10 @@ import api.Axis;
 import api.Robotarm;
 import linker.model.kinematics.Kinematics;
 import linker.model.kinematics.ThreeAxisKinematics2D;
-import linkjvm.Botball;
-import linkjvm.motors.Motor;
-import linkjvm.sensors.analog.AnalogSensor;
+import org.andrix.low.NotConnectedException;
+import org.andrix.motors.Motor;
+import org.andrix.sensors.Analog;
+
 
 /**
  * Implementation of a robotarm
@@ -32,17 +33,21 @@ public class RobotarmImpl implements Robotarm {
 	private Kinematics kinematics;
 
 	public RobotarmImpl() {
-
+		try {
 		joints = new Joint[3];
 
-		joints[0] = new Joint(new Motor(0), new AnalogSensor(0),
-				Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
-		joints[1] = new Joint(new Motor(1), new AnalogSensor(1),
+		joints[1] = new Joint(new Motor(1), new Analog(1),
 				Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
-		joints[2] = new Joint(new Motor(2), new AnalogSensor(2),
+		joints[2] = new Joint(new Motor(2), new Analog(2),
 				Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
 
 		kinematics = new ThreeAxisKinematics2D();
+
+			joints[0] = new Joint(new Motor(0), new Analog(0),
+					Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
+		} catch (NotConnectedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Joint getAxis(Axis axis) {
@@ -71,7 +76,11 @@ public class RobotarmImpl implements Robotarm {
 	@Override
 	public void turnAxis(Axis axis, int power, long timemillis) {
 		turnAxis(axis, power);
-		Botball.msleep(timemillis);
+		try {
+			Thread.sleep(timemillis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		stopAxis(axis);
 	}
 
