@@ -65,6 +65,7 @@ public class ControllerFragment extends Fragment {
                     Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
                     return true;
                 }
+                Log.d("Osiris", "----- KeyCode: "+ keyCode + " Event: " +  event);
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         //DPAD
@@ -77,8 +78,8 @@ public class ControllerFragment extends Fragment {
                         case KeyEvent.KEYCODE_DPAD_RIGHT:
                             break;
 //                    //ARROWS
-//                    case KeyEvent.:
-//                        break;
+//                        case KeyEvent.:
+//                            break;
 //                    case KeyEvent.:
 //                        break;
 //                    case KeyEvent.:
@@ -86,14 +87,14 @@ public class ControllerFragment extends Fragment {
 //                    case KeyEvent.:
 //                        break;
                         //RightButtons
-//                    case KeyEvent.Butto:
-//                        break;
-//                    case KeyEvent.:
-//                        break;
-//                    case KeyEvent.:
-//                        break;
-//                    case KeyEvent.:
-//                        break;
+                        case KeyEvent.KEYCODE_BUTTON_A:
+                            break;
+                        case KeyEvent.KEYCODE_BUTTON_B:
+                            break;
+                        case KeyEvent.KEYCODE_BUTTON_X:
+                            break;
+                        case KeyEvent.KEYCODE_BUTTON_Y:
+                            break;
                         //Backside Buttons
                         case KeyEvent.KEYCODE_BUTTON_L1:
                             remoteRobotarm.turnAxis(Axis.BASE,100);
