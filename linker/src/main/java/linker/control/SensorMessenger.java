@@ -11,13 +11,13 @@ import java.io.ObjectOutputStream;
  * This simple thread implementation sends sensordata in a 1s intervall (to the client)
  * Created by Samuel on 03.11.2014.
  */
-public class SensorMessager implements Runnable, Stoppable {
+public class SensorMessenger implements Runnable, Stoppable {
 
     private ObjectOutputStream oos;
     private RobotarmImpl robotarm;
     private boolean running;
 
-    public SensorMessager(ObjectOutputStream oos, RobotarmImpl ra) {
+    public SensorMessenger(RobotarmImpl ra) {
         this.oos = oos;
         this.robotarm = ra;
         running = true;
