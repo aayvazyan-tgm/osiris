@@ -14,7 +14,7 @@ import java.util.List;
 public class ThreeAxisKinematics2D implements Kinematics {
 
     @Override
-    public List<Double> moveTo(double x, double y, double z, Joint[] joints,
+    public List<Double> moveTo(double x, double y, double z,
                                double[] fragmentLengths, double[][] padding) {
 
         double a = fragmentLengths[0];
