@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
+import at.pria.osiris.osiris.Controllers.ControllerFactory;
+import at.pria.osiris.osiris.Controllers.ControllerType;
 import at.pria.osiris.osiris.view.ControllerFragment;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.TableSensorValuesFragment;
@@ -39,6 +41,9 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        /* Setup the Andrix/Hedgehog controller */
+        //Setup the network
+        ControllerFactory.getControllerSetup(ControllerType.Hedgehog).setup();
     }
 
     @Override
