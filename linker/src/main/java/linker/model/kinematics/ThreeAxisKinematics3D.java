@@ -15,9 +15,9 @@ public class ThreeAxisKinematics3D implements Kinematics {
 
     @Override
     public List<Double> moveTo(double x, double y, double z, Joint[] joints,
-                               double[] fragmentlengths, double[][] padding) {
-        double a = fragmentlengths[0];
-        double b = fragmentlengths[1];
+                               double[] fragmentLengths, double[][] padding) {
+        double a = fragmentLengths[0];
+        double b = fragmentLengths[1];
 
         double r = Math.sqrt(x * x + y * y);
 

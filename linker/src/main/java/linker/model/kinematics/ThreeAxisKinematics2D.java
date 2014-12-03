@@ -15,10 +15,10 @@ public class ThreeAxisKinematics2D implements Kinematics {
 
     @Override
     public List<Double> moveTo(double x, double y, double z, Joint[] joints,
-                               double[] fragmentlengths, double[][] padding) {
+                               double[] fragmentLengths, double[][] padding) {
 
-        double a = fragmentlengths[0];
-        double b = fragmentlengths[1];
+        double a = fragmentLengths[0];
+        double b = fragmentLengths[1];
 
         double c = Math.sqrt(x * x + y * y);
         double beta = Math.toDegrees(Math.acos((b * b - a * a - c * c)
