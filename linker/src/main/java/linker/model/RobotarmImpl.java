@@ -91,7 +91,7 @@ public class RobotarmImpl implements Robotarm {
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-        final List<Double> solution = kinematics.moveTo(x, y, z, joints,
+        final List<Double> solution = kinematics.moveTo(x, y, z,
                 fragmentlength, padding);
 
         if (solution == null)
