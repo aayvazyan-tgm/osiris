@@ -20,10 +20,10 @@ public interface Kinematics {
      * @param y          the y-coordinate
      * @param z          the z-coordinate
      * @param joints     the joints
-     * @param armlengths the length of all the arm fragments
+     * @param fragmentLengths the length of all the arm fragments
      * @param padding    the distance in between the real joints and the theoretical ones
      * @return if the point can be reached
      */
-    public List<Double> moveTo(double x, double y, double z, Joint[] joints, double[] fragmentlengths, double[][] padding);
+    public List<Double> moveTo(double x, double y, double z, Joint[] joints, double[] fragmentLengths, double[][] padding);
 
 }
