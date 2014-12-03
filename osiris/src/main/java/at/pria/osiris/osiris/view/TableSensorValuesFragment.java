@@ -1,9 +1,9 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import at.pria.osiris.osiris.MainActivity;
@@ -36,9 +35,8 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     private Thread sensorRefresher;
     private TableLayout table;
     final private ConcurrentHashMap<String, SensorRow> sensorMap;
-    private SensorRow sr;
 
-    private OnFragmentInteractionListener mListener;
+    private int count;
 
     /**
      * Returns a instance from this class
@@ -71,36 +69,31 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
      */
     public TableSensorValuesFragment() {
         // Required empty public constructor
-
         sensorMap= new ConcurrentHashMap<String, SensorRow>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sensor_values, container, false);
+
+        // removes all views on the table
+        if(table!=null) {
+            table.removeAllViews();
+        }
+
         table= (TableLayout) view.findViewById(R.id.tableLayout);
 
-        return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        for (SensorRow sensorRow : sensorMap.values()) {
+            table.addView(sensorRow, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
+
+        return view;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -110,20 +103,21 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
         if(activity == null)
             return;
 
-        sr= sensorMap.get(sensorName);
-        // if null new row will be created
-        Log.e("Osiris", "SensorName" + sensorName);
-        Log.e("Osiris", "MapSize: " + sensorMap.size());
+        final SensorRow sr= sensorMap.get(sensorName);
 
+        // if null new row will be created
         if(sr == null) {
 
+            SensorRow sr3= new SensorRow(getActivity(), sensorName);
+            sensorMap.put(sensorName, sr3);
+
+            final SensorRow sr2= sr3;
             activity.runOnUiThread(new Runnable() {
 
                 public void run() {
-                    sr= new SensorRow(getActivity(), sensorName);
-                    table.addView(sr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                    sr.updateValue(newValue);
-                    sensorMap.put(sensorName, sr);
+                    table.removeView(sr2);
+                    table.addView(sr2, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    sr2.updateValue(newValue);
                 }
 
             });
@@ -137,20 +131,5 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
 
             });
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 }
