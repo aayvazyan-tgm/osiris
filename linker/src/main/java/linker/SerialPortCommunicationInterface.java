@@ -19,6 +19,7 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
 
     public void connect() throws IOException {
         try {
+            //The serial port of the connected Hedgehog/Andrix Controller
             serialPort = new SerialPort("/dev/ttyAMA0");
             serialPort.openPort();
             serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
