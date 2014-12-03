@@ -1,11 +1,11 @@
 package linker.control;
 
+import Util.AXCPWrapper;
 import api.Axis;
 import api.Stoppable;
 import linker.model.RobotarmImpl;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 /**
  * This simple thread implementation sends sensordata in a 1s intervall (to the client)
@@ -13,12 +13,10 @@ import java.io.ObjectOutputStream;
  */
 public class SensorMessenger implements Runnable, Stoppable {
 
-    private ObjectOutputStream oos;
     private RobotarmImpl robotarm;
     private boolean running;
 
     public SensorMessenger(RobotarmImpl ra) {
-        this.oos = oos;
         this.robotarm = ra;
         running = true;
     }
@@ -29,11 +27,9 @@ public class SensorMessenger implements Runnable, Stoppable {
             try {
                 Thread.sleep(10);
                 try {
-                    // TODO SEND DATA via:
-                    // AXCP.command(AXCP.EXECUTION_DATA_ACTION, "", 0, data)
-                    oos.writeObject("sensor0/" + robotarm.getAxis(Axis.BASE).getSensor().getValue());
-                    oos.writeObject("sensor1/" + robotarm.getAxis(Axis.AXISONE).getSensor().getValue());
-                    oos.writeObject("sensor2/" + robotarm.getAxis(Axis.AXISTWO).getSensor().getValue());
+                    AXCPWrapper.sendData("sensor0/" + robotarm.getAxis(Axis.BASE).getSensor().getValue());
+                    AXCPWrapper.sendData("sensor1/" + robotarm.getAxis(Axis.AXISONE).getSensor().getValue());
+                    AXCPWrapper.sendData("sensor2/" + robotarm.getAxis(Axis.AXISTWO).getSensor().getValue());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
