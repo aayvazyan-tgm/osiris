@@ -11,7 +11,7 @@ import org.andrix.listeners.ExecutionListener;
 public class DataListener implements ExecutionListener {
     private MessageProcessorDistributor messageProcessorDistributor;
 
-    public DataListener(MessageProcessorDistributor messageProcessorDistributor){
+    public DataListener(MessageProcessorDistributor messageProcessorDistributor) {
         this.messageProcessorDistributor = messageProcessorDistributor;
     }
 

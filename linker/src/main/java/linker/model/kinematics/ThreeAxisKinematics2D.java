@@ -1,7 +1,5 @@
 package linker.model.kinematics;
 
-import linker.model.Joint;
-
 import java.util.ArrayList;
 import java.util.List;
 

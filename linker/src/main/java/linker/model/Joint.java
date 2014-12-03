@@ -5,7 +5,6 @@ import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 import org.andrix.motors.Motor;
 import org.andrix.sensors.Analog;
-import org.andrix.AXCP;
 
 /**
  * @author Christian Janeczek
@@ -19,8 +18,8 @@ public class Joint {
     private int max;
 
     private boolean running = false;
-    
-    
+
+
     public Joint(Motor motor, Analog sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
@@ -60,6 +59,7 @@ public class Joint {
             e.printStackTrace();
         }
     }
+
     public void off() {
         try {
             motor.off();
@@ -71,10 +71,10 @@ public class Joint {
     }
 
     public synchronized boolean moveToPosition(int pos, int power) {
-    	if(pos > max || pos < min) return false;
-    	
-        int posmax = (int)((double)pos + ((double)pos * 0.02));
-        int posmin = (int)((double)pos - ((double)pos * 0.02));
+        if (pos > max || pos < min) return false;
+
+        int posmax = (int) ((double) pos + ((double) pos * 0.02));
+        int posmin = (int) ((double) pos - ((double) pos * 0.02));
         try {
             if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
                 power = power * (-1);

@@ -19,7 +19,7 @@ public class MessageProcessorDistributor {
 
     public MessageProcessorDistributor(Robotarm robotarm) {
         this.robotarm = robotarm;
-        this.messageProcessors=new LinkedList<MessageProcessor>();
+        this.messageProcessors = new LinkedList<MessageProcessor>();
     }
 
     /**
@@ -28,7 +28,7 @@ public class MessageProcessorDistributor {
      * @param message the message
      */
 
-    public void processMessage(byte[] message){
+    public void processMessage(byte[] message) {
         try {
             Object receivedMessage = Serializer.deserialize(message);
             for (MessageProcessor messageProcessor : messageProcessors) {
@@ -41,7 +41,7 @@ public class MessageProcessorDistributor {
         }
     }
 
-    public void addMessageProcessor(MessageProcessor messageProcessor){
+    public void addMessageProcessor(MessageProcessor messageProcessor) {
         this.messageProcessors.add(messageProcessor);
     }
 }

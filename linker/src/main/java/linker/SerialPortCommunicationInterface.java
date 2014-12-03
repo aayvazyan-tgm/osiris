@@ -1,10 +1,10 @@
 package linker;
 
-import java.io.IOException;
-
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import org.andrix.low.CommunicationInterface;
+
+import java.io.IOException;
 
 /*
  * This class needs to be set as the CommunicationHandler in the Hedgehog core project.-
@@ -41,6 +41,7 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
 
     /**
      * Wartet bis der buffer voll ist
+     *
      * @param buffer
      * @throws IOException
      */
@@ -54,6 +55,7 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
 
     /**
      * sendet den gesamten buffer
+     *
      * @param buffer
      * @throws IOException
      */
@@ -66,7 +68,6 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
     }
 
     /**
-     *
      * @param buffer
      * @param length
      * @throws IOException

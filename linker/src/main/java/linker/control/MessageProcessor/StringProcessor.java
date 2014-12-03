@@ -76,6 +76,6 @@ public class StringProcessor implements MessageProcessor {
 
     @Override
     public void processMessage(Object message) {
-        if(message instanceof String)processMessage((String)message);
+        if (message instanceof String) processMessage((String) message);
     }
 }
