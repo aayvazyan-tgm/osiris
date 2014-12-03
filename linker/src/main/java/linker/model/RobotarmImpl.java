@@ -1,7 +1,5 @@
 package linker.model;
 
-import java.util.List;
-
 import api.Axis;
 import api.Robotarm;
 import linker.model.kinematics.Kinematics;
@@ -34,7 +32,7 @@ public class RobotarmImpl implements Robotarm {
     private Kinematics kinematics;
 
     public RobotarmImpl() {
-		try {
+        try {
             joints = new Joint[3];
             joints[0] = new Joint(new Motor(0), new Analog(0),
                     Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
@@ -72,16 +70,16 @@ public class RobotarmImpl implements Robotarm {
         }
     }
 
-	@Override
-	public void turnAxis(Axis axis, int power, long timemillis) {
-		turnAxis(axis, power);
-		try {
-			Thread.sleep(timemillis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		stopAxis(axis);
-	}
+    @Override
+    public void turnAxis(Axis axis, int power, long timemillis) {
+        turnAxis(axis, power);
+        try {
+            Thread.sleep(timemillis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        stopAxis(axis);
+    }
 
     @Override
     public void stopAxis(Axis axis) {
