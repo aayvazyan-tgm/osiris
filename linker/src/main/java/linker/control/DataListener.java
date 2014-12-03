@@ -1,5 +1,6 @@
 package linker.control;
 
+import linker.control.MessageProcessor.MessageProcessorDistributor;
 import org.andrix.deployment.Program;
 import org.andrix.listeners.ExecutionListener;
 
@@ -8,7 +9,11 @@ import org.andrix.listeners.ExecutionListener;
  * @version 03.Dec.14
  */
 public class DataListener implements ExecutionListener {
+    private MessageProcessorDistributor messageProcessorDistributor;
 
+    public DataListener(MessageProcessorDistributor messageProcessorDistributor){
+        this.messageProcessorDistributor = messageProcessorDistributor;
+    }
 
     @Override
     public void executionDone(Program program, int i, int i1) {
@@ -20,6 +25,6 @@ public class DataListener implements ExecutionListener {
      */
     @Override
     public void executionDataReceived(Program program, int i, byte[] bytes) {
-
+        this.messageProcessorDistributor.processMessage(bytes);
     }
 }

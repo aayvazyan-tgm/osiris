@@ -1,29 +1,20 @@
-package linker.control;
+package linker.control.MessageProcessor;
 
 import api.Axis;
 import api.Robotarm;
 
 /**
- * Sends a message via socket
- *
- * @author Adrian Bergler
- * @version 2014-10-17
+ * @author Ari Ayvazyan
+ * @version 03.Dec.14
  */
-public class MessageProcessor {
-
+public class StringProcessor implements MessageProcessor {
     private Robotarm robotarm;
 
-
-    public MessageProcessor(Robotarm robotarm) {
+    public StringProcessor(Robotarm robotarm) {
         this.robotarm = robotarm;
     }
 
-    /**
-     * Combined with a message-"receiver" this calls a method of the robotarm
-     *
-     * @param message the message
-     */
-    public void callMethod(String message) {
+    private void processMessage(String message) {
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
 //            System.out.println("Splitted" + i + ": " + splitted[i]);
@@ -81,5 +72,10 @@ public class MessageProcessor {
 //            System.out.println("test");
             robotarm.test();
         }
+    }
+
+    @Override
+    public void processMessage(Object message) {
+        if(message instanceof String)processMessage((String)message);
     }
 }
