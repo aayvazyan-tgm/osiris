@@ -1,80 +1,37 @@
 package linker;
 
-import linker.control.MessageProcessor;
-import linker.control.SensorMessager;
+import linker.control.DataListener;
+import linker.control.MessageProcessor.MessageProcessorDistributor;
+import linker.control.SensorMessenger;
 import linker.model.RobotarmImpl;
+import org.andrix.listeners.ExecutionListener;
+import org.andrix.low.AXCPAccessor;
 import org.andrix.low.AXCPServer;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * Starts the link-controller program
- * Run this on the LinkJVM-Controller
  *
  * @author Adrian Bergler
- * @version 0.1
+ * @version 0.2
  */
 public class Starter {
     public static void main(String[] args) {
-        try {
-            AXCPServer.communicationInterface=new SerialPortCommunicationInterface();
-            //TODO replace socket connections
-            Thread t;
-            ServerSocket serverSocket = new ServerSocket(8889);    //Used to speak with the controller
-            System.out.println("Waiting for client");
-            Socket client = serverSocket.accept();
 
-            System.out.println("Waiting for remote input");
+        AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
+        AXCPAccessor.getInstance(); // Initialise the AXCPAccessor
 
-            RobotarmImpl robotarm = new RobotarmImpl();
+        Thread thread;
+        RobotarmImpl robotarm = new RobotarmImpl();
 
-            MessageProcessor mp = new MessageProcessor(robotarm);
+        MessageProcessorDistributor mp = new MessageProcessorDistributor(robotarm);
+        boolean running = true;
 
-            ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-            ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
+        // sends sensordata in ~1s intervall
+        SensorMessenger st = new SensorMessenger(robotarm);
+        thread = new Thread(st);
+        thread.start();
 
-            boolean running = true;
-
-            // sends sensordata in ~1s intervall
-            SensorMessager st = new SensorMessager(oos, robotarm);
-            t = new Thread(st);
-            t.start();
-
-            while (running) {
-
-                //convert ObjectInputStream object to String
-                String message = "failmessage";
-                try {
-                    message = (String) ois.readObject();
-                } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                System.out.println("Message Received: " + message);
-
-                mp.callMethod(message);
-
-                //terminate the server if client sends exit request
-                if (message.equalsIgnoreCase("exit")) {
-                    robotarm.exit();
-                    System.out.println("Shutting down.");
-                    running = false;
-                }
-            }
-
-            //close resources
-            ois.close();
-            oos.close();
-            client.close();
-            serverSocket.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        System.exit(0);
+        //A listener to receive Data from the Controller
+        ExecutionListener._l_exec.add(new DataListener(mp));
     }
 }
