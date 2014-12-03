@@ -21,7 +21,7 @@ import java.net.Socket;
 public class Starter {
     public static void main(String[] args) {
         try {
-            AXCPServer.USE_SERIAL_CONNECTION=true;
+            AXCPServer.communicationInterface=new SerialPortCommunicationInterface();
             //TODO replace socket connections
             Thread t;
             ServerSocket serverSocket = new ServerSocket(8889);    //Used to speak with the controller
