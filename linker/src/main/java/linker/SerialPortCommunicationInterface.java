@@ -7,7 +7,7 @@ import jssc.SerialPortException;
 import org.andrix.low.CommunicationInterface;
 
 /*
- * This class needs to be set as the CommunicationHandler in the Hedgehog core project.
+ * This class needs to be set as the CommunicationHandler in the Hedgehog core project.-
  * This happens via:
  * AXCPServer.communicationInterface=new SerialPortCommunicationInterface();
  * (HedgehogCore 3.12.2014)
@@ -39,6 +39,11 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
         }
     }
 
+    /**
+     * Wartet bis der buffer voll ist
+     * @param buffer
+     * @throws IOException
+     */
     public void fullReceive(byte[] buffer) throws IOException {
         try {
             System.arraycopy(serialPort.readBytes(buffer.length), 0, buffer, 0, buffer.length);
@@ -47,6 +52,11 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
         }
     }
 
+    /**
+     * sendet den gesamten buffer
+     * @param buffer
+     * @throws IOException
+     */
     public void fullSend(byte[] buffer) throws IOException {
         try {
             serialPort.writeBytes(buffer);// Write data to port
@@ -55,6 +65,12 @@ public class SerialPortCommunicationInterface implements CommunicationInterface 
         }
     }
 
+    /**
+     *
+     * @param buffer
+     * @param length
+     * @throws IOException
+     */
     public void fullSend(byte[] buffer, int length) throws IOException {
         byte[] toSend = new byte[length];
         System.arraycopy(buffer, 0, toSend, 0, length);
