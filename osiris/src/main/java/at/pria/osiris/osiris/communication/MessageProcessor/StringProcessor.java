@@ -38,7 +38,7 @@ public class StringProcessor implements MessageProcessor {
         //Sensor 1
         if (splitted[0].equals("sensor1") && splitted.length == 2) {
             try {
-                sensorRefresher.refresh(splitted[1], "sensor1");
+                sensorRefresher.refresh(Double.parseDouble(splitted[1]), "sensor1");
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
@@ -48,7 +48,7 @@ public class StringProcessor implements MessageProcessor {
         //Sensor 2
         if (splitted[0].equals("sensor2") && splitted.length == 2) {
             try {
-                sensorRefresher.refresh(splitted[1], "sensor2");
+                sensorRefresher.refresh(Double.parseDouble(splitted[1]), "sensor2");
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
