@@ -24,7 +24,7 @@ public class SliderController implements ChangeListener {
 
         JSlider js = (JSlider) e.getSource();
 
-        value.setText("Slider-Value: " + String.valueOf(js.getValue()));
+        value.setText("Slider-Value: " + js.getValue());
 
     }
 
