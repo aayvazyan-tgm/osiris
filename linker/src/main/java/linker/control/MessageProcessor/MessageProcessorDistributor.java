@@ -5,6 +5,7 @@ import api.Robotarm;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Sends a message via socket
@@ -15,7 +16,7 @@ import java.util.LinkedList;
 public class MessageProcessorDistributor {
 
     private Robotarm robotarm;
-    private LinkedList<MessageProcessor> messageProcessors;
+    private List<MessageProcessor> messageProcessors;
 
     public MessageProcessorDistributor(Robotarm robotarm) {
         this.robotarm = robotarm;
