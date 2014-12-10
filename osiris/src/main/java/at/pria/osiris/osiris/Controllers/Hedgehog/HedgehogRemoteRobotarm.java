@@ -1,7 +1,7 @@
-package at.pria.osiris.osiris.Controllers.Hedgehog;
+package at.pria.osiris.osiris.controllers.Hedgehog;
 
 import android.util.Log;
-import api.AXCPWrapper;
+import Util.AXCPWrapper;
 import api.Axis;
 import api.Robotarm;
 import org.andrix.low.NotConnectedException;

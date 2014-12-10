@@ -9,8 +9,8 @@ import android.widget.*;
 import api.Axis;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.network.RemoteRobotarm;
-import at.pria.osiris.osiris.network.RoboArmConfig;
+import at.pria.osiris.osiris.controllers.RemoteRobotarm;
+import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
 import at.pria.osiris.osiris.view.elements.ButtonVisualiser;
 

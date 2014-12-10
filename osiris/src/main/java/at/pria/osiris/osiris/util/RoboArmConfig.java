@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.network;
+package at.pria.osiris.osiris.util;
 
 import api.Axis;
 

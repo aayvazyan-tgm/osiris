@@ -1,6 +1,6 @@
-package at.pria.osiris.osiris.Controllers.Hedgehog;
+package at.pria.osiris.osiris.controllers.Hedgehog;
 
-import at.pria.osiris.osiris.Controllers.ControllerSetup;
+import at.pria.osiris.osiris.controllers.ControllerSetup;
 
 /**
  * @author Ari Ayvazyan
