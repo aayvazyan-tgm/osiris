@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
+import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerFactory;
 import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.view.ControllerFragment;
@@ -27,6 +28,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private Controller robotController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,8 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         /* Setup the Andrix/Hedgehog controller */
         //Setup the network
-        ControllerFactory.getControllerSetup(ControllerType.Hedgehog).setup();
+        robotController = ControllerFactory.getController(ControllerType.Hedgehog);
+        robotController.getSetup().setup();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         } else if (position + 1 == 1) {// controller
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ControllerFragment.getInstance(position + 1))
+                    .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
                     .commit();
 //        } else if (position + 1 == 0) {// joystickfragment
 //            fragmentManager.beginTransaction()

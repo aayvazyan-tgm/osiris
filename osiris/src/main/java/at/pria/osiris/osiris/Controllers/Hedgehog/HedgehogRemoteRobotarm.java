@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 public class HedgehogRemoteRobotarm extends Thread implements Robotarm {
 
+    private static final int MAX_POWER = 100;
     private static HedgehogRemoteRobotarm INSTANCE;
 
     private HedgehogRemoteRobotarm() throws IOException {
@@ -72,6 +73,11 @@ public class HedgehogRemoteRobotarm extends Thread implements Robotarm {
 
     public void exit() {
         sendMessage("exit");
+    }
+
+    @Override
+    public double getMaxMovePower() {
+        return MAX_POWER;
     }
 
     private void sendMessage(String message) {

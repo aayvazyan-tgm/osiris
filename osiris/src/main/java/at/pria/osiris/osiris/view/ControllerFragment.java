@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import api.Axis;
+import api.Robotarm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.controllers.RemoteRobotarm;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
 import at.pria.osiris.osiris.view.elements.ButtonVisualiser;
@@ -32,12 +34,13 @@ public class ControllerFragment extends Fragment {
     private EditText xValue;
     private EditText yValue;
     private EditText zValue;
+    private Controller robotController;
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ControllerFragment getInstance(int sectionNumber) {
+    public static ControllerFragment getInstance(int sectionNumber, Controller robotController) {
         if (INSTANCE == null) {
             ControllerFragment fragment = new ControllerFragment();
             Bundle args = new Bundle();
@@ -46,6 +49,7 @@ public class ControllerFragment extends Fragment {
 
             INSTANCE = fragment;
         }
+        INSTANCE.robotController=robotController;
         return INSTANCE;
     }
 
@@ -58,10 +62,10 @@ public class ControllerFragment extends Fragment {
         inputListener.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                RemoteRobotarm remoteRobotarm;
+                Robotarm remoteRobotarm;
                 try {
-                    remoteRobotarm = RemoteRobotarm.getInstance();
-                } catch (IOException e) {
+                    remoteRobotarm = robotController.getRobotArm();
+                } catch (ConnectionNotEstablishedException e) {
                     Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -176,8 +180,8 @@ public class ControllerFragment extends Fragment {
                     double yValueActual = Double.parseDouble(yValue.getText().toString());
                     double zValueActual = Double.parseDouble(zValue.getText().toString());
                     try {
-                        RemoteRobotarm.getInstance().moveTo(xValueActual, yValueActual, zValueActual);
-                    } catch (IOException e) {
+                        robotController.getRobotArm().moveTo(xValueActual, yValueActual, zValueActual);
+                    } catch (ConnectionNotEstablishedException e) {
                         Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -240,11 +244,11 @@ public class ControllerFragment extends Fragment {
     public void stopPower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm robotArm = RemoteRobotarm.getInstance();
+            Robotarm robotArm = robotController.getRobotArm();
 
             robotArm.stopAxis(cfg.getSelectedAxis());
 
-        } catch (IOException e) {
+        } catch (ConnectionNotEstablishedException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
     }
@@ -259,16 +263,16 @@ public class ControllerFragment extends Fragment {
         if (!positive) direction = -1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            RemoteRobotarm robotArm = RemoteRobotarm.getInstance();
+            Robotarm robotArm = robotController.getRobotArm();
 
             robotArm.turnAxis(cfg.getSelectedAxis(),
                     direction *
                             ((int) (
-                                    (double) RemoteRobotarm.MAX_POWER *
+                                    robotArm.getMaxMovePower() *
                                             ((double) cfg.getPercentPower() / 100d)
                             ))
             );
-        } catch (IOException e) {
+        } catch (ConnectionNotEstablishedException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
         }
     }

@@ -21,7 +21,7 @@ import javax.net.SocketFactory;
  */
 public class BotballRemoteRobotarm extends Thread implements Robotarm {
 
-    public static final int MAX_POWER = 100;
+    private static final int MAX_POWER = 100;
     private static BotballRemoteRobotarm INSTANCE;
     private final String linkip = "192.168.43.241";        //IP of the JVM-Link-Controller
     private final int linkport = 8889;                    //Port of the Server-program running on the Controller
@@ -87,6 +87,11 @@ public class BotballRemoteRobotarm extends Thread implements Robotarm {
 
     public void exit() {
         sendMessage("exit");
+    }
+
+    @Override
+    public double getMaxMovePower() {
+        return MAX_POWER;
     }
 
     private void sendMessage(String message) {

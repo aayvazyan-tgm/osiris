@@ -66,4 +66,10 @@ public interface Robotarm {
      */
     public void exit();
 
+    /**
+     *
+     * @return returns the Maximum Possible Power
+     */
+    public double getMaxMovePower();
+
 }
