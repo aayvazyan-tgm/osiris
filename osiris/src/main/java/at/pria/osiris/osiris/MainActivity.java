@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
+import android.widget.Toast;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerFactory;
 import at.pria.osiris.osiris.controllers.ControllerType;
@@ -58,9 +60,14 @@ public class MainActivity extends ActionBarActivity
             //fragmentManager.beginTransaction()
             //        .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
             //        .commit();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1))
-                    .commit();
+            try {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1, robotController.getRobotArm()))
+                        .commit();
+            } catch (ConnectionNotEstablishedException e) {
+                Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
         } else if (position + 1 == 1) {// controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
