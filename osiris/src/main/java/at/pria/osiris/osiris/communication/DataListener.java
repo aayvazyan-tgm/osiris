@@ -1,5 +1,7 @@
 package at.pria.osiris.osiris.communication;
 
+import api.Robotarm;
+import at.pria.osiris.osiris.communication.messageProcessor.MessageProcessor;
 import at.pria.osiris.osiris.communication.messageProcessor.MessageProcessorDistributor;
 import org.andrix.deployment.Program;
 import org.andrix.listeners.ExecutionListener;
@@ -11,8 +13,8 @@ import org.andrix.listeners.ExecutionListener;
 public class DataListener implements ExecutionListener {
     private MessageProcessorDistributor messageProcessorDistributor;
 
-    public DataListener(MessageProcessorDistributor messageProcessorDistributor) {
-        this.messageProcessorDistributor = messageProcessorDistributor;
+    public DataListener() {
+        this.messageProcessorDistributor = new MessageProcessorDistributor();
     }
 
     @Override
@@ -26,5 +28,8 @@ public class DataListener implements ExecutionListener {
     @Override
     public void executionDataReceived(Program program, int i, byte[] bytes) {
         this.messageProcessorDistributor.processMessage(bytes);
+    }
+    public void addMessageProcessor(MessageProcessor messageProcessor){
+        this.messageProcessorDistributor.addMessageProcessor(messageProcessor);
     }
 }

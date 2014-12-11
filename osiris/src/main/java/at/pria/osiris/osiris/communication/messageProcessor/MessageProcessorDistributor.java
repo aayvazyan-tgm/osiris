@@ -15,11 +15,9 @@ import java.util.List;
  */
 public class MessageProcessorDistributor {
 
-    private Robotarm robotarm;
     private List<MessageProcessor> messageProcessors;
 
-    public MessageProcessorDistributor(Robotarm robotarm) {
-        this.robotarm = robotarm;
+    public MessageProcessorDistributor() {
         this.messageProcessors = new LinkedList<MessageProcessor>();
     }
 
@@ -29,7 +27,7 @@ public class MessageProcessorDistributor {
      * @param message the message
      */
 
-    public void processMessage(byte[] message) {
+    protected void processMessage(byte[] message) {
         try {
             Object receivedMessage = Serializer.deserialize(message);
             for (MessageProcessor messageProcessor : messageProcessors) {
