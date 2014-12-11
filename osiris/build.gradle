@@ -18,6 +18,9 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.1"
 
+    lintOptions {
+        abortOnError false
+    }
     signingConfigs {
 
         defaultConfig {
@@ -64,25 +67,27 @@ android {
 
     applicationVariants.all { variant ->
 
-        def apk = variant.outputFile;
-        def newName = apk.name.replace(".apk", "" + version + ".apk")
-        newName = newName
-        //.replace("BUILD_TYPE", variant.buildType.name)
-                .replace(project.name, "Osiris-App");
-        variant.outputFile = new File(apk.parentFile, newName);
+//        def apk = variant.outputFile;
+//        def newName = apk.name.replace(".apk", "" + version + ".apk")
+//        newName = newName
+//        //.replace("BUILD_TYPE", variant.buildType.name)
+//                .replace(project.name, "Osiris-App");
+//        variant.getOutputs().forEach()
+//        variant.outputFile = new File(apk.parentFile, newName);
     }
 
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.jar'], dir: 'lib')
     compile 'com.android.support:appcompat-v7:21.0.2'
+    //compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.7'
     compile project(':api')
 }
