@@ -2,7 +2,7 @@ package at.pria.osiris.osiris.network;
 
 import android.util.Log;
 import api.Robotarm;
-import at.pria.osiris.osiris.sensors.SensorRefresher;
+import at.pria.osiris.osiris.sensors.SensorRefreshable;
 
 /**
  * Created by Samuel on 29.10.2014.
@@ -10,10 +10,10 @@ import at.pria.osiris.osiris.sensors.SensorRefresher;
 public class DirtyClientMessageProcessor {
 
     private Robotarm robotarm;
-    private SensorRefresher sensorRefresher;
+    private SensorRefreshable sensorRefresher;
 
 
-    public DirtyClientMessageProcessor(Robotarm robotarm, SensorRefresher sensorRefresher) {
+    public DirtyClientMessageProcessor(Robotarm robotarm, SensorRefreshable sensorRefresher) {
         this.robotarm = robotarm;
         this.sensorRefresher = sensorRefresher;
     }
@@ -40,7 +40,7 @@ public class DirtyClientMessageProcessor {
         //Sensor 1
         if (splitted[0].equals("sensor1") && splitted.length == 2) {
             try {
-                sensorRefresher.refresh(splitted[1], "sensor1");
+                sensorRefresher.refresh(Double.parseDouble(splitted[1]), "sensor1");
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
@@ -50,7 +50,7 @@ public class DirtyClientMessageProcessor {
         //Sensor 2
         if (splitted[0].equals("sensor2") && splitted.length == 2) {
             try {
-                sensorRefresher.refresh(splitted[1], "sensor2");
+                sensorRefresher.refresh(Double.parseDouble(splitted[1]), "sensor2");
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
