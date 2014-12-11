@@ -27,7 +27,7 @@ public class MessageProcessorDistributor {
      * @param message the message
      */
 
-    protected void processMessage(byte[] message) {
+    public void processMessage(byte[] message) {
         try {
             Object receivedMessage = Serializer.deserialize(message);
             for (MessageProcessor messageProcessor : messageProcessors) {
