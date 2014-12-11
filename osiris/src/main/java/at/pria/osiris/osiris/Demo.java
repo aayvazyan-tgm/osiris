@@ -2,7 +2,6 @@ package at.pria.osiris.osiris;
 
 import api.Axis;
 import api.Robotarm;
-import at.pria.osiris.osiris.network.RemoteRobotarm;
 
 import java.io.IOException;
 
@@ -19,11 +18,13 @@ public class Demo {
         this.robotarm = robotarm;
     }
 
-    public static Demo getInstance() throws IOException {
+    public static Demo getInstance(Robotarm rm) throws IOException {
         if (demo == null) {
-            RemoteRobotarm rm = RemoteRobotarm.getInstance();
             demo = new Demo(rm);
+        } else {
+            demo.robotarm = rm;
         }
+
         return demo;
     }
 
