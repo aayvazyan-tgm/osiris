@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.controllers2.bedgehog;
+package at.pria.osiris.osiris.controllers.bedgehog;
 
 import org.andrix.listeners.StateListener;
 import org.andrix.low.ConnectionState;

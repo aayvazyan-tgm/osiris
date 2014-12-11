@@ -1,6 +1,6 @@
-package at.pria.osiris.osiris.controllers2.bedgehog;
+package at.pria.osiris.osiris.controllers.bedgehog;
 
-import at.pria.osiris.osiris.controllers2.ControllerSetup;
+import at.pria.osiris.osiris.controllers.ControllerSetup;
 
 /**
  * @author Ari Ayvazyan

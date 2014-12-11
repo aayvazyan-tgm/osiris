@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.controllers2.bedgehog;
+package at.pria.osiris.osiris.controllers.bedgehog;
 
 import android.util.Log;
 import Util.AXCPWrapper;

@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.communication.messageProcessor2;
+package at.pria.osiris.osiris.communication.messageProcessor;
 
 import android.util.Log;
 import api.Robotarm;

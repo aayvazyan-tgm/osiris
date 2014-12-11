@@ -1,9 +1,9 @@
-package at.pria.osiris.osiris.controllers2.bedgehog;
+package at.pria.osiris.osiris.controllers.bedgehog;
 
 import api.Robotarm;
-import at.pria.osiris.osiris.controllers2.ConnectionNotEstablishedException;
-import at.pria.osiris.osiris.controllers2.Controller;
-import at.pria.osiris.osiris.controllers2.ControllerSetup;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers.Controller;
+import at.pria.osiris.osiris.controllers.ControllerSetup;
 
 import java.io.IOException;
 

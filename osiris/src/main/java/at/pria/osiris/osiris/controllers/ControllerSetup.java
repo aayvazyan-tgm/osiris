@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.controllers2;
+package at.pria.osiris.osiris.controllers;
 
 /**
  * @author Ari Ayvazyan
