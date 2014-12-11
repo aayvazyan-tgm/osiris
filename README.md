@@ -34,9 +34,8 @@ Step 3: Prepare the Project
 
 Dependencies
 ------------
-To compile the linker, you need to add the linkjvm.jar manually to the libs folder of the linker subproject.
 
-osiris/linker/libs/linkjvm.jar.
+-
 
 Android sdk path
 ----------------
