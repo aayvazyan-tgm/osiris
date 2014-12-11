@@ -79,6 +79,11 @@ public class RemoteRobotarm implements Robotarm {
         sendMessage("exit");
     }
 
+    @Override
+    public double getMaxMovePower() {
+        return 100;
+    }
+
     private void sendMessage(String message) {
         try {
             System.out.println("Sending message to Socket Server: " + message);
