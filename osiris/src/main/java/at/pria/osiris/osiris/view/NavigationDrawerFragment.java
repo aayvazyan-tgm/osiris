@@ -247,7 +247,8 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.start_test) {
-            Toast.makeText(getActivity(), "Running test...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Demo not implemented", Toast.LENGTH_SHORT).show();
+            /* No more tests
             try {
                 Demo.getInstance().showSomething();
                 Toast.makeText(getActivity(), "Test done...", Toast.LENGTH_SHORT).show();
@@ -255,6 +256,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Toast.makeText(getActivity(), "Error connecting", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            */
             return true;
         }
 
