@@ -10,13 +10,11 @@ import api.Axis;
 import api.Robotarm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
-import at.pria.osiris.osiris.controllers.Controller;
+import at.pria.osiris.osiris.controllers2.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers2.Controller;
 import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
 import at.pria.osiris.osiris.view.elements.ButtonVisualiser;
-
-import java.io.IOException;
 
 /**
  * @author Ari Michael Ayvazyan

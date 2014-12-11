@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.controllers2.Botball;
+package at.pria.osiris.osiris.controllers2.botball;
 
 import android.os.StrictMode;
 import android.util.Log;

@@ -1,6 +1,6 @@
 package at.pria.osiris.osiris.communication;
 
-import at.pria.osiris.osiris.communication.MessageProcessor.MessageProcessorDistributor;
+import at.pria.osiris.osiris.communication.messageProcessor2.MessageProcessorDistributor;
 import org.andrix.deployment.Program;
 import org.andrix.listeners.ExecutionListener;
 
