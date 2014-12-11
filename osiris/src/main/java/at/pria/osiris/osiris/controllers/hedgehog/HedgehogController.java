@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.controllers.bedgehog;
+package at.pria.osiris.osiris.controllers.hedgehog;
 
 import api.Robotarm;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
