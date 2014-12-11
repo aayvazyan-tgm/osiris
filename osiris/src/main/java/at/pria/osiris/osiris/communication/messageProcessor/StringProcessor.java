@@ -12,8 +12,9 @@ public class StringProcessor implements MessageProcessor {
     private Robotarm robotarm;
     private SensorRefreshable sensorRefresher;
 
-    public StringProcessor(Robotarm robotarm) {
+    public StringProcessor(Robotarm robotarm, SensorRefreshable sensorRefresher) {
         this.robotarm = robotarm;
+        this.sensorRefresher=sensorRefresher;
     }
 
     /**
