@@ -135,4 +135,9 @@ public class RobotarmImpl implements Robotarm {
         close();
     }
 
+    @Override
+    public double getMaxMovePower() {
+        return 100;
+    }
+
 }
