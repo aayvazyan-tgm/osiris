@@ -32,10 +32,6 @@ Clone this repo.
 Step 3: Prepare the Project
 ===========
 
-Dependencies
-------------
-
--
 
 Android sdk path
 ----------------
