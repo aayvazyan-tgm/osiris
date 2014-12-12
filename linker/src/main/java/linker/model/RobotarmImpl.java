@@ -32,19 +32,30 @@ public class RobotarmImpl implements Robotarm {
     private Kinematics kinematics;
 
     public RobotarmImpl() {
+        joints = new Joint[3];
         try {
-            joints = new Joint[3];
-            joints[0] = new Joint(new Motor(0), new Analog(0),
+            joints[0] = new Joint(new Motor(0), null,
                     Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
-            joints[1] = new Joint(new Motor(1), new Analog(1),
-                    Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
-            joints[2] = new Joint(new Motor(2), new Analog(2),
-                    Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
-
-            kinematics = new ThreeAxisKinematics2D();
         } catch (NotConnectedException e) {
+            System.err.println("Something is not connected 0");
             e.printStackTrace();
         }
+        try{
+            joints[1] = new Joint(new Motor(1), null,
+                    Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
+        } catch (NotConnectedException e) {
+            System.err.println("Something is not connected 1");
+            e.printStackTrace();
+        }
+        try{
+            joints[2] = new Joint(new Motor(2), null,
+                    Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
+        } catch (NotConnectedException e) {
+            System.err.println("Something is not connected 2");
+            e.printStackTrace();
+        }
+
+            kinematics = new ThreeAxisKinematics2D();
     }
 
     public Joint getAxis(Axis axis) {

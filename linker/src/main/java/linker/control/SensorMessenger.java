@@ -27,6 +27,7 @@ public class SensorMessenger implements Runnable, Stoppable {
             try {
                 Thread.sleep(10);
                 try {
+                    if(robotarm==null) System.out.println("Robotarm is null");
                     AXCPWrapper.sendData("sensor0/" + robotarm.getAxis(Axis.BASE).getSensor().getValue());
                     AXCPWrapper.sendData("sensor1/" + robotarm.getAxis(Axis.AXISONE).getSensor().getValue());
                     AXCPWrapper.sendData("sensor2/" + robotarm.getAxis(Axis.AXISTWO).getSensor().getValue());
