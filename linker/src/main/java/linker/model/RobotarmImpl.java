@@ -34,7 +34,7 @@ public class RobotarmImpl implements Robotarm {
     public RobotarmImpl() {
         joints = new Joint[3];
         try {
-            joints[0] = new Joint(new Motor(0), null,
+            joints[0] = new Joint(new Motor(0), new Analog(0),
                     Axis.BASE.getMinimumAngle(), Axis.BASE.getMaximumAngle());
         } catch (NotConnectedException e) {
             System.err.println("Something is not connected 0");
