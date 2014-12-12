@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import at.pria.osiris.osiris.view.ControllerFragment;
+import at.pria.osiris.osiris.view.DrawFragment;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.TableSensorValuesFragment;
 
@@ -46,21 +47,25 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (position + 1 == 2) {//sensorvalues
+        if (position + 1 == 1) {//sensorvalues
             //fragmentManager.beginTransaction()
             //        .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
             //        .commit();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1))
-                    .commit();
-        } else if (position + 1 == 1) {// controller
-            fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1))
+                    .commit();
+        } else if (position + 1 == 2) {// controller
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1))
                     .commit();
 //        } else if (position + 1 == 0) {// joystickfragment
 //            fragmentManager.beginTransaction()
 //                    .replace(R.id.container, JoystickFragment.getInstance(position + 1))
 //                    .commit();
+        } else if (position + 1 == 3) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, DrawFragment.getInstance(position + 1))
+                    .commit();
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -78,7 +83,7 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.sensor_values);
                 break;
             case 3:
-                mTitle = getString(R.string.joystick);
+                mTitle = getString(R.string.drawline);
                 break;
         }
     }

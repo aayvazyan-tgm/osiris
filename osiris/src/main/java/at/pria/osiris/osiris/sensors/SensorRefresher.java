@@ -32,11 +32,11 @@ public class SensorRefresher implements Runnable, Stoppable {
             ObjectInputStream ois = remoteRobotarm.getOis();
             try {
                 if(ois != null) {
-                    Log.d("OSIRIS_DEBUG_MESSAGES", "Reached waitForMessage");
+                    //Log.d("OSIRIS_DEBUG_MESSAGES", "Reached waitForMessage");
                     message = (String) ois.readObject();
-                    Log.d("OSIRIS_DEBUG_MESSAGES", "Reached gotMessage");
+                    //Log.d("OSIRIS_DEBUG_MESSAGES", "Reached gotMessage");
                 }else {
-                    Log.d("Osiris-Verbose", "Not connected");
+                    //Log.d("Osiris-Verbose", "Not connected");
                 }
 
             } catch (ClassNotFoundException e) {
@@ -44,10 +44,10 @@ public class SensorRefresher implements Runnable, Stoppable {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Closing connection...");
+                //System.out.println("Closing connection...");
                 running = false;
             }
-            System.out.println("Message Received: " + message);
+            //System.out.println("Message Received: " + message);
 
             cmp.callMethod(message);
         }
@@ -60,6 +60,6 @@ public class SensorRefresher implements Runnable, Stoppable {
 
     public void refresh(String s, String sensorname) {
         this.sensorRefreshable.refresh(Double.parseDouble(s), sensorname);
-        Log.d("OSIRIS_DEBUG_MESSAGES", "SentRefresh");
+        //Log.d("OSIRIS_DEBUG_MESSAGES", "SentRefresh");
     }
 }
