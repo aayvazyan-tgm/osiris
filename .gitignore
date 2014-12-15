@@ -99,6 +99,8 @@ local.properties
 .cproject
 # PDT-specific
 .buildpath
+#Astah lock files
+*.lock
 
 
 osiris/osirisKeyStore.jks
