@@ -7,6 +7,7 @@ import linker.model.RobotarmImpl;
 import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.AXCPAccessor;
 import org.andrix.low.AXCPServer;
+import org.andrix.low.HardwareController;
 
 /**
  * Starts the link-controller program
@@ -18,7 +19,7 @@ public class Starter {
     public static void main(String[] args) {
 
         AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
-        AXCPAccessor.getInstance(); // Initialise the AXCPAccessor
+        AXCPAccessor.getInstance().connectController(new HardwareController(null,HardwareController.TYPE_V3,"hedgehog-osiris")); // Initialise the AXCPAccessor
 
         Thread thread;
         RobotarmImpl robotarm = new RobotarmImpl();
