@@ -13,7 +13,6 @@ import java.io.IOException;
  */
 public class HedgehogController implements Controller {
     private ControllerSetup hedgehogSetup;
-    private Robotarm hedgehogRemoteRobotArm;
 
     public HedgehogController(/*Configuration*/) {
         this.hedgehogSetup = new HedgehogSetup();

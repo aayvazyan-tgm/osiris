@@ -2,6 +2,7 @@ package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
@@ -38,16 +39,18 @@ public class ControllerFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ControllerFragment getInstance(int sectionNumber, Controller robotController) {
+    public static ControllerFragment getInstance(int sectionNumber, @NonNull Controller robotController) {
         if (INSTANCE == null) {
             ControllerFragment fragment = new ControllerFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+            fragment.robotController=robotController;
 
             INSTANCE = fragment;
         }
         INSTANCE.robotController=robotController;
+        if(INSTANCE.robotController==null)throw new RuntimeException("robotController is null!!!");
         return INSTANCE;
     }
 
