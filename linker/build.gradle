@@ -16,7 +16,7 @@ dependencies {
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
-archivesBaseName = 'Osiris-Linker' //Name of the base
+archivesBaseName = 'Osiris-Linker'
 mainClassName = 'linker.Starter'
 
 task packJarWithLibs(type: Jar) {
