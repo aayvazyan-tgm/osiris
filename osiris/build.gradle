@@ -4,11 +4,14 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'com.novoda:gradle-android-command-plugin:1.2.1'
+        classpath 'com.novoda:gradle-android-command-plugin:1.3.0'
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'android-command'
+
+archivesBaseName = 'Osiris-App-'+version
 
 repositories {
     jcenter()
@@ -21,14 +24,15 @@ android {
     lintOptions {
         abortOnError false
     }
+
     signingConfigs {
 
         defaultConfig {
-            applicationId "at.pria.osiris.osiris"
+            applicationId "at.pria.osiris.osiris" //This should never change
             minSdkVersion 10
             targetSdkVersion 21
             versionCode 1
-            versionName "1.1"
+            versionName version
         }
 
         debug {
@@ -37,6 +41,7 @@ android {
             keyAlias = 'debug'
             keyPassword = 'mydebug'
         }
+
         release {
             File propFile = file("${projectDir}${File.separator}signing.properties")
 
@@ -62,18 +67,6 @@ android {
                 }
             }
         }
-    }
-
-
-    applicationVariants.all { variant ->
-
-//        def apk = variant.outputFile;
-//        def newName = apk.name.replace(".apk", "" + version + ".apk")
-//        newName = newName
-//        //.replace("BUILD_TYPE", variant.buildType.name)
-//                .replace(project.name, "Osiris-App");
-//        variant.getOutputs().forEach()
-//        variant.outputFile = new File(apk.parentFile, newName);
     }
 
     buildTypes {
