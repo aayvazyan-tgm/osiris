@@ -1,17 +1,7 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-    }
+plugins {
+    id 'application'
+    id 'java'
 }
-
-apply plugin: 'java'
-apply plugin: 'gradle-one-jar'
-
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
 
 repositories {
     mavenCentral()
@@ -23,7 +13,17 @@ dependencies {
     compile 'org.scream3r:jssc:2.8.0'
 }
 
-task packJarWithLibs(type: OneJar) {
-    mainClass = 'linker.Starter'
-    archiveName = "Osiris-" + archiveName.toString()
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+archivesBaseName = 'Osiris-Linker' //Name of the base
+mainClassName = 'linker.Starter'
+
+task packJarWithLibs(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
 }

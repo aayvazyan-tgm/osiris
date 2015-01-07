@@ -1,16 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-    }
+plugins {
+    id 'application'
+    id 'java'
 }
 
-apply plugin: 'java'
-apply plugin: 'gradle-one-jar'
-
 sourceCompatibility = 1.6
+
+//jar.archiveName = "DesktopApp.jar" //Defines the full archive name
+archivesBaseName = 'DesktopApp'
+
+mainClassName = 'client.ClientStarter'
 
 repositories {
     mavenCentral()
@@ -21,8 +19,11 @@ dependencies {
     compile project(':api')
 }
 
+task packJarWithLibs(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
 
-task packJarWithLibs(type: OneJar) {
-    mainClass = 'client.ClientStarter'
-    archiveName = "DesktopApp".concat(archiveName.toString().minus("desktopApp"))
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
 }
