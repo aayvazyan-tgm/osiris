@@ -14,16 +14,19 @@ apply plugin: 'idea'
 subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-//    ext.revision = 'git rev-list --count HEAD'.execute().text.trim()
-//    ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
-//    version = "r${revision}.${hash}"
+
+    group = 'at.pria.osiris'
+
+        // //
+        // Generate a Version
+        // //
+
     version = 'git describe --tags'.execute().text.trim()
     //Ceil the hash
     int versionStartsAt = version.lastIndexOf("-g")
     if (versionStartsAt > 0) {
         version = version.substring(0, versionStartsAt)
     }
-    group = 'at.pria.osiris'
 }
 
 task wrapper(type: Wrapper) {
