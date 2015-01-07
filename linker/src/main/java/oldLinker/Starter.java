@@ -1,9 +1,9 @@
-package linker;
+package oldLinker;
 
-import linker.control.DataListener;
-import linker.control.MessageProcessor.MessageProcessorDistributor;
-import linker.control.SensorMessenger;
-import linker.model.RobotarmImpl;
+import oldLinker.control.DataListener;
+import oldLinker.control.MessageProcessor.MessageProcessorDistributor;
+import oldLinker.control.SensorMessenger;
+import oldLinker.model.RobotarmImpl;
 import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.AXCPAccessor;
 import org.andrix.low.AXCPServer;

@@ -1,7 +1,7 @@
-package linker.control;
+package oldLinker.control;
 
 import api.Stoppable;
-import linker.model.Joint;
+import oldLinker.model.Joint;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 

@@ -1,4 +1,4 @@
-package linker.model.kinematics;
+package oldLinker.model.kinematics;
 
 import java.util.List;
 

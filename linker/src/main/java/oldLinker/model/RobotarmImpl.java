@@ -1,9 +1,9 @@
-package linker.model;
+package oldLinker.model;
 
 import api.Axis;
 import api.Robotarm;
-import linker.model.kinematics.Kinematics;
-import linker.model.kinematics.ThreeAxisKinematics2D;
+import oldLinker.model.kinematics.Kinematics;
+import oldLinker.model.kinematics.ThreeAxisKinematics2D;
 import org.andrix.low.NotConnectedException;
 import org.andrix.motors.Motor;
 import org.andrix.sensors.Analog;

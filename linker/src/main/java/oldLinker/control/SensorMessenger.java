@@ -1,9 +1,9 @@
-package linker.control;
+package oldLinker.control;
 
 import api.Axis;
 import api.Stoppable;
-import linker.model.RobotarmImpl;
-import linker.util.AXCPWrapper;
+import oldLinker.model.RobotarmImpl;
+import oldLinker.util.AXCPWrapper;
 
 import java.io.IOException;
 
