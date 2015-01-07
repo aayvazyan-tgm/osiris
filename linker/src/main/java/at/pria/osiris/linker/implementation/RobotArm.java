@@ -3,7 +3,7 @@ package at.pria.osiris.linker.implementation;
 import at.pria.osiris.linker.controllers.components.Axis;
 import at.pria.osiris.linker.controllers.components.Joint;
 
-public class RobotArm {
+public abstract class RobotArm {
 
 	public Joint getJoint(Axis axis) {
 		return null;
