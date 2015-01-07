@@ -1,4 +1,4 @@
-package linker.controllers.components.systemDependent;
+package at.pria.osiris.linker.controllers.components.systemDependent;
 
 public interface Motor {
 

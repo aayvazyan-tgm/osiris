@@ -1,6 +1,6 @@
-package linker.controllers.hedgehog;
+package at.pria.osiris.linker.controllers.hedgehog;
 
-import linker.controllers.components.systemDependent.Servo;
+import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 
 public class HedgehogServo implements Servo {
 

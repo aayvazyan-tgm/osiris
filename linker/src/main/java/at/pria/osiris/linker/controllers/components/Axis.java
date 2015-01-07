@@ -1,4 +1,4 @@
-package linker.controllers.components;
+package at.pria.osiris.linker.controllers.components;
 
 public class Axis {
 

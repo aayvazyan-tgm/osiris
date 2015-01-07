@@ -1,6 +1,6 @@
-package linker.controllers.hedgehog;
+package at.pria.osiris.linker.controllers.hedgehog;
 
-import linker.controllers.components.systemDependent.Motor;
+import at.pria.osiris.linker.controllers.components.systemDependent.Motor;
 
 public class HedgehogMotor implements Motor {
 

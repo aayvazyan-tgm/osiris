@@ -1,4 +1,4 @@
-package linker.kinematics;
+package at.pria.osiris.linker.kinematics;
 
 public interface Kinematic {
 

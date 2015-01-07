@@ -1,4 +1,4 @@
-package linker.communication.messageProcessors;
+package at.pria.osiris.linker.communication.messageProcessors;
 
 public interface MessageProcessor {
 

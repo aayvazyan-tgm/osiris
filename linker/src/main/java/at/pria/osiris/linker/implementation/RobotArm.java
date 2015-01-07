@@ -1,7 +1,7 @@
-package linker.implementation;
+package at.pria.osiris.linker.implementation;
 
-import linker.controllers.components.Axis;
-import linker.controllers.components.Joint;
+import at.pria.osiris.linker.controllers.components.Axis;
+import at.pria.osiris.linker.controllers.components.Joint;
 
 public class RobotArm {
 

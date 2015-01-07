@@ -1,6 +1,6 @@
-package linker.communication.messageProcessors;
+package at.pria.osiris.linker.communication.messageProcessors;
 
-import linker.implementation.HedgehogRobotArm;
+import at.pria.osiris.linker.implementation.HedgehogRobotArm;
 
 public class SampleStringProcessor implements MessageProcessor {
 

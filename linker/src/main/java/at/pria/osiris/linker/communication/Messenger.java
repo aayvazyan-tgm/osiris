@@ -1,6 +1,6 @@
-package linker.communication;
+package at.pria.osiris.linker.communication;
 
-import linker.communication.messageProcessors.MessageProcessor;
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 
 public class Messenger {
 

@@ -1,4 +1,4 @@
-package linker.kinematics;
+package at.pria.osiris.linker.kinematics;
 
 public class Kinematics3D implements Kinematic {
 
