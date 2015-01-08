@@ -13,10 +13,10 @@ Make sure the following things are set up:
 -----------
 - Your android phone allows adb connection.
 
-- via the SDK Manager as defined in osiris/build.gradle:
-    - Android SDK 17, 19
-    - buildToolsVersion 19.1.0
-    - support library: appcompat-v7:20.0.0
+- via the SDK Manager as defined in ./osiris/build.gradle:
+    - Android SDK 21
+    - buildToolsVersion "21.1.1"
+    - support library: appcompat-v7:21.0.2
 
 The following programs should be in your Path variable
 ------------------------------------------------------
