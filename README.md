@@ -36,6 +36,7 @@ Step 3: Prepare the Project
 Android sdk path
 ----------------
 Create a file called local.properties in the project root and fill in the path to your SDK dir.
+A sample config file can be found in `/sampleConfiguration/local.properties`
 
 Alternatively you could set your ANDROID_HOME variable to this path.
 
