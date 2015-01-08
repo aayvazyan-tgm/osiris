@@ -19,7 +19,7 @@ dependencies {
     compile project(':api')
 }
 
-task packJarWithLibs(type: Jar) {
+task packJarWithLibs(type: Jar, dependsOn: jar) {
     from files(sourceSets.main.output.classesDir)
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
 
