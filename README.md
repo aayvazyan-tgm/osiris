@@ -89,7 +89,7 @@ Do not use the android adt plugin, a default eclipse with the gradle plugin shou
 - Make sure that auto-select subprojects is marked.
 - You are done!
 
-Step 4Setup the controller
+Step 4 - Setup the controller
 ===========
 
 Instructions
