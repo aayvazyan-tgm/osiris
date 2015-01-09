@@ -116,3 +116,27 @@ Sensor of Axis2 motor = 2
 Axis3 motor = M3
 
 ...
+
+Step 5 - Setup the Raspberry Pi + Hedgehog 
+===========
+
+Instructions
+------------
+To successfully link our Raspberry Pi- with the Hedgehog Hardware we have to make sure that the following buses are connected to each other:
+
+A little glossary:
+    - The pin, which is responsible for any POWER, is identified by the name 5V (as 5 Voltage)
+    - The pin, which is responsible for transmitting signals/data, is identified by the name TX (Transmit)
+    - The pin, which is responsible for receiving signals/data, is identified by the name RX (Receive)
+    - The pin, which is responsible for grounding, is identified by the name GND (Ground)
+
+Make sure to connect the following pins/hardware:
+    - The Hedgehog Controller is connected to the battery, the main source of power. (via the giant black-n-red cable stickin out)
+    - Both the HWC and PI 5V pins have to be connected to each other.
+    - The ReceiveX pin of the PI has got to be connected to the TransmitX pin of the HWC. (and vice versa)
+    - Both the HWC and PI GND pins have to be connected to each other.
+    
+    Wash your hands before touching any contacts with your greasy fingers :)
+    
+    ![The connection between HWC and PI](http://i.imgur.com/BrGbwMM.jpg?1 "The connection between HWC and PI")
+    
