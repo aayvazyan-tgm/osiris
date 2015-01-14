@@ -50,7 +50,6 @@ public class ControllerFragment extends Fragment {
             INSTANCE = fragment;
         }
         INSTANCE.robotController=robotController;
-        if(INSTANCE.robotController==null)throw new RuntimeException("robotController is null!!!");
         return INSTANCE;
     }
 
