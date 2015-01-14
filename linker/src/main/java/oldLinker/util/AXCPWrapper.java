@@ -3,6 +3,7 @@ package oldLinker.util;
 import org.andrix.AXCP;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
+import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 
@@ -21,6 +22,6 @@ public class AXCPWrapper {
      * Sends data via the Hedgehog AXCP Controller
      */
     public static void sendData(Serializable data) throws NotConnectedException, RequestTimeoutException {
-        sendData(((byte[]) data));
+        sendData((SerializationUtils.serialize(data)));
     }
 }
