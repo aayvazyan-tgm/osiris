@@ -40,6 +40,7 @@ public class ControllerFragment extends Fragment {
      * number.
      */
     public static ControllerFragment getInstance(int sectionNumber, @NonNull Controller robotController) {
+        if(robotController==null)throw new RuntimeException("robotController may not be null.");
         if (INSTANCE == null) {
             ControllerFragment fragment = new ControllerFragment();
             Bundle args = new Bundle();
