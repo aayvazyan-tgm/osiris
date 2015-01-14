@@ -87,6 +87,8 @@ public class HedgehogRemoteRobotarm extends Thread implements Robotarm {
             Log.d("Connection", e.toString());
         } catch (NotConnectedException e) {
             Log.d("Connection", e.toString());
+        } catch (IOException e){
+            Log.d("Connection", e.toString());
         }
     }
 }
