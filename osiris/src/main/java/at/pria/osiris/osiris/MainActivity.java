@@ -35,6 +35,9 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        robotController = ControllerFactory.getController(ControllerType.Hedgehog);
+        robotController.getSetup().setup();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -48,8 +51,6 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         /* Setup the Andrix/Hedgehog controller */
         //Setup the network
-        robotController = ControllerFactory.getController(ControllerType.Hedgehog);
-        robotController.getSetup().setup();
     }
 
     @Override
