@@ -6,10 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import api.Points;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.util.AXCPWrapper;
 
@@ -44,9 +47,8 @@ public class DrawFragment extends Fragment {
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint paint;
-    private ArrayList<Point> l;
-
-    private boolean once= true;
+    private ArrayList<Points> l;
+    private ArrayList<ArrayList<Points>> allLists;
 
     /**
      * Creates a new DrawFragment instance
@@ -72,7 +74,7 @@ public class DrawFragment extends Fragment {
      * Constructor
      */
     public DrawFragment() {
-        l= new ArrayList<Point>();
+        allLists= new ArrayList<ArrayList<Points>>();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -120,15 +122,13 @@ public class DrawFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 int action= event.getAction();
 
-                if(once==false) {
-                    return false;
-                }
-
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
 
                         startx=event.getX();
                         starty=event.getY();
+                        l= new ArrayList<Points>();
+                        allLists.add(l);
 
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -136,7 +136,7 @@ public class DrawFragment extends Fragment {
                         endx = event.getX();
                         endy = event.getY();
 
-                        l.add(new Point((int) endx, (int) endy));
+                        l.add(new Points((int) endx, (int) endy));
 
                         canvas.drawLine(startx, starty, endx, endy, paint);
                         imageView.invalidate();
@@ -146,7 +146,6 @@ public class DrawFragment extends Fragment {
 
                         break;
                     case MotionEvent.ACTION_UP:
-                        once= false;
                         break;
                     case MotionEvent.ACTION_CANCEL:
                         break;
@@ -166,8 +165,7 @@ public class DrawFragment extends Fragment {
             public void onClick(View v) {
                 bitmap.eraseColor(Color.TRANSPARENT);
                 imageView.invalidate();
-                once= true;
-                l.clear();
+                allLists.clear();
             }
         });
 
@@ -177,7 +175,7 @@ public class DrawFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    AXCPWrapper.sendData(l);
+                    AXCPWrapper.sendData(allLists);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
