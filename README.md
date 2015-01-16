@@ -15,7 +15,7 @@ Make sure the following things are set up:
 
 - via the SDK Manager as defined in ./osiris/build.gradle:
     - Android SDK 21
-    - buildToolsVersion "21.1.2"
+    - buildToolsVersion "21.1.1"
     - support library: appcompat-v7:21.0.2
 
 The following programs should be in your Path variable
