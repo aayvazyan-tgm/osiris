@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.util.AXCPWrapper;
 
 /**
+ *
+ * A fragment which allows the user to draw a line on the screen.
+ *
  * Created by helmuthbrunner on 03/12/14.
  */
 public class DrawFragment extends Fragment {
@@ -30,13 +37,22 @@ public class DrawFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private float downx = 0, downy = 0, upx = 0, upy = 0;
+    private float startx=0, starty=0, endx=0, endy=0;
 
+    private Button buttonClear, buttonSend;
     private ImageView imageView;
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint paint;
+    private ArrayList<Point> l;
 
+    private boolean once= true;
+
+    /**
+     * Creates a new DrawFragment instance
+     * @param sectionNumber the sectionNumber from the fragments collection
+     * @return the new instance
+     */
     public static DrawFragment getInstance(int sectionNumber) {
 
         if(INSTANCE==null) {
@@ -52,8 +68,11 @@ public class DrawFragment extends Fragment {
         return INSTANCE;
     }
 
+    /**
+     * Constructor
+     */
     public DrawFragment() {
-
+        l= new ArrayList<Point>();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -62,6 +81,8 @@ public class DrawFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_draw, container, false);
 
         imageView = (ImageView) view.findViewById(R.id.drawView);
+        buttonClear= (Button) view.findViewById(R.id.buttonClear);
+        buttonSend= (Button) view.findViewById(R.id.buttonSend);
 
         WindowManager manager = (WindowManager) imageView.getContext().getSystemService(Context.WINDOW_SERVICE);
 
@@ -83,12 +104,14 @@ public class DrawFragment extends Fragment {
             int dh= p.y;
 
             bitmap = Bitmap.createBitmap(dw, dh, Bitmap.Config.ARGB_8888);
-
         }
 
         canvas = new Canvas(bitmap);
+
         paint = new Paint();
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.GREEN);    // sets the color of the line
+        paint.setStrokeWidth(10.0f);    // sets the width of the line
+
         imageView.setImageBitmap(bitmap);
 
         imageView.setOnTouchListener(new View.OnTouchListener() {
@@ -96,26 +119,68 @@ public class DrawFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action= event.getAction();
+
+                if(once==false) {
+                    return false;
+                }
+
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        downx = event.getX();
-                        downy = event.getY();
+
+                        startx=event.getX();
+                        starty=event.getY();
+
                         break;
                     case MotionEvent.ACTION_MOVE:
+
+                        endx = event.getX();
+                        endy = event.getY();
+
+                        l.add(new Point((int) endx, (int) endy));
+
+                        canvas.drawLine(startx, starty, endx, endy, paint);
+                        imageView.invalidate();
+
+                        startx=endx;
+                        starty=endy;
+
                         break;
                     case MotionEvent.ACTION_UP:
-                        upx = event.getX();
-                        upy = event.getY();
-                        canvas.drawLine(downx, downy, upx, upy, paint);
-                        imageView.invalidate();
+                        once= false;
                         break;
                     case MotionEvent.ACTION_CANCEL:
                         break;
                     default:
                         break;
                 }
+                return true;
+            }
 
-                return false;
+        });
+
+        // listener for the clear button
+        // clears the list with the points
+        buttonClear.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                bitmap.eraseColor(Color.TRANSPARENT);
+                imageView.invalidate();
+                once= true;
+                l.clear();
+            }
+        });
+
+        // listener for the send button
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    AXCPWrapper.sendData(l);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
