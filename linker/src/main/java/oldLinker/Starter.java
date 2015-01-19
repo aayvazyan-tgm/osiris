@@ -8,6 +8,7 @@ import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.AXCPAccessor;
 import org.andrix.low.AXCPServer;
 import org.andrix.low.HardwareController;
+import org.apache.log4j.Logger;
 
 /**
  * Starts the link-controller program
@@ -16,6 +17,7 @@ import org.andrix.low.HardwareController;
  * @version 0.2
  */
 public class Starter {
+    static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
     public static void main(String[] args) {
 
         AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
