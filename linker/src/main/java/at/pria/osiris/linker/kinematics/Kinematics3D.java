@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Kinematics3D implements Kinematic {
 
-	static Logger logger = org.apache.log4j.Logger.getLogger(Kinematics3D.class);
+	private static Logger logger = org.apache.log4j.Logger.getLogger(Kinematics3D.class);
 	private double a, b, beta, gamma, delta, eta, c, r, phi, x, y, z;
 	private double[] fragmentLengths;
 	private double[][] padding;
@@ -17,6 +17,8 @@ public class Kinematics3D implements Kinematic {
 		this.z = z;
 		if(fragmentLengths.length != 0){
 			this.fragmentLengths = fragmentLengths;
+			this.a = fragmentLengths[0];
+			this.b = fragmentLengths[1];
 		}else{
 			throw new RuntimeException("Kinematics3D, das FragmentLengths-Array darf nicht leer sein!");
 		}
@@ -25,8 +27,21 @@ public class Kinematics3D implements Kinematic {
 		}else{
 			throw new RuntimeException("Kinematics3D, das Padding-Array darf nicht leer sein!");
 		}
-		this.a = fragmentLengths[0];
-		this.b = fragmentLengths[1];
+		logger.info("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
+	}
+	/**
+	 * @see at.pria.osiris.linker.kinematics.Kinematic#moveToConfiguredPosition()
+	 */
+	public void moveToConfiguredPosition() {
+		//TODO use the solution list
+	}
+
+	/**
+	 * Calculates any needed values...
+	 * @return solution, ArrayList with Double values(Base, AxisOne, AxisTwo)
+	 */
+	private ArrayList<Double> calculateValues(){
+
 		this.r = Math.sqrt(x * x + y * y);
 		this.phi = Math.toDegrees(Math.asin(y / r));
 		this.c = Math.sqrt(r * r + z * z);
@@ -35,17 +50,11 @@ public class Kinematics3D implements Kinematic {
 		this.delta = beta + Math.toDegrees(Math.atan(z / c));
 		this.eta = 90 - delta;
 
-		logger.info("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
-
 		ArrayList<Double> solution = new ArrayList<Double>();
 		solution.add(phi); // Base
 		solution.add(eta); // AxisOne
 		solution.add(gamma); // AxisTwo
-	}
-	/**
-	 * @see at.pria.osiris.linker.kinematics.Kinematic#moveToConfiguredPosition()
-	 */
-	public void moveToConfiguredPosition() {
 
+		return solution;
 	}
 }

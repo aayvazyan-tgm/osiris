@@ -17,9 +17,12 @@ import org.apache.log4j.Logger;
  * @version 0.2
  */
 public class Starter {
-    static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
+
+    private static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
     public static void main(String[] args) {
 
+        //TODO change to log4j2
+        logger.info("Log4J works now");
         AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
         AXCPAccessor.getInstance().connectController(new HardwareController(null,HardwareController.TYPE_V3,"hedgehog-osiris")); // Initialise the AXCPAccessor
 
