@@ -16,7 +16,22 @@ public class DataListener implements ExecutionListener {
     }
 
     @Override
+    public void executionStarted(Program program, int i) {
+
+    }
+
+    @Override
+    public void executionStopped(Program program, int i) {
+
+    }
+
+    @Override
     public void executionDone(Program program, int i, int i1) {
+
+    }
+
+    @Override
+    public void executionOutput(Program program, int i, String s) {
 
     }
 
@@ -26,5 +41,10 @@ public class DataListener implements ExecutionListener {
     @Override
     public void executionDataReceived(Program program, int i, byte[] bytes) {
         this.messageProcessorDistributor.processMessage(bytes);
+    }
+
+    @Override
+    public void executionBreaked(Program program, int i, int i1, String[] strings) {
+
     }
 }
