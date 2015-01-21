@@ -41,14 +41,14 @@ public class RobotarmImpl implements Robotarm {
             e.printStackTrace();
         }
         try{
-            joints[1] = new Joint(new Motor(1), null,
+            joints[1] = new Joint(new Motor(1), new Analog(1),
                     Axis.AXISONE.getMinimumAngle(), Axis.AXISONE.getMaximumAngle());
         } catch (NotConnectedException e) {
             System.err.println("Something is not connected 1");
             e.printStackTrace();
         }
         try{
-            joints[2] = new Joint(new Motor(2), null,
+            joints[2] = new Joint(new Motor(2), new Analog(2),
                     Axis.AXISTWO.getMinimumAngle(), Axis.AXISTWO.getMaximumAngle());
         } catch (NotConnectedException e) {
             System.err.println("Something is not connected 2");
