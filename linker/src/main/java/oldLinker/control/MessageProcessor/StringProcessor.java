@@ -12,9 +12,11 @@ public class StringProcessor implements MessageProcessor {
 
     public StringProcessor(Robotarm robotarm) {
         this.robotarm = robotarm;
+        System.out.println("String processor initialized");
     }
 
     private void processMessage(String message) {
+        System.out.println("Received: " + message);
         String[] splitted = message.split("/");
         for (int i = 0; i < splitted.length; i++) {
 //            System.out.println("Splitted" + i + ": " + splitted[i]);
