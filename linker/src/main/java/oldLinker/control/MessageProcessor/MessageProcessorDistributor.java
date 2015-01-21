@@ -21,6 +21,11 @@ public class MessageProcessorDistributor {
     public MessageProcessorDistributor(Robotarm robotarm) {
         this.robotarm = robotarm;
         this.messageProcessors = new LinkedList<MessageProcessor>();
+        initProcessors();
+    }
+
+    private void initProcessors() {
+        this.addMessageProcessor(new StringProcessor(robotarm));
     }
 
     /**
