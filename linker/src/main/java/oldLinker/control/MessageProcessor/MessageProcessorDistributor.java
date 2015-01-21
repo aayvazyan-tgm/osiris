@@ -38,7 +38,7 @@ public class MessageProcessorDistributor {
         try {
             Object receivedMessage = Serializer.deserialize(message);
             for (MessageProcessor messageProcessor : messageProcessors) {
-                messageProcessor.processMessage(message);
+                messageProcessor.processMessage(receivedMessage);
             }
         } catch (IOException e) {
             e.printStackTrace();
