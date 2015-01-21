@@ -39,4 +39,14 @@ public class MyStateListener implements StateListener{
     public void exceptionThrown(Exception e) {
         e.printStackTrace();
     }
+
+    @Override
+    public void controllerCharge(int i) {
+
+    }
+
+    @Override
+    public void controllerChargingState(boolean b) {
+
+    }
 }
