@@ -3,6 +3,13 @@ package at.pria.osiris.linker.controllers.hedgehog;
 import org.andrix.low.NotConnectedException;
 import org.andrix.motors.Servo;
 
+/**
+ * A class to control the hedgehog servo
+ *
+ * @author Helmuth Brunner
+ * @version 2015-01-26
+ *
+ */
 public class HedgehogServo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
 
 	private Servo actualServo;
