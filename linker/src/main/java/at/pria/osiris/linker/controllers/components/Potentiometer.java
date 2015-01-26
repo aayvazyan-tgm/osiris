@@ -1,15 +1,15 @@
 package at.pria.osiris.linker.controllers.components;
 
-import at.pria.osiris.linker.controllers.components.systemDependent.Sensor;
+import at.pria.osiris.linker.controllers.components.systemDependent.SensorAnalog;
 
 public class Potentiometer {
 
-	public double getAngle() {
-		return 0;
+	public Potentiometer(SensorAnalog sensorAnalog) {
+
 	}
 
-	public Potentiometer(Sensor sensor) {
-
+	public double getAngle() {
+		return 0;
 	}
 
 }
