@@ -1,9 +1,10 @@
 package at.pria.osiris.linker.controllers.components;
 
+import at.pria.osiris.linker.controllers.components.systemDependent.Sensor;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
-import org.andrix.motors.Motor;
-import org.andrix.sensors.Analog;
+
+import at.pria.osiris.linker.controllers.components.systemDependent.Motor;
 
 /**
  * @author Christian Janeczek
@@ -12,14 +13,14 @@ import org.andrix.sensors.Analog;
 public class Joint {
 
     private Motor motor;
-    private Analog sensor;
+    private Sensor sensor;
     private int min;
     private int max;
 
     private boolean running = false;
 
 
-    public Joint(Motor motor, Analog sensor, int min, int max) {
+    public Joint(Motor motor, Sensor sensor, int min, int max) {
         this.motor = motor;
         this.sensor = sensor;
         this.min = min;
@@ -36,15 +37,15 @@ public class Joint {
 
         running = true;
         try {
-            if (sensor.getValue() < max && power > 0) {
+            if (sensor.getCurentValue() < max && power > 0) {
                 motor.moveAtPower(power);
                 System.out.println("Starting Motor with power " + power);
             } else {
-                if (sensor.getValue() > min && power < 0) {
+                if (sensor.getCurentValue() > min && power < 0) {
                     motor.moveAtPower(power);
                     System.out.println("Starting Motor with power " + power);
                 } else {
-                    if (sensor.getValue() > min && power < 0) {
+                    if (sensor.getCurentValue() > min && power < 0) {
                         motor.moveAtPower(power);
                         System.out.println("Starting Motor with power " + power);
                     } else {
@@ -59,36 +60,25 @@ public class Joint {
         }
     }
 
-    public void off() {
-        try {
-            motor.off();
-        } catch (NotConnectedException e) {
-            e.printStackTrace();
-        }
-        running = false;
-        System.out.println("Stopping Motor");
-    }
-
     public synchronized boolean moveToPosition(int pos, int power) {
         if (pos > max || pos < min) return false;
 
         int posmax = (int) ((double) pos + ((double) pos * 0.02));
         int posmin = (int) ((double) pos - ((double) pos * 0.02));
         try {
-            if ((power > 0 && pos < sensor.getValue()) || (power < 0 && pos > sensor.getValue())) {
+            if ((power > 0 && pos < sensor.getCurentValue()) || (power < 0 && pos > sensor.getCurentValue())) {
                 power = power * (-1);
             }
 
             motor.moveAtPower(power);
             System.out.println("Moving to position: " + pos);
-            while (posmax < sensor.getValue() || posmin > sensor.getValue()) {
+            while (posmax < sensor.getCurentValue() || posmin > sensor.getCurentValue()) {
                 Thread.sleep(50);
             }
-            motor.off();
 
             Thread.sleep(100);
 
-            if (posmax < sensor.getValue() || posmin > sensor.getValue()) return moveToPosition(pos, power);
+            if (posmax < sensor.getCurentValue() || posmin > sensor.getCurentValue()) return moveToPosition(pos, power);
         } catch (RequestTimeoutException e) {
             e.printStackTrace();
         } catch (NotConnectedException e) {
@@ -132,11 +122,11 @@ public class Joint {
         this.motor = motor;
     }
 
-    public Analog getSensor() {
+    public Sensor getSensor() {
         return sensor;
     }
 
-    public void setSensor(Analog sensor) {
+    public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
 

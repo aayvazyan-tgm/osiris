@@ -8,9 +8,7 @@ package at.pria.osiris.linker.controllers.components.systemDependent;
 public interface AxisDefinition {
 
     public boolean addAxis(int id, String name);
-
     public boolean removeAxis(int id);
-
     public String getName(int id);
 
 }

@@ -1,7 +1,9 @@
 package at.pria.osiris.linker.controllers.components.systemDependent;
 
+import org.andrix.low.NotConnectedException;
+
 public interface Servo {
 
-	public void moveToAngle(double angle);
+	public void moveToAngle(int angle) throws NotConnectedException;
 
 }
