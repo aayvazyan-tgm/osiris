@@ -5,5 +5,6 @@ package at.pria.osiris.osiris.controllers;
  * @version 03.Dec.14
  */
 public enum ControllerType {
-    Hedgehog
+    Hedgehog,
+    Botball
 }

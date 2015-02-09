@@ -122,7 +122,7 @@
                 android:ems="10"
                 android:id="@+id/xValue" android:layout_below="@+id/negativePower"
                 android:layout_toRightOf="@+id/textView2" android:layout_toEndOf="@+id/textView2" android:text="0"
-                android:digits="0123456789"/>
+                android:digits="-0123456789"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:text="0"
                 android:layout_alignTop="@+id/textView3"
                 android:layout_below="@+id/xValue"
-                android:digits="0123456789"/>
+                android:digits="-0123456789"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceLarge" android:text="Z"
                   android:id="@+id/textView4"
@@ -145,7 +145,7 @@
                   android:layout_toEndOf="@+id/textView4" android:text="0"
                   android:layout_below="@+id/yValue" android:layout_alignLeft="@+id/yValue"
                   android:layout_alignStart="@+id/yValue"
-                  android:digits="0123456789"/>
+                  android:digits="-0123456789"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

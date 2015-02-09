@@ -5,6 +5,8 @@ import android.util.Log;
 
 import api.Axis;
 import api.Robotarm;
+import at.pria.osiris.osiris.controllers.Controller;
+import at.pria.osiris.osiris.controllers.NoSetupException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,8 +25,8 @@ public class BotballRemoteRobotarm extends Thread implements Robotarm {
 
     private static final int MAX_POWER = 100;
     private static BotballRemoteRobotarm INSTANCE;
-    private final String linkip = "192.168.43.241";        //IP of the JVM-Link-Controller
-    private final int linkport = 8889;                    //Port of the Server-program running on the Controller
+    private String linkip; // = "192.168.43.241";        //IP of the JVM-Link-Controller
+    private int linkport; //= 8889;                    //Port of the Server-program running on the Controller
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
@@ -38,11 +40,20 @@ public class BotballRemoteRobotarm extends Thread implements Robotarm {
 
     }
 
-    public static BotballRemoteRobotarm getInstance() throws IOException {
+    public static BotballRemoteRobotarm getInstance() throws NoSetupException {
         if (INSTANCE == null) {
-            INSTANCE = new BotballRemoteRobotarm();
+            throw new NoSetupException("No setup executed");
         }
         return INSTANCE;
+    }
+
+    public static void setup(String host, int port) throws IOException {
+        BotballRemoteRobotarm createdInstance= new BotballRemoteRobotarm();
+
+        createdInstance.linkip= host;
+        createdInstance.linkport= port;
+
+        INSTANCE= createdInstance;
     }
 
     @Override
