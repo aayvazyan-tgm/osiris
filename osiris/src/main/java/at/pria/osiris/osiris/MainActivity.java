@@ -13,10 +13,7 @@ import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerFactory;
 import at.pria.osiris.osiris.controllers.ControllerType;
-import at.pria.osiris.osiris.view.ControllerFragment;
-import at.pria.osiris.osiris.view.DrawFragment;
-import at.pria.osiris.osiris.view.NavigationDrawerFragment;
-import at.pria.osiris.osiris.view.TableSensorValuesFragment;
+import at.pria.osiris.osiris.view.*;
 
 
 public class MainActivity extends ActionBarActivity
@@ -58,10 +55,7 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (position + 1 == 2) {//sensorvalues
-            //fragmentManager.beginTransaction()
-            //        .replace(R.id.container, SensorValuesFragment.getInstance(position + 1))
-            //        .commit();
+        if (position + 1 == 2) {
             try {
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1, robotController.getRobotArm()))
@@ -77,6 +71,10 @@ public class MainActivity extends ActionBarActivity
         } else if (position + 1 == 3) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, DrawFragment.getInstance(position + 1))
+                    .commit();
+        } else if (position + 1 == 4) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ProfileFragment.getInstance(position + 1))
                     .commit();
         } else {
             fragmentManager.beginTransaction()
@@ -96,6 +94,8 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 mTitle = getString(R.string.drawline);
                 break;
+            case 4:
+                mTitle = getString(R.string.profiles);
         }
     }
 
@@ -105,7 +105,6 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
