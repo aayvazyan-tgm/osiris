@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        robotController = ControllerFactory.getController(ControllerType.Botball);
+        robotController = ControllerFactory.getController(ControllerType.Hedgehog);
         robotController.getSetup().setup();
 
         super.onCreate(savedInstanceState);
