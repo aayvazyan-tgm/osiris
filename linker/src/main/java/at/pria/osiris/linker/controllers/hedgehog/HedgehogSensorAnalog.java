@@ -21,7 +21,7 @@ public class HedgehogSensorAnalog implements SensorAnalog {
     }
 
     @Override
-    public double getCurentValue() throws NotConnectedException, RequestTimeoutException {
+    public double getCurrentValue() throws NotConnectedException, RequestTimeoutException {
         return actualSensor.getValue();
     }
 

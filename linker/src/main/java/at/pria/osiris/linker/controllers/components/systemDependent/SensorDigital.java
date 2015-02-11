@@ -8,6 +8,6 @@ import org.andrix.low.RequestTimeoutException;
  */
 public interface SensorDigital {
 
-    public boolean getCurentValue() throws NotConnectedException, RequestTimeoutException;
+    public boolean getCurrentValue() throws NotConnectedException, RequestTimeoutException;
 
 }

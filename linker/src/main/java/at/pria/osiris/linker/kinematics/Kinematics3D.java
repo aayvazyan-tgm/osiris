@@ -29,6 +29,7 @@ public class Kinematics3D implements Kinematic {
 		}
 		logger.info("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
 	}
+
 	/**
 	 * @see at.pria.osiris.linker.kinematics.Kinematic#moveToConfiguredPosition()
 	 */
@@ -37,7 +38,7 @@ public class Kinematics3D implements Kinematic {
 	}
 
 	/**
-	 * Calculates any needed values...
+	 * Calculates values for a 3-Axis robotarm that is within a 3D-coordinate system
 	 * @return solution, ArrayList with Double values(Base, AxisOne, AxisTwo)
 	 */
 	private ArrayList<Double> calculateValues(){
@@ -50,7 +51,7 @@ public class Kinematics3D implements Kinematic {
 		this.delta = beta + Math.toDegrees(Math.atan(z / c));
 		this.eta = 90 - delta;
 
-		ArrayList<Double> solution = new ArrayList<Double>();
+		ArrayList<Double> solution = new ArrayList<>();
 		solution.add(phi); // Base
 		solution.add(eta); // AxisOne
 		solution.add(gamma); // AxisTwo

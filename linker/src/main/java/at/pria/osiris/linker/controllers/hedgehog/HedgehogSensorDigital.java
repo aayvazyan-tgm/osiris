@@ -19,7 +19,7 @@ public class HedgehogSensorDigital implements SensorDigital {
     }
 
     @Override
-    public boolean getCurentValue() throws NotConnectedException, RequestTimeoutException {
+    public boolean getCurrentValue() throws NotConnectedException, RequestTimeoutException {
         return actualSensor.getValue();
     }
 

@@ -37,15 +37,15 @@ public class Joint {
 
         running = true;
         try {
-            if (sensorAnalog.getCurentValue() < max && power > 0) {
+            if (sensorAnalog.getCurrentValue() < max && power > 0) {
                 motor.moveAtPower(power);
                 System.out.println("Starting Motor with power " + power);
             } else {
-                if (sensorAnalog.getCurentValue() > min && power < 0) {
+                if (sensorAnalog.getCurrentValue() > min && power < 0) {
                     motor.moveAtPower(power);
                     System.out.println("Starting Motor with power " + power);
                 } else {
-                    if (sensorAnalog.getCurentValue() > min && power < 0) {
+                    if (sensorAnalog.getCurrentValue() > min && power < 0) {
                         motor.moveAtPower(power);
                         System.out.println("Starting Motor with power " + power);
                     } else {
@@ -66,19 +66,19 @@ public class Joint {
         int posmax = (int) ((double) pos + ((double) pos * 0.02));
         int posmin = (int) ((double) pos - ((double) pos * 0.02));
         try {
-            if ((power > 0 && pos < sensorAnalog.getCurentValue()) || (power < 0 && pos > sensorAnalog.getCurentValue())) {
+            if ((power > 0 && pos < sensorAnalog.getCurrentValue()) || (power < 0 && pos > sensorAnalog.getCurrentValue())) {
                 power = power * (-1);
             }
 
             motor.moveAtPower(power);
             System.out.println("Moving to position: " + pos);
-            while (posmax < sensorAnalog.getCurentValue() || posmin > sensorAnalog.getCurentValue()) {
+            while (posmax < sensorAnalog.getCurrentValue() || posmin > sensorAnalog.getCurrentValue()) {
                 Thread.sleep(50);
             }
 
             Thread.sleep(100);
 
-            if (posmax < sensorAnalog.getCurentValue() || posmin > sensorAnalog.getCurentValue()) return moveToPosition(pos, power);
+            if (posmax < sensorAnalog.getCurrentValue() || posmin > sensorAnalog.getCurrentValue()) return moveToPosition(pos, power);
         } catch (RequestTimeoutException e) {
             e.printStackTrace();
         } catch (NotConnectedException e) {

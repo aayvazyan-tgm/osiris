@@ -29,7 +29,7 @@ public class Potentiometer {
 		double result=0.0;
 		try {
 
-			result= sensor.getCurentValue();
+			result= sensor.getCurrentValue();
 
 		} catch (NotConnectedException e) {
 			e.printStackTrace(); // TODO handle this exception
