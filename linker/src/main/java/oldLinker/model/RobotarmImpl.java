@@ -77,7 +77,9 @@ public class RobotarmImpl implements Robotarm {
     @Override
     public void turnAxis(Axis axis, int power) {
         if (power >= -100 && power <= 100) {
-            joints[axis.ordinal()].run(power);
+            System.out.println("running joint 0");
+            joints[0].run(100);
+            //joints[axis.ordinal()].run(power);
         }
     }
 
