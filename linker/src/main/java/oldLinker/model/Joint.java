@@ -33,10 +33,12 @@ public class Joint {
      * @param power The Power in percent
      */
     public synchronized void run(int power) {
+        System.out.println("running Joint...");
         if (running) return;
 
         running = true;
         try {
+            System.out.println("trying harder...");
             if (sensor.getValue() < max && power > 0) {
                 motor.moveAtPower(power);
                 System.out.println("Starting Motor with power " + power);
