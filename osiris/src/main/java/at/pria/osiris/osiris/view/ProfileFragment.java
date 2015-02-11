@@ -14,8 +14,11 @@ import at.pria.osiris.osiris.view.elements.Profile;
 
 import java.util.List;
 
-
 /**
+ * A fragment which displays all the profiles from the database
+ *
+ * mean while for debug only
+ *
  * Created by helmuthbrunner on 10/02/15.
  */
 public class ProfileFragment extends Fragment {
@@ -61,6 +64,7 @@ public class ProfileFragment extends Fragment {
 
         DataBaseHandler db= new DataBaseHandler(activity);
 
+        // debug data
         db.addProfile(new Profile(0, "192.168.0.2", 8889, ControllerType.Botball));
         db.addProfile(new Profile(1, "192.168.0.3", 8289, ControllerType.Hedgehog));
         db.addProfile(new Profile(2, "192.168.0.4", 8839, ControllerType.Botball));
