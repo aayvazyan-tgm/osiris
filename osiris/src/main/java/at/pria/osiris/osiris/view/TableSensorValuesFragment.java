@@ -107,7 +107,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
     @Override
     public void refresh(final double newValue, final String sensorName) {
         final Activity activity = getActivity();
-
+        Log.e("OsirisSensorValueReceived","newVal: "+newValue);
         if(activity == null)
             return;
 
