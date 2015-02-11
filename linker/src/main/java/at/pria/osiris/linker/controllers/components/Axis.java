@@ -1,6 +1,6 @@
 package at.pria.osiris.linker.controllers.components;
 
-import at.pria.osiris.linker.controllers.hedgehog.HedgehogAxisDef;
+import at.pria.osiris.linker.controllers.hedgehog.AxisDefinition;
 
 /**
  *
@@ -11,9 +11,9 @@ public class Axis {
 
 	private String name;
 	private int axisID;
-	private HedgehogAxisDef hhad;
+	private AxisDefinition hhad;
 
-	public Axis(int axisID, HedgehogAxisDef hhad) {
+	public Axis(int axisID, AxisDefinition hhad) {
 		this.hhad= hhad;
 		this.name= this.hhad.getName(axisID);
 		this.axisID= axisID;

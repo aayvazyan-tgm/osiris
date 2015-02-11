@@ -1,25 +1,24 @@
 package at.pria.osiris.linker.controllers.hedgehog;
 
-import at.pria.osiris.linker.controllers.components.systemDependent.AxisDefinition;
 import java.util.HashMap;
 
 /**
- * The HedgehogAxisDef class, is used to store the defined axis
+ * The AxisDefinition class, is used to store the defined axis
  *
  * Created by helmuthbrunner on 07/01/15.
  */
-public class HedgehogAxisDef implements AxisDefinition {
+public class AxisDefinition implements at.pria.osiris.linker.controllers.components.systemDependent.AxisDefinition {
 
-    private static HedgehogAxisDef instance;
+    private static AxisDefinition instance;
     private HashMap<Integer, String> map;
 
-    public static HedgehogAxisDef getInstance() {
+    public static AxisDefinition getInstance() {
         if(instance==null)
-            instance= new HedgehogAxisDef();
+            instance= new AxisDefinition();
         return instance;
     }
 
-    private HedgehogAxisDef() {
+    private AxisDefinition() {
         map= new HashMap<Integer, String>();
     }
 
