@@ -39,24 +39,26 @@ public class Joint {
         running = true;
         try {
             System.out.println("trying harder...");
-            if (sensor.getValue() < max && power > 0) {
-                motor.moveAtPower(power);
-                System.out.println("Starting Motor with power " + power);
-            } else {
-                if (sensor.getValue() > min && power < 0) {
-                    motor.moveAtPower(power);
-                    System.out.println("Starting Motor with power " + power);
-                } else {
-                    if (sensor.getValue() > min && power < 0) {
-                        motor.moveAtPower(power);
-                        System.out.println("Starting Motor with power " + power);
-                    } else {
-                        System.out.println("You are trying to move outside the threshold!");
-                    }
-                }
-            }
-        } catch (RequestTimeoutException e) {
-            e.printStackTrace();
+            motor.moveAtPower(power);
+//
+//            if (sensor.getValue() < max && power > 0) {
+//                motor.moveAtPower(power);
+//                System.out.println("Starting Motor with power " + power);
+//            } else {
+//                if (sensor.getValue() > min && power < 0) {
+//                    motor.moveAtPower(power);
+//                    System.out.println("Starting Motor with power " + power);
+//                } else {
+//                    if (sensor.getValue() > min && power < 0) {
+//                        motor.moveAtPower(power);
+//                        System.out.println("Starting Motor with power " + power);
+//                    } else {
+//                        System.out.println("You are trying to move outside the threshold!");
+//                    }
+//                }
+//            }
+//        } catch (RequestTimeoutException e) {
+//            e.printStackTrace();
         } catch (NotConnectedException e) {
             e.printStackTrace();
         }
