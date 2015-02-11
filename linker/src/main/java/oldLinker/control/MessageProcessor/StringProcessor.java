@@ -23,17 +23,17 @@ public class StringProcessor implements MessageProcessor {
         }
         if (splitted[0].equals("turnaxis") && splitted.length == 3) {
             try {
-//                System.out.println("turnaxis1");
+                System.out.println("Turning axis...");
                 robotarm.turnAxis(Axis.values()[Integer.parseInt(splitted[1])],
                         Integer.parseInt(splitted[2]));
-
+                System.out.println("Done Turning axis");
             } catch (NumberFormatException nfe) {
                 // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("turnaxis") && splitted.length == 4) {
             try {
-//                System.out.println("turnaxis2");
+                System.out.println("Turning axis...");
                 robotarm.turnAxis(Axis.values()[Integer.parseInt(splitted[1])],
                         Integer.parseInt(splitted[2]),
                         Integer.parseInt(splitted[3]));
