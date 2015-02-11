@@ -12,9 +12,19 @@ public class Profile {
     private int port;
     private ControllerType type;
 
+    /**
+     * Default constructor never use this
+     */
     public Profile() {
     }
 
+    /**
+     * Constructor
+     * @param id the unique id for this object
+     * @param host the hostname e.q. to 192.168.0.10 or localhost
+     * @param port the port
+     * @param type the controller type, Hedgehog or Botball
+     */
     public Profile(int id, String host, int port, ControllerType type) {
         this.id= id;
         this.host= host;
@@ -22,7 +32,10 @@ public class Profile {
         this.type= type;
     }
 
-
+    /**
+     * A method to which returns a String representing this object
+     * @return a String which contains all attributes
+     */
     @Override
     public String toString() {
         return  "Id: " + this.id +

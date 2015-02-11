@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A class to save a Profile Object in the SQL-lite database on the android phone.
+ *
  * Created by helmuthbrunner on 10/02/15.
  */
 public class DataBaseHandler extends SQLiteOpenHelper {
@@ -35,6 +37,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     /**
      * Method to create the database tables
+     *
+     * Is only call if the database doesn't exist.
+     *
      * @param db
      */
     @Override
@@ -42,7 +47,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String create_query=
                 "CREATE TABLE " + TABLE_PROFILES + " (" +
-
                         KEY_ID + " INTEGER PRIMARY KEY, " +
                         KEY_HOST + " TEXT, " +
                         KEY_PORT + " INTEGER, " +
@@ -54,6 +58,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Has no functionality //TODO implementate the functionality
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //drop all tables
@@ -65,7 +75,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     /**
      * Method to add a new profile to database
-     * @param profile
+     * @param profile the new profile
      */
     public void addProfile(Profile profile) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -80,6 +90,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Method to get all Proile objects in the Database
+     * @return the objects as a collection
+     */
     public List<Profile> getAll() {
 
         List<Profile> profileList = new ArrayList<Profile>();
