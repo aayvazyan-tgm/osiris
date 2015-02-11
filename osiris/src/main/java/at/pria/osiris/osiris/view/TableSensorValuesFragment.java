@@ -61,7 +61,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
             //We add the ExecutionListener to listen for events from the controller
             DataListener dl=new DataListener();
             //We add the required EventHandlers
-            dl.addMessageProcessor(new StringProcessor(robotarm,INSTANCE));
+            dl.addMessageProcessor(new StringProcessor(robotarm,fragment));
             //Set the listener in Hedgehog
             ExecutionListener._l_exec.add(dl);
 
