@@ -10,20 +10,14 @@ public abstract class SerializableMessage implements Serializable {
 
     private static int totalIDs = 0;
     private final long uniqueMessageID;
+    private final long creationTime;
 
     /**
      * Generates a Unique message ID
      */
     public SerializableMessage() {
         this.uniqueMessageID = getUniqueMessageID();
-    }
-
-    /**
-     *
-     * @return returns the unique message ID of this message
-     */
-    public long getMessageID() {
-        return uniqueMessageID;
+        this.creationTime = System.currentTimeMillis();
     }
 
     /**
@@ -32,5 +26,21 @@ public abstract class SerializableMessage implements Serializable {
     private static synchronized long getUniqueMessageID() {
         totalIDs++;
         return totalIDs;
+    }
+
+    /**
+     * Getter for property 'creationTime'.
+     *
+     * @return Value for property 'creationTime'.
+     */
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    /**
+     * @return returns the unique message ID of this message
+     */
+    public long getMessageID() {
+        return uniqueMessageID;
     }
 }
