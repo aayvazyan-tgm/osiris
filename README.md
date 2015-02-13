@@ -1,7 +1,7 @@
 00siris
 ======
 [![Build Status](http://aayvazyan.bitnamiapp.com/jenkins/job/osiris/badge/icon)](http://aayvazyan.bitnamiapp.com/jenkins/job/osiris/)
-Our matriculation project. TODO: describe
+Our matriculation project. The software for a modern industrial robotarm, which is easy to recreate and can be used for educational purposes.
 
 Development
 ===========
