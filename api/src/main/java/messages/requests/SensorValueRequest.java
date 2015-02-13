@@ -12,7 +12,7 @@ public class SensorValueRequest extends SerializableMessage {
     /**
      * Defines a request for a sensor value
      *
-     * @param sensorPort
+     * @param sensorPort the port to request the value for.
      */
     public SensorValueRequest(int sensorPort) {
         this.sensorPort = sensorPort;
