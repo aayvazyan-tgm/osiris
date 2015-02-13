@@ -25,10 +25,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_PROFILES = "profiles";
 
     // Columns
-    private static final String KEY_ID= "id";
-    private static final String KEY_HOST = "host";
-    private static final String KEY_PORT= "port";
-    private static final String KEY_TYPE= "controllertype";
+    public static final String _ID = "_id"; // the _id variable must be named as _ID
+    public static final String KEY_HOST = "host";
+    public static final String KEY_PORT= "port";
+    public static final String KEY_TYPE= "controllertype";
 
     public DataBaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,7 +47,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         String create_query=
                 "CREATE TABLE " + TABLE_PROFILES + " (" +
-                        KEY_ID + " INTEGER PRIMARY KEY, " +
+                        _ID + " INTEGER PRIMARY KEY, " +
                         KEY_HOST + " TEXT, " +
                         KEY_PORT + " INTEGER, " +
                         KEY_TYPE + " TEXT" +
@@ -88,6 +88,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_PROFILES, null, values);
         db.close();
+    }
+
+    public Cursor fetchAllProfiles() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_PROFILES, null);
     }
 
     /**
@@ -138,8 +142,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         Cursor c= db.query(
                 TABLE_PROFILES,
-                new String[] {KEY_ID, KEY_HOST, KEY_PORT, KEY_TYPE},
-                KEY_ID + "=?",
+                new String[] {_ID, KEY_HOST, KEY_PORT, KEY_TYPE},
+                _ID + "=?",
                 new String[] { String.valueOf(id) },
                 null, null, null, null );
 
