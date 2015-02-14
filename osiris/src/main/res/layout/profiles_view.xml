@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:padding="6dip">
+
+    <TextView
+            android:id="@+id/textProfileView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Id: "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+            android:id="@+id/textProfileView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textProfileView1"
+            android:layout_below="@+id/textProfileView1"
+            android:text="Host: "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+            android:id="@+id/textProfileView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textProfileView2"
+            android:layout_below="@+id/textProfileView2"
+            android:text="Port: "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+            android:id="@+id/textProfileView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textProfileView3"
+            android:layout_below="@+id/textProfileView3"
+            android:text="Type: "
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textProfileView1"
+            android:layout_alignBottom="@+id/textProfileView1"
+            android:layout_toRightOf="@+id/textProfileView1"
+            android:text="TextView" />
+
+    <TextView
+            android:id="@+id/host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textProfileView2"
+            android:layout_alignBottom="@+id/textProfileView2"
+            android:layout_toRightOf="@+id/textProfileView2"
+            android:text="TextView" />
+
+    <TextView
+            android:id="@+id/port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textProfileView3"
+            android:layout_alignBottom="@+id/textProfileView3"
+            android:layout_toRightOf="@+id/textProfileView3"
+            android:text="TextView" />
+
+    <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textProfileView4"
+            android:layout_alignBottom="@+id/textProfileView4"
+            android:layout_toRightOf="@+id/textProfileView4"
+            android:text="TextView" />
+
+</RelativeLayout>
