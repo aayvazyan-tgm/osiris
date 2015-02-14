@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.communication.connectors.hedgehog;
+package at.pria.osiris.linker.controllers.hedgehog.communication;
 
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import oldLinker.control.MessageProcessor.MessageProcessorDistributor;

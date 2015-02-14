@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.communication.connectors;
+package at.pria.osiris.linker.controllers.connectors;
 
 import java.io.Serializable;
 
