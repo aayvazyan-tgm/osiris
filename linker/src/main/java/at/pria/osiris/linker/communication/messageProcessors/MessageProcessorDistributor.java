@@ -1,7 +1,8 @@
-package at.pria.osiris.osiris.communication.messageProcessor;
+package at.pria.osiris.linker.communication.messageProcessors;
 
 import Util.Serializer;
 import api.Robotarm;
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -11,9 +12,9 @@ import java.util.List;
  * Distributes messages to listeners.
  *
  * @author Ari Ayvazyan
- * @version 2014-10-17
+ * @version 13.02.2015
  */
-public class MessageProcessorDistributor implements MessageProcessor{
+public class MessageProcessorDistributor implements MessageProcessor {
 
     private List<MessageProcessor> messageProcessors;
 
@@ -30,7 +31,6 @@ public class MessageProcessorDistributor implements MessageProcessor{
      *
      * @param message the message
      */
-
     public void processMessage(byte[] message) {
         try {
             Object receivedMessage = Serializer.deserialize(message);
@@ -50,6 +50,10 @@ public class MessageProcessorDistributor implements MessageProcessor{
         this.messageProcessors.add(messageProcessor);
     }
 
+    /**
+     * Distributes the message
+     * @param message the message to distribute
+     */
     @Override
     public void processMessage(Object message) {
         for (MessageProcessor messageProcessor : messageProcessors) {
