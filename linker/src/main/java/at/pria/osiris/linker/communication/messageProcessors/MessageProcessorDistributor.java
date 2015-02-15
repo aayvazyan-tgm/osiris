@@ -5,6 +5,7 @@ import api.Robotarm;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,10 +45,10 @@ public class MessageProcessorDistributor implements MessageProcessor {
 
     /**
      * Adds a MessageProcessor that receives messages.
-     * @param messageProcessor the MessageProcessor to be added.
+     * @param messageProcessor the MessageProcessor/s to be added.
      */
-    public void addMessageProcessor(MessageProcessor messageProcessor) {
-        this.messageProcessors.add(messageProcessor);
+    public void addMessageProcessor(MessageProcessor ... messageProcessor) {
+        Collections.addAll(this.messageProcessors, messageProcessor);
     }
 
     /**
