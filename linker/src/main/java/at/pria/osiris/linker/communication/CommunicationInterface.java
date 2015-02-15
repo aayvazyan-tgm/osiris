@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.controllers.connectors;
+package at.pria.osiris.linker.communication;
 
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 

@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.implementation;
+package at.pria.osiris.linker.controllers;
 
 import at.pria.osiris.linker.controllers.components.Axis;
 import at.pria.osiris.linker.controllers.components.Joint;

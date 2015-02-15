@@ -1,7 +1,6 @@
 package at.pria.osiris.linker.communication.messageProcessors;
 
-import at.pria.osiris.linker.controllers.components.Axis;
-import at.pria.osiris.linker.implementation.HedgehogRobotArm;
+import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
 
 // Sample only
 

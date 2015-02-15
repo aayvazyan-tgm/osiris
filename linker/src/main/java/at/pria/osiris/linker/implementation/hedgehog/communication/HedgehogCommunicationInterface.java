@@ -1,7 +1,7 @@
 package at.pria.osiris.linker.implementation.hedgehog.communication;
 
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
-import at.pria.osiris.linker.controllers.connectors.CommunicationInterface;
+import at.pria.osiris.linker.communication.CommunicationInterface;
 import org.andrix.AXCP;
 import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.*;
