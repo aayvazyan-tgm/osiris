@@ -1,6 +1,6 @@
 package at.pria.osiris.linker.controllers.hedgehog.communication;
 
-import at.pria.osiris.linker.controllers.connectors.MessageSender;
+import at.pria.osiris.linker.controllers.connectors.CommunicationInterface;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessorDistributor;
 import org.andrix.AXCP;
 import org.andrix.listeners.ExecutionListener;
@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author Ari Ayvazyan
  * @version 03.Dec.14
  */
-public class HedgehogMessageSender implements MessageSender {
+public class HedgehogCommunicationInterface implements CommunicationInterface {
     /**
      * Sends data via the Hedgehog AXCP Controller
      */
@@ -50,6 +50,6 @@ public class HedgehogMessageSender implements MessageSender {
 
         MessageProcessorDistributor mp = new MessageProcessorDistributor();
         //TODO This should not be new MessageProcessr...
-        ExecutionListener._l_exec.add(new HedgehogDataListener(new MessageProcessorDistributor()));
+        ExecutionListener._l_exec.add(new HedgehogDataListener());
     }
 }

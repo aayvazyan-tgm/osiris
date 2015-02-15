@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author Ari Ayvazyan
  * @version 13.02.2015
  */
-public interface MessageSender {
+public interface CommunicationInterface {
     public void sendMessage(Serializable message);
     public void setupCommunication();
 }
