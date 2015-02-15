@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.controllers.hedgehog;
+package at.pria.osiris.linker.implementation.hedgehog.components;
 
 import org.andrix.low.NotConnectedException;
 import org.andrix.motors.Motor;

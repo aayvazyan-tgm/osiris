@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.controllers.hedgehog.communication;
+package at.pria.osiris.linker.implementation.hedgehog.communication;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;

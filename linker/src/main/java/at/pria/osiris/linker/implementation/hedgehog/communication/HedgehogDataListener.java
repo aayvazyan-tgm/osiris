@@ -1,7 +1,6 @@
-package at.pria.osiris.linker.controllers.hedgehog.communication;
+package at.pria.osiris.linker.implementation.hedgehog.communication;
 
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
-import oldLinker.control.MessageProcessor.MessageProcessorDistributor;
 import org.andrix.deployment.Program;
 import org.andrix.listeners.ExecutionListener;
 

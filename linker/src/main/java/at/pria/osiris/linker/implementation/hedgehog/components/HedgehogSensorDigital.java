@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.controllers.hedgehog;
+package at.pria.osiris.linker.implementation.hedgehog.components;
 
 import at.pria.osiris.linker.controllers.components.systemDependent.SensorDigital;
 import org.andrix.low.NotConnectedException;
