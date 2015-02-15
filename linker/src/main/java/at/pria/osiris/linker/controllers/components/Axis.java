@@ -1,6 +1,7 @@
 package at.pria.osiris.linker.controllers.components;
 
-import at.pria.osiris.linker.controllers.hedgehog.AxisDefinition;
+
+import at.pria.osiris.linker.controllers.components.systemDependent.AxisDefinition;
 
 /**
  *
