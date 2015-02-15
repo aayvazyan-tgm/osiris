@@ -12,8 +12,8 @@ import org.andrix.listeners.ExecutionListener;
 public class HedgehogDataListener implements ExecutionListener {
     private MessageProcessor messageProcessorDistributor;
 
-    public HedgehogDataListener(MessageProcessor messageProcessorDistributor) {
-        this.messageProcessorDistributor = messageProcessorDistributor;
+    public HedgehogDataListener(MessageProcessor messageProcessor) {
+        this.messageProcessorDistributor = messageProcessor;
     }
 
     @Override
