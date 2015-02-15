@@ -1,5 +1,7 @@
 package at.pria.osiris.linker.controllers.connectors;
 
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
+
 import java.io.Serializable;
 
 /**
@@ -8,5 +10,5 @@ import java.io.Serializable;
  */
 public interface CommunicationInterface {
     public void sendMessage(Serializable message);
-    public void setupCommunication();
+    public void setupCommunication(MessageProcessor messageProcessor);
 }
