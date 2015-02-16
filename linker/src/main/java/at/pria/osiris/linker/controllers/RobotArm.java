@@ -72,4 +72,5 @@ public abstract class RobotArm {
 
 	}
 
+    public abstract int getSensorValue(int sensorPort);
 }
