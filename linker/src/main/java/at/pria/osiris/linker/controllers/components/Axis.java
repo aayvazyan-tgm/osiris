@@ -1,36 +1,31 @@
 package at.pria.osiris.linker.controllers.components;
 
 
-import at.pria.osiris.linker.controllers.components.systemDependent.AxisDefinition;
-
 /**
- *
  * @author Helmuth Brunner
  * @version 2015-01-07
  */
 public abstract class Axis {
 
-	private String name;
-	private int axisID;
-	private AxisDefinition hhad;
+    private String name;
 
-	public Axis(int axisID, AxisDefinition hhad) {
-		this.hhad= hhad;
-		this.name= this.hhad.getName(axisID);
-		this.axisID= axisID;
-	}
+    public Axis(String axisName) {
+        this.name = axisName;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getID() {
-		return axisID;
-	}
+    public String getName(int axisID) {
+        return name;
+    }
 
-	public String getName(int axisID) {
-		return hhad.getName(axisID);
-	}
+    /**
+     * Returns the value of the Sensor where -1 is a undefined state
+     * @return the Sensor value
+     */
+    public abstract int getSensorValue();
 
-    public abstract int getSensorValue(int i);
+    public abstract void moveToPosition();
 }
