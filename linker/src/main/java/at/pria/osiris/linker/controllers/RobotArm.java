@@ -58,6 +58,8 @@ public abstract class RobotArm {
 
 	public abstract Axis[] getAvailableAxes();
 
+	public abstract Axis getAxis(int i);
+
     public abstract CommunicationInterface getCommunicationInterface();
 
 	public void turnAxis(Axis axis) {
@@ -71,6 +73,4 @@ public abstract class RobotArm {
 	public void moveTo() {
 
 	}
-
-    public abstract int getSensorValue(int sensorPort);
 }

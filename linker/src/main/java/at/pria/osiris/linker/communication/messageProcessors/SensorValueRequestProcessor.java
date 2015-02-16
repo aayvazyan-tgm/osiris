@@ -11,15 +11,20 @@ import messages.responses.SensorValueResponse;
 public class SensorValueRequestProcessor implements MessageProcessor {
     private RobotArm robotArm;
 
-    public SensorValueRequestProcessor(RobotArm robotArm){
+    public SensorValueRequestProcessor(RobotArm robotArm) {
         this.robotArm = robotArm;
     }
+
     @Override
     public void processMessage(Object msg) {
         if (msg instanceof SensorValueRequest) {
             SensorValueRequest request = (SensorValueRequest) msg;
 
-            SensorValueResponse response=new SensorValueResponse(request.getSensorPort(),robotArm.getSensorValue(request.getSensorPort()));
+            SensorValueResponse response = new SensorValueResponse(
+                    request.getSensorPort(),
+                    robotArm.getAxis(request.getSensorPort())
+                            .getSensorValue(request.getSensorPort())
+            );
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }

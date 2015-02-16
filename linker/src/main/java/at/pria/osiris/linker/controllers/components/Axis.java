@@ -8,7 +8,7 @@ import at.pria.osiris.linker.controllers.components.systemDependent.AxisDefiniti
  * @author Helmuth Brunner
  * @version 2015-01-07
  */
-public class Axis {
+public abstract class Axis {
 
 	private String name;
 	private int axisID;
@@ -32,4 +32,5 @@ public class Axis {
 		return hhad.getName(axisID);
 	}
 
+    public abstract int getSensorValue(int i);
 }
