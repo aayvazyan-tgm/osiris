@@ -22,9 +22,8 @@ public class SensorValueRequestProcessor implements MessageProcessor {
 
             SensorValueResponse response = new SensorValueResponse(
                     request.getSensorPort(),
-                    robotArm.getAxis(request.getSensorPort())
-                            .getSensorValue(request.getSensorPort())
-            );
+                    robotArm.getAxis(
+                            request.getSensorPort()).getSensorValue());
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }

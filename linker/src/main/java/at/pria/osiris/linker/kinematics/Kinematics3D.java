@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Kinematics3D implements Kinematic {
 
-	private static Logger logger = org.apache.log4j.Logger.getLogger(Kinematics3D.class);
+	private static Logger logger = Logger.getLogger(Kinematics3D.class);
 	private double a, b, beta, gamma, delta, eta, c, r, phi, x, y, z;
 	private double[] fragmentLengths;
 	private double[][] padding;

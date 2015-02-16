@@ -27,5 +27,15 @@ public abstract class Axis {
      */
     public abstract int getSensorValue();
 
-    public abstract void moveToPosition();
+    /**
+     * Moves to the desired position.
+     * @param position the desired position in degrees
+     */
+    public abstract void moveToPosition(int position);
+
+    /**
+     * moves the Axis at the desired power
+     * @param power the power
+     */
+    public abstract void moveAtPower(int power);
 }

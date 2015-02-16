@@ -2,18 +2,17 @@ package at.pria.osiris.linker.controllers;
 
 import at.pria.osiris.linker.communication.CommunicationInterface;
 import at.pria.osiris.linker.controllers.components.Axis;
-import at.pria.osiris.linker.controllers.components.Joint;
 import at.pria.osiris.linker.kinematics.Kinematic;
 
 public abstract class RobotArm {
 
     // Joints
-    private Joint joint;
+    private Axis joint;
 
     // KinematicStrategies
     private Kinematic kinematics;
 
-    public Joint getJoint(Axis axis) {
+    public Axis getJoint(Axis axis) {
         return joint;
     }
 

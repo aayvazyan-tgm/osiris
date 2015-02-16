@@ -1,7 +1,6 @@
 package at.pria.osiris.linker.communication.messageProcessors;
 
 import Util.Serializer;
-import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -46,7 +45,7 @@ public class MessageProcessorDistributor implements MessageProcessor {
      * Adds a MessageProcessor that receives messages.
      * @param messageProcessor the MessageProcessor/s to be added.
      */
-    public void addMessageProcessor(@NotNull MessageProcessor ... messageProcessor) {
+    public void addMessageProcessor(MessageProcessor ... messageProcessor) {
         Collections.addAll(this.messageProcessors, messageProcessor);
     }
 
