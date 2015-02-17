@@ -1,6 +1,7 @@
 package at.pria.osiris.linker.implementation.hedgehog;
 
 import at.pria.osiris.linker.communication.CommunicationInterface;
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.controllers.components.Axis;
 import at.pria.osiris.linker.implementation.hedgehog.communication.HedgehogCommunicationInterface;
@@ -11,11 +12,12 @@ import at.pria.osiris.linker.implementation.hedgehog.communication.HedgehogCommu
  * @version 15.02.2015
  */
 public class HedgehogRobotArm extends RobotArm {
-    private static HedgehogCommunicationInterface communicationInterfaceINSTANCE =new HedgehogCommunicationInterface();
 
-    public HedgehogRobotArm() {
-//TODO this class is a stub
-	}
+    public HedgehogRobotArm(MessageProcessor messageProcessor) {
+        //Add the Communication Interface
+        super(new HedgehogCommunicationInterface(),messageProcessor);
+    }
+
 
     @Override
     public Axis[] getAvailableAxes() {
@@ -25,11 +27,6 @@ public class HedgehogRobotArm extends RobotArm {
     @Override
     public Axis getAxis(int i) {
         return null;
-    }
-
-    @Override
-    public CommunicationInterface getCommunicationInterface() {
-        return communicationInterfaceINSTANCE;
     }
 
 
