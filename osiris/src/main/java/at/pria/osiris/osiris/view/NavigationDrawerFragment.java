@@ -107,6 +107,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.sensor_values),
                         getString(R.string.drawline),
                         getString(R.string.profiles),
+                        getString(R.string.new_profile),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

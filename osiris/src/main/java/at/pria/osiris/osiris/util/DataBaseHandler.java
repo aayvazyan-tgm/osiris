@@ -90,6 +90,16 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Deletes a row in the db
+     * @param id the specfic field
+     * @return true, false
+     */
+    public boolean delete(long id) {
+        SQLiteDatabase db= this.getWritableDatabase();
+        return db.delete(TABLE_PROFILES, _ID + "=" + String.valueOf(id), null) > 0;
+    }
+
     public Cursor fetchAllProfiles() {
         return this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_PROFILES, null);
     }

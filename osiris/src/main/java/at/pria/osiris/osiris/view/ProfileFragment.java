@@ -9,13 +9,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
 
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
+import android.widget.*;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.util.DataBaseHandler;
 import at.pria.osiris.osiris.view.elements.Profile;
 
@@ -39,6 +35,8 @@ public class ProfileFragment extends Fragment {
 
     private ListView listView;
     private DataBaseHandler db;
+
+    private View current_delete_button;
 
     /**
      * Creates a new DrawFragment instance
@@ -103,9 +101,9 @@ public class ProfileFragment extends Fragment {
         db= new DataBaseHandler(activity);
 
         // debug data
-        db.addProfile(new Profile(0, "192.168.0.2", 8889, ControllerType.Botball));
-        db.addProfile(new Profile(1, "192.168.0.3", 8289, ControllerType.Hedgehog));
-        db.addProfile(new Profile(2, "192.168.0.4", 8839, ControllerType.Botball));
+        //db.addProfile(new Profile(0, "192.168.0.2", 8889, ControllerType.Botball));
+        //db.addProfile(new Profile(1, "192.168.0.3", 8289, ControllerType.Hedgehog));
+        //db.addProfile(new Profile(2, "192.168.0.4", 8839, ControllerType.Botball));
 
         List<Profile> list= db.getAll();
 
@@ -129,6 +127,35 @@ public class ProfileFragment extends Fragment {
 
         final Activity activity = getActivity();
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final long idd= id;
+                current_delete_button= view.findViewById(R.id.delete_button);
+                current_delete_button.setVisibility(View.VISIBLE);
+
+                current_delete_button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        final Activity activity = getActivity();
+                        db= new DataBaseHandler(activity);
+
+                        db.delete(idd); // delete the item over the id
+
+                        // refresh the GUI
+                        listView.setAdapter(newAdapter());
+                    }
+
+                });
+
+                return false;
+            }
+
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> listView,
@@ -143,9 +170,20 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(activity.getBaseContext(),
                         countryCode,
                         Toast.LENGTH_SHORT).show();
-
             }
         });
 
     }
+
+    /**
+     * Method to update the content in the ListView
+     * @return a new ListAdapter
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public ListAdapter newAdapter() {
+        final Activity activity = getActivity();
+        cursor= new DataBaseHandler(activity).fetchAllProfiles();
+        return new SimpleCursorAdapter(activity.getBaseContext(), R.layout.profiles_view, cursor, columns, to, 0);
+    }
+
 }

@@ -76,6 +76,10 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ProfileFragment.getInstance(position + 1))
                     .commit();
+        } else if (position + 1 == 5) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, NewProfileFragment.getInstance(position + 1))
+                    .commit();
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -96,6 +100,8 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.profiles);
+            case 5:
+                mTitle= getString(R.string.new_profile);
         }
     }
 
