@@ -2,6 +2,7 @@ package at.pria.osiris.linker.implementation.hedgehog.axes;
 
 import at.pria.osiris.linker.controllers.components.Axis;
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import org.andrix.low.NotConnectedException;
 
 /**
@@ -11,8 +12,9 @@ import org.andrix.low.NotConnectedException;
 public class BaseAxis extends Axis{
     private Servo servo;
     private int servoPosition=-1; //-1 is a undefined state
-    public BaseAxis() {
-        super("Base");
+    public BaseAxis() throws NotConnectedException {
+        super("BaseAxis");
+        this.servo=new HedgehogServo(1);
     }
 
     /**
@@ -32,7 +34,7 @@ public class BaseAxis extends Axis{
      * @see at.pria.osiris.linker.controllers.components.Axis
      */
     public void moveAtPower(int power){
-        //This one will be tricky...
+        //TODO This one will be tricky...
     }
 
     /**

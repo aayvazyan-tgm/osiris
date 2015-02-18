@@ -1,6 +1,7 @@
 package at.pria.osiris.linker;
 
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessorDistributor;
+import at.pria.osiris.linker.communication.messageProcessors.MoveAxisRequestProcessor;
 import at.pria.osiris.linker.communication.messageProcessors.SensorValueRequestProcessor;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
@@ -23,5 +24,6 @@ public class Main {
 
         //Add the message processors to handle incoming requests
         msgDistributor.addMessageProcessor(new SensorValueRequestProcessor(robotArm));
+        msgDistributor.addMessageProcessor(new MoveAxisRequestProcessor(robotArm));
     }
 }
