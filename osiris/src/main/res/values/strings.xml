@@ -20,5 +20,6 @@
     <string name="new_button_profile">Save</string>
 
     <string name="button_delete_item">Delete</string>
+    <string name="button_edit_item">Edit</string>
 
 </resources>

@@ -1,9 +1,9 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +17,10 @@ import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.util.DataBaseHandler;
 import at.pria.osiris.osiris.util.EnumUtil;
-import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.view.elements.Profile;
 
 /**
- * A fragement to create a new profile
+ * A fragement to create a new profile or edit a profile
  *
  * Created by helmuthbrunner on 16/02/15.
  */
@@ -34,8 +33,9 @@ public class NewProfileFragment extends Fragment {
     private String selectedItem;
     private DataBaseHandler db;
     private ControllerType controllerType;
+    private static Profile profile;
 
-    public static NewProfileFragment getInstance(int sectionNumber) {
+    public static NewProfileFragment getInstance(int sectionNumber, Profile p) {
 
         if(INSTANCE==null) {
 
@@ -47,8 +47,8 @@ public class NewProfileFragment extends Fragment {
             INSTANCE= fragment;
         }
 
+        profile= p;
         return INSTANCE;
-
     }
 
     public NewProfileFragment() {
@@ -90,7 +90,7 @@ public class NewProfileFragment extends Fragment {
                     return;
                 }
 
-                // TODO check the syntax of the code
+                // TODO check the input, ip - address, port
 
                 if(selectedItem.equals(ControllerType.Botball.toString())) {
                     controllerType= ControllerType.Botball;
@@ -102,12 +102,28 @@ public class NewProfileFragment extends Fragment {
                 final Activity activity = getActivity();
                 db= new DataBaseHandler(activity);
 
-                Log.d("Osiris", "New Profile");
-                db.addProfile(new Profile(0, hostname.getText().toString(), Integer.valueOf( port.getText().toString() ), controllerType));
+                // check if edit or new
+                if(profile==null) { // create a new profile
+                    Log.d("Osiris", "New Profile");
+                    db.addProfile(new Profile(0, hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType));
+                }else { // update the profile
+                    db.update(profile.getId(), hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType);
+                }
 
+                // Jump to the ProfileFragement where all entries are listed.
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.container, ProfileFragment.getInstance(5)).commit();
             }
 
         });
+
+        if(profile != null) {
+            int spinnerPostion = spinnerArrayAdapter.getPosition(profile.getType().toString());
+            typeSpinner.setSelection(spinnerPostion);
+
+            hostname.setText(profile.getHost(), TextView.BufferType.EDITABLE);
+            port.setText(String.valueOf(profile.getPort()), TextView.BufferType.EDITABLE);
+        }
 
         return rootView;
     }
@@ -122,5 +138,4 @@ public class NewProfileFragment extends Fragment {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
     }
-
 }

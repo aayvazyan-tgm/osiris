@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.*;
 
@@ -36,7 +37,7 @@ public class ProfileFragment extends Fragment {
     private ListView listView;
     private DataBaseHandler db;
 
-    private View current_delete_button;
+    private View current_delete_button, current_edit_button;
 
     /**
      * Creates a new DrawFragment instance
@@ -100,11 +101,10 @@ public class ProfileFragment extends Fragment {
         final Activity activity = getActivity();
         db= new DataBaseHandler(activity);
 
-        // debug data
+        //debug data
         //db.addProfile(new Profile(0, "192.168.0.2", 8889, ControllerType.Botball));
         //db.addProfile(new Profile(1, "192.168.0.3", 8289, ControllerType.Hedgehog));
         //db.addProfile(new Profile(2, "192.168.0.4", 8839, ControllerType.Botball));
-
         List<Profile> list= db.getAll();
 
         for(Profile p : list) {
@@ -147,6 +147,26 @@ public class ProfileFragment extends Fragment {
 
                         // refresh the GUI
                         listView.setAdapter(newAdapter());
+                    }
+
+                });
+
+                current_edit_button= view.findViewById(R.id.edit_button);
+                current_edit_button.setVisibility(View.VISIBLE);
+
+                current_edit_button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        final Activity activity = getActivity();
+                        DataBaseHandler db= new DataBaseHandler(activity);
+                        Profile p= db.getProfile(idd);
+                        Log.d("Osiris", "Hostname" + p.getHost());
+                        Log.d("Osiris", "Port" + p.getPort());
+                        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.container, NewProfileFragment.getInstance(5, p)).commit();
+
                     }
 
                 });
