@@ -82,9 +82,21 @@
             android:layout_height="wrap_content"
             android:text="@string/button_delete_item"
             android:id="@+id/delete_button"
-            android:layout_marginRight="33dp" android:layout_marginEnd="33dp"
-            android:layout_alignTop="@+id/textProfileView2" android:layout_alignParentRight="true"
+            android:layout_marginRight="33dp"
+            android:layout_marginEnd="33dp"
+            android:layout_alignTop="@+id/textProfileView2"
+            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:visibility="invisible"/>
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_edit_item"
+            android:id="@+id/edit_button"
+            android:visibility="invisible"
+            android:layout_alignTop="@+id/delete_button"
+            android:layout_toLeftOf="@+id/delete_button"
+            android:layout_toStartOf="@+id/delete_button"/>
 
 </RelativeLayout>

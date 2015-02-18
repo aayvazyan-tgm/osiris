@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         } else if (position + 1 == 5) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, NewProfileFragment.getInstance(position + 1))
+                    .replace(R.id.container, NewProfileFragment.getInstance(position + 1, null))
                     .commit();
         } else {
             fragmentManager.beginTransaction()
