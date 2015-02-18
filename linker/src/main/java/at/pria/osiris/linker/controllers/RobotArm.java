@@ -31,7 +31,7 @@ public abstract class RobotArm {
         return this.communicationInterface;
     }
 
-    public void moveTo() {
+    public void moveTo(double x,double y,double z) {
 
     }
 }
