@@ -29,11 +29,7 @@ public class HorizontalAxis extends Axis{
      * @see at.pria.osiris.linker.controllers.components.Axis
      */
     public void moveAtPower(int power){
-        try {
-            motor.moveAtPower(power);
-        } catch (NotConnectedException e) {
-            e.printStackTrace();
-        }
+        motor.moveAtPower(power);
     }
 
     /**

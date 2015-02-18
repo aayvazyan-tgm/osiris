@@ -22,12 +22,8 @@ public class BaseAxis extends Axis{
      * @see at.pria.osiris.linker.controllers.components.Axis
      */
     public void moveToPosition(int position){
-        try {
             servo.moveToAngle(position);
             servoPosition=position;
-        } catch (NotConnectedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

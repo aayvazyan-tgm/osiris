@@ -21,8 +21,12 @@ public class HedgehogServo implements at.pria.osiris.linker.controllers.componen
 	/**
 	 * @see at.pria.osiris.linker.controllers.components.systemDependent.Servo#moveToAngle(int)
 	 */
-	public void moveToAngle(int angle) throws NotConnectedException {
-		actualServo.setPosition(angle);
-	}
+	public void moveToAngle(int angle){
+        try {
+            actualServo.setPosition(angle);
+        } catch (NotConnectedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

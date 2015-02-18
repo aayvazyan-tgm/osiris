@@ -20,8 +20,11 @@ public class HedgehogMotor implements at.pria.osiris.linker.controllers.componen
 	/**
 	 * @see at.pria.osiris.linker.controllers.components.systemDependent.Motor#moveAtPower(int)
 	 */
-	public void moveAtPower(int power) throws NotConnectedException {
-		actualMotor.moveAtPower(power);
-	}
-
+	public void moveAtPower(int power) {
+        try {
+            actualMotor.moveAtPower(power);
+        } catch (NotConnectedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
