@@ -8,6 +8,7 @@ import org.andrix.low.NotConnectedException;
 import org.andrix.motors.Motor;
 import org.andrix.sensors.Analog;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -150,6 +151,11 @@ public class RobotarmImpl implements Robotarm {
     @Override
     public double getMaxMovePower() {
         return 100;
+    }
+
+    @Override
+    public void sendMessage(Serializable msg) {
+        return;
     }
 
 }

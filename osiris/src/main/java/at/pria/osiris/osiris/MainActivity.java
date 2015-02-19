@@ -33,7 +33,12 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         robotController = ControllerFactory.getController(ControllerType.Hedgehog);
-        robotController.getSetup().setup();
+        try {
+            robotController.getSetup().setup(robotController.getRobotArm());
+        } catch (ConnectionNotEstablishedException e) {
+            e.printStackTrace();
+            Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
