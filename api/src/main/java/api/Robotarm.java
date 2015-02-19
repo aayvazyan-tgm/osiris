@@ -1,5 +1,7 @@
 package api;
 
+import java.io.Serializable;
+
 /**
  * A Robotarm
  *
@@ -72,4 +74,5 @@ public interface Robotarm {
      */
     public double getMaxMovePower();
 
+    public void sendMessage(Serializable msg);
 }
