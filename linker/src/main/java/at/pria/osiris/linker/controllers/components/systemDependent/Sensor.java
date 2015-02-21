@@ -5,5 +5,5 @@ package at.pria.osiris.linker.controllers.components.systemDependent;
  */
 public interface Sensor {
 
-    public double getCurrentValue();
+    public int getCurrentValue();
 }

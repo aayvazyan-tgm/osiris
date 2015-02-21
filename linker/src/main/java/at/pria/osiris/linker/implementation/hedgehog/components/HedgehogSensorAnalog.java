@@ -21,7 +21,7 @@ public class HedgehogSensorAnalog implements Sensor {
     }
 
     @Override
-    public double getCurrentValue() {
+    public int getCurrentValue() {
         try {
             return actualSensor.getValue();
         } catch (Exception e){

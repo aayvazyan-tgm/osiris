@@ -1,4 +1,4 @@
-package at.pria.osiris.linker.controllers.components;
+package at.pria.osiris.linker.controllers.components.Axes;
 
 
 /**

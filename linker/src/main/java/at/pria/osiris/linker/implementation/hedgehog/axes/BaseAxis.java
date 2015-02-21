@@ -1,6 +1,7 @@
 package at.pria.osiris.linker.implementation.hedgehog.axes;
 
-import at.pria.osiris.linker.controllers.components.Axis;
+import at.pria.osiris.linker.controllers.components.Axes.Axis;
+import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import org.andrix.low.NotConnectedException;
@@ -9,35 +10,8 @@ import org.andrix.low.NotConnectedException;
  * @author Ari Michael Ayvazyan
  * @version 16.02.2015
  */
-public class BaseAxis extends Axis{
-    private Servo servo;
-    private int servoPosition=-1; //-1 is a undefined state
+public class BaseAxis extends ServoAxis {
     public BaseAxis() throws NotConnectedException {
-        super("BaseAxis");
-        this.servo=new HedgehogServo(1);
-    }
-
-    /**
-     *
-     * @see at.pria.osiris.linker.controllers.components.Axis
-     */
-    public void moveToPosition(int position){
-            servo.moveToAngle(position);
-            servoPosition=position;
-    }
-
-    /**
-     * @see at.pria.osiris.linker.controllers.components.Axis
-     */
-    public void moveAtPower(int power){
-        //TODO This one will be tricky...
-    }
-
-    /**
-     * @see at.pria.osiris.linker.controllers.components.Axis
-     */
-    @Override
-    public int getSensorValue() {
-        return servoPosition;
+        super("BaseAxis",new HedgehogServo(1));
     }
 }

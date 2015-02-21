@@ -2,7 +2,7 @@ package at.pria.osiris.linker.controllers;
 
 import at.pria.osiris.linker.communication.CommunicationInterface;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
-import at.pria.osiris.linker.controllers.components.Axis;
+import at.pria.osiris.linker.controllers.components.Axes.Axis;
 import at.pria.osiris.linker.kinematics.Kinematic;
 
 public abstract class RobotArm {
