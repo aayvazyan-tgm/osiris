@@ -1,8 +1,6 @@
 package at.pria.osiris.linker.implementation.hedgehog.axes;
 
-import at.pria.osiris.linker.controllers.components.Axes.Axis;
 import at.pria.osiris.linker.controllers.components.Axes.MotorSensorAxis;
-import at.pria.osiris.linker.controllers.components.systemDependent.Motor;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogMotor;
 import org.andrix.low.NotConnectedException;
 
@@ -12,6 +10,6 @@ import org.andrix.low.NotConnectedException;
  */
 public class HorizontalAxis extends MotorSensorAxis {
     public HorizontalAxis() throws NotConnectedException {
-        super("HorizontalAxis",new HedgehogMotor(2),null);
+        super("HorizontalAxis", new HedgehogMotor(2), null);
     }
 }

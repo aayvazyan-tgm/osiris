@@ -25,7 +25,6 @@ mainClassName = 'oldLinker.Starter'
 
 task packJarWithLibs(type: Jar, dependsOn: jar) {
     from files(sourceSets.main.output.classesDir)
-//    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 

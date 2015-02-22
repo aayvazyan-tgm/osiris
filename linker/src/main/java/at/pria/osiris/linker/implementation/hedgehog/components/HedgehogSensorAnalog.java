@@ -1,9 +1,7 @@
 package at.pria.osiris.linker.implementation.hedgehog.components;
 
 import at.pria.osiris.linker.controllers.components.systemDependent.Sensor;
-
 import org.andrix.low.NotConnectedException;
-import org.andrix.low.RequestTimeoutException;
 import org.andrix.sensors.Analog;
 
 /**
@@ -17,14 +15,14 @@ public class HedgehogSensorAnalog implements Sensor {
     private Analog actualSensor;
 
     public HedgehogSensorAnalog(int port) throws NotConnectedException {
-        actualSensor= new Analog(port);
+        actualSensor = new Analog(port);
     }
 
     @Override
     public int getCurrentValue() {
         try {
             return actualSensor.getValue();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

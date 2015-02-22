@@ -1,8 +1,6 @@
 package at.pria.osiris.linker.implementation.hedgehog.axes;
 
-import at.pria.osiris.linker.controllers.components.Axes.Axis;
 import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
-import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import org.andrix.low.NotConnectedException;
 
@@ -12,6 +10,6 @@ import org.andrix.low.NotConnectedException;
  */
 public class BaseAxis extends ServoAxis {
     public BaseAxis() throws NotConnectedException {
-        super("BaseAxis",new HedgehogServo(1));
+        super("BaseAxis", new HedgehogServo(1));
     }
 }

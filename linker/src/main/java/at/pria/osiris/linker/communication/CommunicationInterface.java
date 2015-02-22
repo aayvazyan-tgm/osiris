@@ -10,5 +10,6 @@ import java.io.Serializable;
  */
 public interface CommunicationInterface {
     public void sendMessage(Serializable message);
+
     public void setupCommunication(MessageProcessor messageProcessor);
 }

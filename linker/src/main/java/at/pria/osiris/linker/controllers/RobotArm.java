@@ -15,10 +15,11 @@ public abstract class RobotArm {
 
     /**
      * Sets up the communication interface with the given messageProcessor
+     *
      * @param communicationInterface
      * @param messageProcessor
      */
-    public RobotArm(CommunicationInterface communicationInterface,MessageProcessor messageProcessor) {
+    public RobotArm(CommunicationInterface communicationInterface, MessageProcessor messageProcessor) {
         this.communicationInterface = communicationInterface;
         this.communicationInterface.setupCommunication(messageProcessor);
     }
@@ -31,7 +32,7 @@ public abstract class RobotArm {
         return this.communicationInterface;
     }
 
-    public void moveTo(double x,double y,double z) {
+    public void moveTo(double x, double y, double z) {
 
     }
 }
