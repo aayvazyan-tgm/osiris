@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,7 +28,6 @@ import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.util.AXCPWrapper;
 
 /**
- *
  * A fragment which allows the user to draw a line on the screen.
  *
  * Created by helmuthbrunner on 03/12/14.
@@ -82,12 +80,12 @@ public class DrawFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_draw, container, false);
 
+        // get view elements from the view
         imageView = (ImageView) view.findViewById(R.id.drawView);
         buttonClear= (Button) view.findViewById(R.id.buttonClear);
         buttonSend= (Button) view.findViewById(R.id.buttonSend);
 
         WindowManager manager = (WindowManager) imageView.getContext().getSystemService(Context.WINDOW_SERVICE);
-
         Display currentDisplay= manager.getDefaultDisplay();
 
         int sdk = android.os.Build.VERSION.SDK_INT;
@@ -136,7 +134,7 @@ public class DrawFragment extends Fragment {
                         endx = event.getX();
                         endy = event.getY();
 
-                        l.add(new Points((int) endx, (int) endy));
+                        l.add(new Points((int) endx, (int) endy)); // add new Points to the list
 
                         canvas.drawLine(startx, starty, endx, endy, paint);
                         imageView.invalidate();

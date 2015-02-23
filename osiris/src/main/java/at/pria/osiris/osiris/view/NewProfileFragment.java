@@ -56,13 +56,14 @@ public class NewProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragement_new_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_new_profile, container, false);
 
         Axis.values();
         final Spinner typeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(ControllerType.class));
         typeSpinner.setAdapter(spinnerArrayAdapter);
 
+        // setting the listener to the spinner
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

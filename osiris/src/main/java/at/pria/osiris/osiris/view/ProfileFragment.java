@@ -19,7 +19,9 @@ import at.pria.osiris.osiris.view.elements.Profile;
 import java.util.List;
 
 /**
- * A fragment which displays all the profiles from the database
+ * A fragment which displays all the profiles from the database.
+ *
+ * If you press long on the the item two buttons will appeare. One edit- and one deletebutton.
  *
  * Created by helmuthbrunner on 10/02/15.
  */
@@ -27,13 +29,10 @@ public class ProfileFragment extends Fragment {
 
     private static ProfileFragment INSTANCE;
     private static final String ARG_SECTION_NUMBER = "section_number";
-
     private SimpleCursorAdapter sca;
     private Cursor cursor;
-
     private int[] to;
     private String[] columns;
-
     private ListView listView;
     private DataBaseHandler db;
 
@@ -81,15 +80,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
         cursor= new DataBaseHandler(getActivity()).fetchAllProfiles();
-
         listView= (ListView) rootView.findViewById(R.id.listViewProfile);
-
         final Activity activity = getActivity();
-
+        // set the parameters to the adapter
         sca= new SimpleCursorAdapter(activity.getBaseContext(), R.layout.profiles_view, cursor, columns, to, 0);
-
         this.displayListView();
 
         return rootView;
@@ -101,10 +96,6 @@ public class ProfileFragment extends Fragment {
         final Activity activity = getActivity();
         db= new DataBaseHandler(activity);
 
-        //debug data
-        //db.addProfile(new Profile(0, "192.168.0.2", 8889, ControllerType.Botball));
-        //db.addProfile(new Profile(1, "192.168.0.3", 8289, ControllerType.Hedgehog));
-        //db.addProfile(new Profile(2, "192.168.0.4", 8839, ControllerType.Botball));
         List<Profile> list= db.getAll();
 
         for(Profile p : list) {
@@ -127,17 +118,31 @@ public class ProfileFragment extends Fragment {
 
         final Activity activity = getActivity();
 
+        // setting a listener to the listview
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                // checks if some buttons are visible.
+                if(current_delete_button != null) {
+                    if(current_delete_button.getVisibility() == View.VISIBLE) {
+                        current_delete_button.setVisibility(View.INVISIBLE);
+                        current_edit_button.setVisibility(View.INVISIBLE);
+                    }
+                }
+
                 final long idd= id;
                 current_delete_button= view.findViewById(R.id.delete_button);
                 current_delete_button.setVisibility(View.VISIBLE);
 
+                // setting a listener to the delete button
                 current_delete_button.setOnClickListener(new View.OnClickListener() {
 
+                    /**
+                     * Removes the listView element and the dataset in the database.
+                     * @param v
+                     */
                     @Override
                     public void onClick(View v) {
                         final Activity activity = getActivity();
@@ -154,8 +159,13 @@ public class ProfileFragment extends Fragment {
                 current_edit_button= view.findViewById(R.id.edit_button);
                 current_edit_button.setVisibility(View.VISIBLE);
 
+                // setting a listener to the edit button
                 current_edit_button.setOnClickListener(new View.OnClickListener() {
 
+                    /**
+                     * Forwards to the NewFragmentProfile and fills in the data from the current profile
+                     * @param v
+                     */
                     @Override
                     public void onClick(View v) {
 
@@ -166,17 +176,24 @@ public class ProfileFragment extends Fragment {
                         Log.d("Osiris", "Port" + p.getPort());
                         final FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.replace(R.id.container, NewProfileFragment.getInstance(5, p)).commit();
-
                     }
 
                 });
-
                 return false;
             }
 
         });
 
+        // set a listener to the listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * This method makes a toast with the id, of the clicked row.
+             *
+             * @param listView
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> listView,
                                     View view,
@@ -196,7 +213,7 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
-     * Method to update the content in the ListView
+     * Method to update the content in the ListView if one of the values has changed.
      * @return a new ListAdapter
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
