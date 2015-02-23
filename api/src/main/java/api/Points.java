@@ -7,6 +7,7 @@ import java.io.Serializable;
  *
  * Created by helmuthbrunner on 16/01/15.
  */
+@Deprecated
 public class Points implements Serializable {
 
     private int x, y;
