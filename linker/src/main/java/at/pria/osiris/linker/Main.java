@@ -5,6 +5,8 @@ import at.pria.osiris.linker.communication.messageProcessors.MoveAxisRequestProc
 import at.pria.osiris.linker.communication.messageProcessors.SensorValueRequestProcessor;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
+import oldLinker.Starter;
+import org.apache.log4j.Logger;
 
 /**
  * Starts the Linker and sets up its communication.
@@ -13,8 +15,9 @@ import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
  * @version 15.02.2015
  */
 public class Main {
+    private static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
     public static void main(String[] args) {
-
+        logger.info("new Linker started");
         //Initialize the MessageProcessorDistributor to handle incoming requests
         MessageProcessorDistributor msgDistributor = new MessageProcessorDistributor();
 
