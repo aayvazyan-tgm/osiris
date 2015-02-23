@@ -36,11 +36,11 @@ public class SerialLatencyTest {
      */
     @Before
     public void before() throws Exception {
-        //Initialize a RobotArm Implementation
-        robotArm = new HedgehogRobotArm();
-
         //Initialize the MessageProcessorDistributor and add MessageProcessors to handle incoming requests
         msgDistributor = new MessageProcessorDistributor();
+        //Initialize a RobotArm Implementation
+        robotArm = new HedgehogRobotArm(msgDistributor);
+
         //Add the handlers
         msgDistributor.addMessageProcessor(new SensorValueRequestProcessor(robotArm));
         //Setup the Communication of the specified RobotArm/Controller
