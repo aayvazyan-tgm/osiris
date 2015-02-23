@@ -9,12 +9,11 @@ import org.andrix.motors.Servo;
  * @author Helmuth Brunner
  * @version 2015-01-26
  */
-public class HedgehogServo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
+public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
 
-    private Servo actualServo;
 
     public HedgehogServo(int port) throws NotConnectedException {
-        actualServo = new Servo(port);
+        super(port);
     }
 
     /**
@@ -22,7 +21,7 @@ public class HedgehogServo implements at.pria.osiris.linker.controllers.componen
      */
     public void moveToAngle(int angle) {
         try {
-            actualServo.setPosition(angle);
+            super.setPosition(angle);
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }
