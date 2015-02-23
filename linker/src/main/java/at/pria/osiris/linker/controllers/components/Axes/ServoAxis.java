@@ -28,6 +28,7 @@ public abstract class ServoAxis extends Axis {
      */
     public void moveAtPower(int power) {
         //TODO This one will be tricky...
+        moveToPosition(power);
     }
 
     /**
