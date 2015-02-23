@@ -20,6 +20,7 @@ import api.Robotarm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.communication.DataListener;
+import at.pria.osiris.osiris.communication.messageProcessor.SensorValueResponseProcessor;
 import at.pria.osiris.osiris.communication.messageProcessor.StringProcessor;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 import at.pria.osiris.osiris.view.elements.SensorRow;
@@ -56,14 +57,6 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
-
-
-            //We add the ExecutionListener to listen for events from the controller
-            DataListener dl=new DataListener();
-            //We add the required EventHandlers
-            dl.addMessageProcessor(new StringProcessor(robotarm,fragment));
-            //Set the listener in Hedgehog
-            ExecutionListener._l_exec.add(dl);
 
             INSTANCE = fragment;
         } else {

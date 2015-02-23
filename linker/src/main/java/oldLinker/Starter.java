@@ -1,5 +1,6 @@
 package oldLinker;
 
+import at.pria.osiris.linker.Main;
 import oldLinker.control.DataListener;
 import oldLinker.control.MessageProcessor.MessageProcessorDistributor;
 import oldLinker.control.SensorMessenger;
@@ -19,25 +20,29 @@ import org.apache.log4j.Logger;
 public class Starter {
 
     private static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
+
     public static void main(String[] args) {
+        //Start the new Linker if any arguments are supplied
+        if (args.length > 0) {
+            Main.main(new String[0]);
+        } else {
+            logger.info("Log4J works now");
+            AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
+            AXCPAccessor.getInstance().connectController(new HardwareController(null, HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
 
-        //TODO change to log4j2
-        logger.info("Log4J works now");
-        AXCPServer.communicationInterface = new SerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
-        AXCPAccessor.getInstance().connectController(new HardwareController(null,HardwareController.TYPE_V3,"hedgehog-osiris")); // Initialise the AXCPAccessor
+            Thread thread;
+            RobotarmImpl robotarm = new RobotarmImpl();
 
-        Thread thread;
-        RobotarmImpl robotarm = new RobotarmImpl();
+            MessageProcessorDistributor mp = new MessageProcessorDistributor(robotarm);
+            boolean running = true;
 
-        MessageProcessorDistributor mp = new MessageProcessorDistributor(robotarm);
-        boolean running = true;
+            // sends sensordata in ~1s intervall
+            SensorMessenger st = new SensorMessenger(robotarm);
+            thread = new Thread(st);
+            thread.start();
 
-        // sends sensordata in ~1s intervall
-        SensorMessenger st = new SensorMessenger(robotarm);
-        thread = new Thread(st);
-        thread.start();
-
-        //A listener to receive Data from the Controller
-        ExecutionListener._l_exec.add(new DataListener(mp));
+            //A listener to receive Data from the Controller
+            ExecutionListener._l_exec.add(new DataListener(mp));
+        }
     }
 }

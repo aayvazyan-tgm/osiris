@@ -60,6 +60,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     /**
      * Has no functionality //TODO implementate the functionality
+     *
+     * Version controll
+     *
      * @param db
      * @param oldVersion
      * @param newVersion
@@ -88,6 +91,35 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_PROFILES, null, values);
         db.close();
+    }
+
+    /**
+     * Deletes a row in the db
+     * @param id the specfic field
+     * @return true, false
+     */
+    public boolean delete(long id) {
+        SQLiteDatabase db= this.getWritableDatabase();
+        return db.delete(TABLE_PROFILES, _ID + "=" + String.valueOf(id), null) > 0;
+    }
+
+    /**
+     * A method to update a value in the database
+     * @param id the primary key from the dataset
+     * @param hostname the new hostname
+     * @param port the new port
+     * @param type the new controller type
+     * @return true, false
+     */
+    public boolean update(long id, String hostname, int port, ControllerType type) {
+        SQLiteDatabase db= this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_HOST, hostname);
+        values.put(KEY_PORT, port);
+        values.put(KEY_TYPE, type.toString());
+
+        return db.update(TABLE_PROFILES, values, _ID + "=" + String.valueOf(id), null) > 0;
     }
 
     public Cursor fetchAllProfiles() {
@@ -135,7 +167,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * @param id
      * @return the profile with this id
      */
-    public Profile getProfile(int id) {
+    public Profile getProfile(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         ControllerType type= null;

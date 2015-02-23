@@ -1,5 +1,6 @@
 package at.pria.osiris.osiris.controllers.botball;
 
+import api.Robotarm;
 import at.pria.osiris.osiris.controllers.ControllerSetup;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class BotballSetup implements ControllerSetup {
     }
 
     @Override
-    public void setup() {
+    public void setup(Robotarm robotarm) {
         try {
             BotballRemoteRobotarm.setup(this.host, this.port);
         } catch (IOException e) {

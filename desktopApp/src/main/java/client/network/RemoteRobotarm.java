@@ -6,6 +6,7 @@ import api.Robotarm;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 /**
@@ -84,9 +85,9 @@ public class RemoteRobotarm implements Robotarm {
         return 100;
     }
 
-    private void sendMessage(String message) {
+    public void sendMessage(Serializable message) {
         try {
-            System.out.println("Sending message to Socket Server: " + message);
+            System.out.println("Sending message to Socket Server");
             oos.writeObject(message);
             System.out.println("Message sent");
         } catch (IOException e) {

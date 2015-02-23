@@ -11,6 +11,7 @@ import at.pria.osiris.osiris.controllers.NoSetupException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 
 import javax.net.SocketFactory;
@@ -105,7 +106,8 @@ public class BotballRemoteRobotarm extends Thread implements Robotarm {
         return MAX_POWER;
     }
 
-    private void sendMessage(String message) {
+    @Override
+    public void sendMessage(Serializable message) {
         try {
             //Log.d("osiris", "Sending message to Socket Server: " + message);
 

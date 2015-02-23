@@ -1,7 +1,7 @@
 package at.pria.osiris.linker.implementation.hedgehog.communication;
 
-import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.communication.CommunicationInterface;
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import org.andrix.AXCP;
 import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.*;
@@ -46,7 +46,7 @@ public class HedgehogCommunicationInterface implements CommunicationInterface {
     @Override
     public void setupCommunication(MessageProcessor messageProcessor) {
         AXCPServer.communicationInterface = new HedgehogSerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
-        AXCPAccessor.getInstance().connectController(new HardwareController(null,HardwareController.TYPE_V3,"hedgehog-osiris")); // Initialise the AXCPAccessor
+        AXCPAccessor.getInstance().connectController(new HardwareController(null, HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
         ExecutionListener._l_exec.add(new HedgehogDataListener(messageProcessor));
     }
 }

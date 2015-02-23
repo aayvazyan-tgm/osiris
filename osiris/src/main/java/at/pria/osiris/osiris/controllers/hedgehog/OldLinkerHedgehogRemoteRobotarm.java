@@ -7,6 +7,7 @@ import api.Robotarm;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * This class Provides a simple Interface to Send commands to the Robot
@@ -14,19 +15,19 @@ import java.io.IOException;
  * @author Adrian Bergler, Ari Ayvazyan
  * @version 3.11.2014
  */
-public class HedgehogRemoteRobotarm extends Thread implements Robotarm {
+public class OldLinkerHedgehogRemoteRobotarm extends Thread implements Robotarm {
 
     private static final int MAX_POWER = 100;
-    private static HedgehogRemoteRobotarm INSTANCE;
+    private static OldLinkerHedgehogRemoteRobotarm INSTANCE;
 
-    private HedgehogRemoteRobotarm() throws IOException {
+    private OldLinkerHedgehogRemoteRobotarm() throws IOException {
         this.start();
 
     }
 
-    public static HedgehogRemoteRobotarm getInstance() throws IOException {
+    public static OldLinkerHedgehogRemoteRobotarm getInstance() throws IOException {
         if (INSTANCE == null) {
-            INSTANCE = new HedgehogRemoteRobotarm();
+            INSTANCE = new OldLinkerHedgehogRemoteRobotarm();
         }
         return INSTANCE;
     }
@@ -80,7 +81,8 @@ public class HedgehogRemoteRobotarm extends Thread implements Robotarm {
         return MAX_POWER;
     }
 
-    private void sendMessage(String message) {
+    @Override
+    public void sendMessage(Serializable message) {
         try {
             AXCPWrapper.sendData(message);
         } catch (RequestTimeoutException e) {
