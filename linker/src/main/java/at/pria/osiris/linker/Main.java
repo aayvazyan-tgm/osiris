@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
  * @version 15.02.2015
  */
 public class Main {
-    private static Logger logger = org.apache.log4j.Logger.getLogger(Starter.class);
+    private static Logger logger = org.apache.log4j.Logger.getLogger(Main.class);
     public static void main(String[] args) {
         logger.info("new Linker started");
         //Initialize the MessageProcessorDistributor to handle incoming requests
@@ -26,8 +26,10 @@ public class Main {
         RobotArm robotArm = new HedgehogRobotArm(msgDistributor);
 
         //Add the message processors to handle incoming requests
+        logger.info("Adding Processors");
         msgDistributor.addMessageProcessor(new SensorValueRequestProcessor(robotArm));
         msgDistributor.addMessageProcessor(new MoveAxisRequestProcessor(robotArm));
         msgDistributor.addMessageProcessor(new StringProcessor(robotArm));
+        logger.info("All Processors are added");
     }
 }

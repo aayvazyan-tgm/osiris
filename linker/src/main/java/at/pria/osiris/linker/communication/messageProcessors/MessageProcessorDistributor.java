@@ -1,6 +1,8 @@
 package at.pria.osiris.linker.communication.messageProcessors;
 
 import Util.Serializer;
+import messages.SerializableMessage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -14,7 +16,7 @@ import java.util.List;
  * @version 13.02.2015
  */
 public class MessageProcessorDistributor implements MessageProcessor {
-
+    private static Logger logger = org.apache.log4j.Logger.getLogger(MessageProcessorDistributor.class);
     private List<MessageProcessor> messageProcessors;
 
     /**
@@ -23,6 +25,7 @@ public class MessageProcessorDistributor implements MessageProcessor {
      */
     public MessageProcessorDistributor() {
         this.messageProcessors = new LinkedList<MessageProcessor>();
+        logger.info("MessageProcessorDistributor started");
     }
 
     /**
@@ -57,6 +60,11 @@ public class MessageProcessorDistributor implements MessageProcessor {
      */
     @Override
     public void processMessage(Object message) {
+        logger.info("Distributing message: "+message.getClass());
+        if(message instanceof SerializableMessage) {
+            SerializableMessage msg=((SerializableMessage) message);
+            logger.info("Distributing Serializable msg ID: " +msg.getMessageID());
+        }
         for (MessageProcessor messageProcessor : messageProcessors) {
             messageProcessor.processMessage(message);
         }
