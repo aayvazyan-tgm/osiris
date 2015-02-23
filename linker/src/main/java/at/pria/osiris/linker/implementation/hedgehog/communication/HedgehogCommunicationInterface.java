@@ -5,6 +5,7 @@ import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import org.andrix.AXCP;
 import org.andrix.listeners.ExecutionListener;
 import org.andrix.low.*;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,6 +15,8 @@ import java.io.Serializable;
  * @version 03.Dec.14
  */
 public class HedgehogCommunicationInterface implements CommunicationInterface {
+
+    private static Logger logger = org.apache.log4j.Logger.getLogger(HedgehogCommunicationInterface.class);
     /**
      * Sends data via the Hedgehog AXCP Controller
      */
@@ -45,6 +48,7 @@ public class HedgehogCommunicationInterface implements CommunicationInterface {
      */
     @Override
     public void setupCommunication(MessageProcessor messageProcessor) {
+        logger.info("Setting up communication...");
         AXCPServer.communicationInterface = new HedgehogSerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
         AXCPAccessor.getInstance().connectController(new HardwareController(null, HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
         ExecutionListener._l_exec.add(new HedgehogDataListener(messageProcessor));
