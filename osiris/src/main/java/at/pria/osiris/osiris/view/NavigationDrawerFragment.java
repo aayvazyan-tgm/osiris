@@ -19,6 +19,7 @@ import android.widget.Toast;
 import at.pria.osiris.osiris.Demo;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.util.AXCPWrapper;
+import messages.requests.SensorValueRequest;
 import org.andrix.AXCP;
 
 import java.io.IOException;
@@ -253,7 +254,7 @@ public class NavigationDrawerFragment extends Fragment {
         if (item.getItemId() == R.id.start_test) {
             Toast.makeText(getActivity(), "Sending Test Data...", Toast.LENGTH_SHORT).show();
             try {
-                AXCPWrapper.sendData("TestString");
+                AXCPWrapper.sendData(new SensorValueRequest(0));
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
