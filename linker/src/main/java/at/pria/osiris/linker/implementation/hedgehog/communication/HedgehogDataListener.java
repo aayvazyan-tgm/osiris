@@ -40,6 +40,7 @@ public class HedgehogDataListener implements ExecutionListener {
      */
     @Override
     public void executionDataReceived(Program program, int i, byte[] bytes) {
+        System.out.println("received some data!");
         this.messageProcessorDistributor.processMessage(bytes);
     }
 
