@@ -29,22 +29,6 @@ public class MessageProcessorDistributor implements MessageProcessor {
     }
 
     /**
-     * Combined with a message-"receiver" this calls a method of the robotarm
-     *
-     * @param message the message
-     */
-    public void processMessage(byte[] message) {
-        try {
-            Object receivedMessage = Serializer.deserialize(message);
-            processMessage(receivedMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Adds a MessageProcessor that receives messages.
      *
      * @param messageProcessor the MessageProcessor/s to be added.
