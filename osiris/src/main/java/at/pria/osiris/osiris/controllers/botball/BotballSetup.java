@@ -1,6 +1,7 @@
 package at.pria.osiris.osiris.controllers.botball;
 
 import api.Robotarm;
+import at.pria.osiris.osiris.communication.DataListener;
 import at.pria.osiris.osiris.controllers.ControllerSetup;
 
 import java.io.IOException;
@@ -25,5 +26,10 @@ public class BotballSetup implements ControllerSetup {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public DataListener getDataListener() {
+        return null;
     }
 }

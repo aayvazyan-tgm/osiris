@@ -25,8 +25,8 @@ public class HedgehogSetup implements ControllerSetup {
         dl=new DataListener();
         //We add the required EventHandlers
         SensorRefreshable sensorRefreshable =TableSensorValuesFragment.getInstance(1, robotarm);
-        dl.addMessageProcessor(new StringProcessor(robotarm, sensorRefreshable));
-        dl.addMessageProcessor(new SensorValueResponseProcessor(robotarm, sensorRefreshable));
+        dl.addMessageProcessor(new StringProcessor(sensorRefreshable));
+        dl.addMessageProcessor(new SensorValueResponseProcessor(sensorRefreshable));
         //Set the listener in Hedgehog
         ExecutionListener._l_exec.add(dl);
     }
