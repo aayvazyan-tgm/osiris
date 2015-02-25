@@ -23,7 +23,7 @@ public class Starter {
 
     public static void main(String[] args) {
         //Start the new Linker if any arguments are supplied
-        if (args.length > 0) {
+        if (!(args.length > 0)) {
             Main.main(new String[0]);
         } else {
             logger.info("Log4J works now");
