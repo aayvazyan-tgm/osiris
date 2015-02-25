@@ -16,3 +16,4 @@
 #   public *;
 #}
 -dontwarn org.slf4j.**
+-dontwarn org.apache.**
