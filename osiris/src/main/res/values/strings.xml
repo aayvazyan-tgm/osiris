@@ -22,4 +22,9 @@
     <string name="button_delete_item">Delete</string>
     <string name="button_edit_item">Edit</string>
 
+    <!-- Colors -->
+    <string name="color_0">#FFA000</string> <!-- StatusBar -->
+    <string name="color_1">#FE9A2E</string> <!-- ActionBar -->
+    <string name="color_2">#FFD54F</string>
+
 </resources>

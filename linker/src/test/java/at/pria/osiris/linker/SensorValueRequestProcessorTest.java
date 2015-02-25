@@ -65,7 +65,7 @@ public class SensorValueRequestProcessorTest {
             }
 
             @Override
-            public void moveToPosition(int position) {
+            public void moveToAngle(int angle) {
 
             }
 

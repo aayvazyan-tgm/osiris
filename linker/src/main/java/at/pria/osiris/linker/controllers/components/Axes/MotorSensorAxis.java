@@ -21,7 +21,7 @@ public abstract class MotorSensorAxis extends Axis {
     /**
      * @see at.pria.osiris.linker.controllers.components.Axes.Axis
      */
-    public void moveToPosition(int position) {
+    public void moveToAngle(int angle) {
         //TODO work with sensor values
     }
 

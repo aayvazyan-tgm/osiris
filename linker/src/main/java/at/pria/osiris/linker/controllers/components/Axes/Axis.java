@@ -29,11 +29,11 @@ public abstract class Axis {
     public abstract int getSensorValue();
 
     /**
-     * Moves to the desired position.
+     * Moves to the desired angle.
      *
-     * @param position the desired position in degrees
+     * @param angle the desired angle in degrees
      */
-    public abstract void moveToPosition(int position);
+    public abstract void moveToAngle(int angle);
 
     /**
      * moves the Axis at the desired power
@@ -41,4 +41,5 @@ public abstract class Axis {
      * @param power the power
      */
     public abstract void moveAtPower(int power);
+
 }

@@ -7,6 +7,7 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
  * @version 21.02.2015
  */
 public abstract class ServoAxis extends Axis {
+
     private Servo servo;
     private int servoPosition = -1; //-1 is a undefined state
 
@@ -18,17 +19,9 @@ public abstract class ServoAxis extends Axis {
     /**
      * @see Axis
      */
-    public void moveToPosition(int position) {
-        servo.moveToAngle(position);
-        servoPosition = position;
-    }
-
-    /**
-     * @see Axis
-     */
     public void moveAtPower(int power) {
         //TODO This one will be tricky...
-        moveToPosition(power);
+        moveToAngle(power);
     }
 
     /**
@@ -36,8 +29,9 @@ public abstract class ServoAxis extends Axis {
      */
     @Override
     public int getSensorValue() {
-        return servoPosition;
+        return servo.getPosition();
     }
 
+    public Servo getServo() { return servo; }
 
 }

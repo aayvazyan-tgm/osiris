@@ -103,7 +103,7 @@ public class Joint {
     }
 
     /**
-     * moveToAngle invokes the moveToPosition method and uses the converted angle as the new position parameter
+     * moveToExactPosition invokes the moveToExactPosition method and uses the converted angle as the new position parameter
      *
      * @param angle The specific angle
      * @param power range -100 , 100

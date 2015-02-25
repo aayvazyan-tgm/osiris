@@ -17,14 +17,15 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
     }
 
     /**
-     * @see at.pria.osiris.linker.controllers.components.systemDependent.Servo#moveToAngle(int)
+     * Moves to a certain position
+     * @param position the system dependent position value
      */
-    public void moveToAngle(int angle) {
+    @Override
+    public void moveToExactPosition(int position) {
         try {
-            super.setPosition(angle);
+            super.setPosition(position);
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
