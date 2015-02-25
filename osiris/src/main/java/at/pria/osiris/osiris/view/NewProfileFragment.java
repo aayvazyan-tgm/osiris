@@ -15,9 +15,11 @@ import api.Axis;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ControllerType;
-import at.pria.osiris.osiris.util.DataBaseHandler;
+import at.pria.osiris.osiris.orm.DBQuery;
+import at.pria.osiris.osiris.orm.ProfileORM;
 import at.pria.osiris.osiris.util.EnumUtil;
-import at.pria.osiris.osiris.view.elements.Profile;
+
+import java.sql.SQLException;
 
 /**
  * A fragement to create a new profile or edit a profile
@@ -31,11 +33,11 @@ public class NewProfileFragment extends Fragment {
 
     private EditText hostname, port;
     private String selectedItem;
-    private DataBaseHandler db;
     private ControllerType controllerType;
-    private static Profile profile;
+    private static ProfileORM profile;
+    private Integer id;
 
-    public static NewProfileFragment getInstance(int sectionNumber, Profile p) {
+    public static NewProfileFragment getInstance(int sectionNumber, ProfileORM p) {
 
         if(INSTANCE==null) {
 
@@ -87,7 +89,7 @@ public class NewProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 if(hostname.getText().toString().equals("") || port.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "TextFiledsEmpty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Textfiled is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -101,29 +103,41 @@ public class NewProfileFragment extends Fragment {
                 }
 
                 final Activity activity = getActivity();
-                db= new DataBaseHandler(activity);
 
                 // check if edit or new
                 if(profile==null) { // create a new profile
                     Log.d("Osiris", "New Profile");
-                    db.addProfile(new Profile(0, hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType));
+                    ProfileORM porm= new ProfileORM(0, hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType.name() );
+                    DBQuery.insertProfileItem(activity, porm);
+
                 }else { // update the profile
-                    db.update(profile.getId(), hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType);
+                    ProfileORM porm= new ProfileORM(id, hostname.getText().toString(),Integer.valueOf(port.getText().toString()), controllerType.name());
+                    try {
+                        DBQuery.updateProfileItem(activity, porm);
+                    } catch (SQLException e) {
+                        Log.d("Osiris", "Exception while updating", e);
+                    }
                 }
 
                 // Jump to the ProfileFragement where all entries are listed.
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.container, ProfileFragment.getInstance(5)).commit();
+
+                // clear the textfildes
+                hostname.setText("");
+                port.setText("");
             }
 
         });
 
+        // if profile != null, the user has pressed the update button
         if(profile != null) {
-            int spinnerPostion = spinnerArrayAdapter.getPosition(profile.getType().toString());
+            int spinnerPostion = spinnerArrayAdapter.getPosition(profile.getController_type());
             typeSpinner.setSelection(spinnerPostion);
 
-            hostname.setText(profile.getHost(), TextView.BufferType.EDITABLE);
+            hostname.setText(profile.getHostname(), TextView.BufferType.EDITABLE);
             port.setText(String.valueOf(profile.getPort()), TextView.BufferType.EDITABLE);
+            id= profile.getId();
         }
 
         return rootView;
