@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @version 13.02.2015
  */
 public abstract class SerializableMessage implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private static int totalIDs = 0;
     private final long uniqueMessageID;

@@ -7,6 +7,7 @@ import messages.SerializableMessage;
  * @version 13.02.2015
  */
 public class SensorValueRequest extends SerializableMessage {
+    private static final long serialVersionUID = 1L;
     private int sensorPort;
 
     /**

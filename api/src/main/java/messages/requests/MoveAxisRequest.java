@@ -7,6 +7,7 @@ import messages.SerializableMessage;
  * @version 13.02.2015
  */
 public class MoveAxisRequest extends SerializableMessage {
+    private static final long serialVersionUID = 1L;
     private int axisPort;
     private int power;
     /**

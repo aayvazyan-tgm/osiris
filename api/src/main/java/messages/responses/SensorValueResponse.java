@@ -8,6 +8,7 @@ import messages.SerializableMessage;
  */
 
 public class SensorValueResponse extends SerializableMessage {
+    private static final long serialVersionUID = 1L;
     private final int sensorNumber;
     private final int sensorValue;
 

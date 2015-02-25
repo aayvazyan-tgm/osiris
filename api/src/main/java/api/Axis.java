@@ -6,6 +6,7 @@ package api;
  * @author Adrian Bergler
  * @version 2014-10-17
  */
+@Deprecated
 public enum Axis {
     BASE(-12345678, 12345678),
     AXISONE(150, 800),

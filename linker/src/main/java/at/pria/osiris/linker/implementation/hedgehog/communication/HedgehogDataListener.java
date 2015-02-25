@@ -1,8 +1,12 @@
 package at.pria.osiris.linker.implementation.hedgehog.communication;
 
+import Util.Serializer;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import org.andrix.deployment.Program;
 import org.andrix.listeners.ExecutionListener;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * @author Ari Ayvazyan
@@ -40,7 +44,16 @@ public class HedgehogDataListener implements ExecutionListener {
      */
     @Override
     public void executionDataReceived(Program program, int i, byte[] bytes) {
-        this.messageProcessorDistributor.processMessage(bytes);
+        System.out.println("received some data!");
+        try {
+            Logger.getGlobal().info("deserialized message");
+            Object receivedMessage = Serializer.deserialize(bytes);
+            this.messageProcessorDistributor.processMessage(receivedMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
