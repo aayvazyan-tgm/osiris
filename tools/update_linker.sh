@@ -5,4 +5,4 @@ rm libs.zip
 rm "$(find . -maxdepth 1 -name 'Osiris-Linker*.jar' -print -quit)"
 mv "$(find ./libs -maxdepth 1 -name 'Osiris-Linker*.jar' -print -quit)" .
 rm -r ./libs
-java -jar "$(find . -maxdepth 1 -name 'Osiris-Linker*.jar' -print -quit)"
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=8998,server=y -jar "$(find . -maxdepth 1 -name 'Osiris-Linker*.jar' -print -quit)"
