@@ -14,4 +14,13 @@ public class HorizontalAxis extends ServoAxis {
     public HorizontalAxis() throws NotConnectedException {
         super("HorizontalAxis", new HedgehogServo(4));
     }
+
+    /**
+     * @see at.pria.osiris.linker.controllers.components.Axes.Axis
+     */
+    public void moveToAngle(int angle) {
+        //TODO this is not the angle!
+        getServo().moveToExactPosition(angle);
+        setServoPosition(angle);
+    }
 }

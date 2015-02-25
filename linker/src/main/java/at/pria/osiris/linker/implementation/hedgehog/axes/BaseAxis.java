@@ -12,4 +12,13 @@ public class BaseAxis extends ServoAxis {
     public BaseAxis() throws NotConnectedException {
         super("BaseAxis", new HedgehogServo(1));
     }
+
+    /**
+     * @see at.pria.osiris.linker.controllers.components.Axes.Axis
+     */
+    public void moveToAngle(int angle) {
+        //TODO this is not the angle!
+        getServo().moveToExactPosition(angle);
+        setServoPosition(angle);
+    }
 }

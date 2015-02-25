@@ -25,17 +25,20 @@ public class VerticalAxis extends Axis {
     }
 
     @Override
-    public void moveToPosition(int position) {
-        curentPosition = position;
-        hedgehogServo.moveToAngle(position);
-        hedgehogServo2.moveToAngle(position);
+    public void moveToAngle(int angle) {
+        //TODO this is not the angle!
+        curentPosition = angle;
+        hedgehogServo.moveToExactPosition(angle);
+        hedgehogServo2.moveToExactPosition(angle);
     }
 
     @Override
     public void moveAtPower(int power) {
         //TODO Pfui :stinky:
         curentPosition = power;
-        hedgehogServo.moveToAngle(power);
-        hedgehogServo2.moveToAngle(power);
+        hedgehogServo.moveToExactPosition(power);
+        hedgehogServo2.moveToExactPosition(power);
     }
+
+
 }
