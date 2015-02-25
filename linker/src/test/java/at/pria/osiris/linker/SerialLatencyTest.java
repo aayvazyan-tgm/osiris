@@ -1,9 +1,7 @@
 package at.pria.osiris.linker;
 
 import at.pria.osiris.linker.communication.CommunicationInterface;
-import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
-import at.pria.osiris.linker.communication.messageProcessors.MessageProcessorDistributor;
-import at.pria.osiris.linker.communication.messageProcessors.SensorValueRequestProcessor;
+import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
 import org.junit.After;
@@ -19,16 +17,9 @@ import org.apache.log4j.Logger;
  * @version 2/16/2015
  */
 public class SerialLatencyTest {
-    private static CommunicationInterface communicationInterface;
     private static MessageProcessorDistributor msgDistributor;
     private static RobotArm robotArm;
-    private static Logger log = Logger.getLogger(SerialLatencyTest.class);
-
-//    public static void main(String[] args) throws Exception {
-//        JUnitCore.main(
-//                "at.pria.osiris.linker.SerialLatencyTest");
-//    }
-
+    private static Logger logger = Logger.getLogger(SerialLatencyTest.class);
 
     /**
      * Sets up the Serial Connection
@@ -36,18 +27,19 @@ public class SerialLatencyTest {
      */
     @Before
     public void before() throws Exception {
-        //Initialize the MessageProcessorDistributor and add MessageProcessors to handle incoming requests
+        logger.info("new Linker started");
+        //Initialize the MessageProcessorDistributor to handle incoming requests
         msgDistributor = new MessageProcessorDistributor();
+
         //Initialize a RobotArm Implementation
         robotArm = new HedgehogRobotArm(msgDistributor);
 
-        //Add the handlers
+        //Add the message processors to handle incoming requests
+        logger.info("Adding Processors");
         msgDistributor.addMessageProcessor(new SensorValueRequestProcessor(robotArm));
-        //Setup the Communication of the specified RobotArm/Controller
-        communicationInterface = robotArm.getCommunicationInterface();
-        communicationInterface.setupCommunication(msgDistributor);
-
-
+        msgDistributor.addMessageProcessor(new MoveAxisRequestProcessor(robotArm));
+        msgDistributor.addMessageProcessor(new StringProcessor(robotArm));
+        logger.info("All Processors are added");
     }
 
     @After
@@ -55,6 +47,9 @@ public class SerialLatencyTest {
 
     }
 
+    /**
+     * Tests the Serialports communcication speed using a sample String
+     */
     @Test
     public void testSerialSendMessage() {
         long startTime, endTime;
@@ -70,12 +65,11 @@ public class SerialLatencyTest {
         msgDistributor.addMessageProcessor(messageProcessor);
 
         startTime = System.nanoTime();
-        communicationInterface.sendMessage(text);
+        robotArm.getCommunicationInterface().sendMessage(text);
         endTime = System.nanoTime();
 
         //divide by 1000000 to get milliseconds.
         long duration = (endTime - startTime) / 1000000;
-        log.trace("testSerialSendMessage took " + duration + "ms");
+        logger.trace("testSerialSendMessage took " + duration + "ms");
     }
-
 }
