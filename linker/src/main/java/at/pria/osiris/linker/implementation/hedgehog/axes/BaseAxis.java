@@ -19,6 +19,5 @@ public class BaseAxis extends ServoAxis {
     public void moveToAngle(int angle) {
         //TODO this is not the angle!
         getServo().moveToExactPosition(angle);
-        setServoPosition(angle);
     }
 }

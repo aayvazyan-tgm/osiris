@@ -4,4 +4,5 @@ public interface Servo {
 
     public void moveToExactPosition(int position);
 
+    public int getPosition();
 }

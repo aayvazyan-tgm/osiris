@@ -29,16 +29,9 @@ public abstract class ServoAxis extends Axis {
      */
     @Override
     public int getSensorValue() {
-        return servoPosition;
+        return servo.getPosition();
     }
 
     public Servo getServo() { return servo; }
 
-    public int getServoPosition() {
-        return servoPosition; //TODO: Proper Wrapping
-    }
-
-    public void setServoPosition(int position) {
-        servoPosition = position; //TODO: More checking
-    }
 }
