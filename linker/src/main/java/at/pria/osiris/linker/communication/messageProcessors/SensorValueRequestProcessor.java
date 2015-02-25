@@ -19,11 +19,10 @@ public class SensorValueRequestProcessor implements MessageProcessor {
     public void processMessage(Object msg) {
         if (msg instanceof SensorValueRequest) {
             SensorValueRequest request = (SensorValueRequest) msg;
-
-            SensorValueResponse response = new SensorValueResponse(
-                    request.getSensorPort(),
-                    robotArm.getAxis(request.getSensorPort())
-                            .getSensorValue());
+            int sensorVal=robotArm.getAxis(request.getSensorPort())
+                    .getSensorValue();
+            System.out.println(sensorVal);
+            SensorValueResponse response = new SensorValueResponse(request.getSensorPort(),sensorVal);
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }
