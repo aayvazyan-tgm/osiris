@@ -4,6 +4,7 @@ import at.pria.osiris.linker.communication.CommunicationInterface;
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
+import org.andrix.low.NotConnectedException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,6 +21,7 @@ public class SerialLatencyTest {
     private static MessageProcessorDistributor msgDistributor;
     private static RobotArm robotArm;
     private static Logger logger = Logger.getLogger(SerialLatencyTest.class);
+    private static boolean configuredPi = true;
 
     /**
      * Sets up the Serial Connection
@@ -32,7 +34,12 @@ public class SerialLatencyTest {
         msgDistributor = new MessageProcessorDistributor();
 
         //Initialize a RobotArm Implementation
-        robotArm = new HedgehogRobotArm(msgDistributor);
+        try{
+            robotArm = new HedgehogRobotArm(msgDistributor);
+        } catch (Exception e){
+            e.printStackTrace();
+            configuredPi = false;
+        }
 
         //Add the message processors to handle incoming requests
         logger.info("Adding Processors");
@@ -50,8 +57,11 @@ public class SerialLatencyTest {
     /**
      * Tests the Serialports communcication speed using a sample String
      */
+
     @Test
     public void testSerialSendMessage() {
+        if(!configuredPi)
+            return;
         long startTime, endTime;
         String text = "I like Serialports";
 
@@ -66,6 +76,7 @@ public class SerialLatencyTest {
 
         startTime = System.nanoTime();
         robotArm.getCommunicationInterface().sendMessage(text);
+
         endTime = System.nanoTime();
 
         //divide by 1000000 to get milliseconds.
