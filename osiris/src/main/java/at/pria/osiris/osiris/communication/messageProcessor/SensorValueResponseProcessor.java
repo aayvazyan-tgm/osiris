@@ -10,11 +10,9 @@ import messages.responses.SensorValueResponse;
  * @version 03.Dec.14
  */
 public class SensorValueResponseProcessor implements MessageProcessor {
-    private Robotarm robotarm;
     private SensorRefreshable sensorRefresher;
 
-    public SensorValueResponseProcessor(Robotarm robotarm, SensorRefreshable sensorRefresher) {
-        this.robotarm = robotarm;
+    public SensorValueResponseProcessor(SensorRefreshable sensorRefresher) {
         this.sensorRefresher=sensorRefresher;
     }
 

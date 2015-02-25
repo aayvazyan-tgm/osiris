@@ -9,11 +9,9 @@ import at.pria.osiris.osiris.sensors.SensorRefreshable;
  * @version 03.Dec.14
  */
 public class StringProcessor implements MessageProcessor {
-    private Robotarm robotarm;
     private SensorRefreshable sensorRefresher;
 
-    public StringProcessor(Robotarm robotarm, SensorRefreshable sensorRefresher) {
-        this.robotarm = robotarm;
+    public StringProcessor(SensorRefreshable sensorRefresher) {
         this.sensorRefresher=sensorRefresher;
     }
 
