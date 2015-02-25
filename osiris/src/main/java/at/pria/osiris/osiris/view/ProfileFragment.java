@@ -9,13 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.*;
-
 import android.widget.*;
+
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.util.DataBaseHandler;
-import at.pria.osiris.osiris.view.elements.Profile;
+import at.pria.osiris.osiris.orm.DBQuery;
+import at.pria.osiris.osiris.orm.ProfileORM;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +36,6 @@ public class ProfileFragment extends Fragment {
     private int[] to;
     private String[] columns;
     private ListView listView;
-    private DataBaseHandler db;
 
     private View current_delete_button, current_edit_button;
 
@@ -61,10 +62,10 @@ public class ProfileFragment extends Fragment {
     public ProfileFragment() {
 
         columns = new String[] {
-                DataBaseHandler._ID,
-                DataBaseHandler.KEY_HOST,
-                DataBaseHandler.KEY_PORT,
-                DataBaseHandler.KEY_TYPE
+                "_id",
+                "hostname",
+                "port",
+                "controller_type"
         }; // Define the tables for the cursor
 
         to= new int[] {
@@ -80,12 +81,43 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        cursor= new DataBaseHandler(getActivity()).fetchAllProfiles();
+
+        try {
+            cursor= DBQuery.getCursor(getActivity().getBaseContext());
+            Log.d("Osiris", "New Cursor Created");
+        } catch (SQLException e) {
+            Log.d("Osiris", "Expection by Cursor", e);
+        }
+
         listView= (ListView) rootView.findViewById(R.id.listViewProfile);
+
         final Activity activity = getActivity();
+
+        // debug only
+        String erg= "";
+        for(int i=0; i<cursor.getColumnNames().length;i++) {
+            erg += cursor.getColumnNames()[i] + "\n";
+        }
+        Log.d("Osiris", erg);
+
         // set the parameters to the adapter
         sca= new SimpleCursorAdapter(activity.getBaseContext(), R.layout.profiles_view, cursor, columns, to, 0);
         this.displayListView();
+
+        List<ProfileORM> items= new ArrayList<>();
+
+        try {
+            items= DBQuery.getAll(activity);
+        } catch (SQLException e) {
+            Log.d("Osiris", "SQL-Exception", e);
+        }
+
+        for(ProfileORM o : items) {
+            Log.d("Osiris", "\n From ORM \n" + o.toString());
+        }
+
+        // refresh the GUI
+        listView.setAdapter(newAdapter());
 
         return rootView;
     }
@@ -93,14 +125,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Activity activity = getActivity();
-        db= new DataBaseHandler(activity);
-
-        List<Profile> list= db.getAll();
-
-        for(Profile p : list) {
-            Log.d("Osiris", p.toString());
-        }
     }
 
     @Override
@@ -113,9 +137,7 @@ public class ProfileFragment extends Fragment {
      * add the views to the listView
      */
     private void displayListView() {
-
         listView.setAdapter(sca);
-
         final Activity activity = getActivity();
 
         // setting a listener to the listview
@@ -124,7 +146,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // checks if some buttons are visible.
+                // checks if some buttons are visible
                 if(current_delete_button != null) {
                     if(current_delete_button.getVisibility() == View.VISIBLE) {
                         current_delete_button.setVisibility(View.INVISIBLE);
@@ -146,9 +168,13 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         final Activity activity = getActivity();
-                        db= new DataBaseHandler(activity);
 
-                        db.delete(idd); // delete the item over the id
+                        // delete over the id
+                        try {
+                            DBQuery.deleteOverId(activity.getBaseContext(), String.valueOf(idd) );
+                        } catch (SQLException e) {
+                            Log.d("Osiris", "Exception in deleteOverId", e);
+                        }
 
                         // refresh the GUI
                         listView.setAdapter(newAdapter());
@@ -168,12 +194,17 @@ public class ProfileFragment extends Fragment {
                      */
                     @Override
                     public void onClick(View v) {
-
                         final Activity activity = getActivity();
-                        DataBaseHandler db= new DataBaseHandler(activity);
-                        Profile p= db.getProfile(idd);
-                        Log.d("Osiris", "Hostname" + p.getHost());
-                        Log.d("Osiris", "Port" + p.getPort());
+
+                        ProfileORM p= null;
+                        try {
+                            // select the selected Element
+                            p= DBQuery.getStoredPackages(activity, String.valueOf(idd) );
+                        } catch (SQLException e) {
+                            Log.d("Osiris", "Exception", e);
+                        }
+
+                        // jump to the NewProfileFragmetn
                         final FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.replace(R.id.container, NewProfileFragment.getInstance(5, p)).commit();
                     }
@@ -188,24 +219,16 @@ public class ProfileFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /**
              * This method makes a toast with the id, of the clicked row.
-             *
-             * @param listView
-             * @param view
-             * @param position
-             * @param id
              */
             @Override
-            public void onItemClick(AdapterView<?> listView,
-                                    View view,
-                                    int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
                 // Get the cursor, positioned to the corresponding row in the result set
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
-                // Get the state's capital from this row in the database.
-                String countryCode = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+                // Get the id from this row in the database
+                String selected_id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
                 Toast.makeText(activity.getBaseContext(),
-                        countryCode,
+                        selected_id,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -219,7 +242,11 @@ public class ProfileFragment extends Fragment {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public ListAdapter newAdapter() {
         final Activity activity = getActivity();
-        cursor= new DataBaseHandler(activity).fetchAllProfiles();
+        try {
+            cursor= DBQuery.getCursor(activity.getBaseContext());
+        } catch (SQLException e) {
+            Log.d("Osiris", "Exception in method new Adapter", e);
+        }
         return new SimpleCursorAdapter(activity.getBaseContext(), R.layout.profiles_view, cursor, columns, to, 0);
     }
 

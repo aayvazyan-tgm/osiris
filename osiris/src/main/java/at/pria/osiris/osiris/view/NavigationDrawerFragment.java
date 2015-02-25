@@ -255,6 +255,7 @@ public class NavigationDrawerFragment extends Fragment {
             Toast.makeText(getActivity(), "Sending Test Data...", Toast.LENGTH_SHORT).show();
             try {
                 AXCPWrapper.sendData(new SensorValueRequest(0));
+                AXCPWrapper.sendData(new SensorValueRequest(1));
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
