@@ -12,6 +12,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-command'
 
 archivesBaseName = 'Osiris-App-'+version
+boolean releaseAvailable=false
 
 repositories {
     jcenter()
@@ -61,6 +62,7 @@ android {
                     storePassword = props['STORE_PASSWORD']
                     keyAlias = props['KEY_ALIAS']
                     keyPassword = props['KEY_PASSWORD']
+                    releaseAvailable=true
                 } else {
                     println 'signing.properties a property is not set'
                     logger.info 'signing.properties a property is not set'
@@ -71,7 +73,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (releaseAvailable) signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
