@@ -35,4 +35,6 @@ public abstract class RobotArm {
     public void moveTo(double x, double y, double z) {
 
     }
+
+    public abstract int getSensorValue(int sensorPort);
 }

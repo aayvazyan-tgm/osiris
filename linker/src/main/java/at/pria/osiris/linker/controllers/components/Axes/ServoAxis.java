@@ -9,7 +9,6 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 public abstract class ServoAxis extends Axis {
 
     private Servo servo;
-    private int servoPosition = -1; //-1 is a undefined state
 
     public ServoAxis(String axisName, Servo servo) {
         super(axisName);

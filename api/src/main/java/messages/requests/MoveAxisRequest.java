@@ -8,15 +8,17 @@ import messages.SerializableMessage;
  */
 public class MoveAxisRequest extends SerializableMessage {
     private static final long serialVersionUID = 1L;
-    private int axisPort;
-    private int power;
+    private final int axisPort;
+    private final int power;
     /**
      * Defines a request for a sensor value
      *
      * @param requestedAxis axis id to request the value for.
+     * @param power
      */
-    public MoveAxisRequest(int requestedAxis) {
+    public MoveAxisRequest(int requestedAxis, int power) {
         this.axisPort = requestedAxis;
+        this.power = power;
     }
 
     /**
@@ -29,27 +31,10 @@ public class MoveAxisRequest extends SerializableMessage {
     }
 
     /**
-     * Setter for property 'axisPort'.
-     *
-     * @param axisPort Value to set for property 'axisPort'.
-     */
-    public void setAxisPort(int axisPort) {
-        this.axisPort = axisPort;
-    }
-
-    /**
      * Setter for property 'power'
      * @return
      */
     public int getPower() {
         return power;
-    }
-
-    /**
-     * Setter for property 'power'
-     * @param power
-     */
-    public void setPower(int power) {
-        this.power = power;
     }
 }

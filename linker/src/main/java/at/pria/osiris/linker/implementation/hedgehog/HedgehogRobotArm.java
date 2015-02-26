@@ -7,7 +7,9 @@ import at.pria.osiris.linker.implementation.hedgehog.axes.BaseAxis;
 import at.pria.osiris.linker.implementation.hedgehog.axes.HorizontalAxis;
 import at.pria.osiris.linker.implementation.hedgehog.axes.VerticalAxis;
 import at.pria.osiris.linker.implementation.hedgehog.communication.HedgehogCommunicationInterface;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogSensorAnalog;
 import org.andrix.low.NotConnectedException;
+import org.andrix.low.RequestTimeoutException;
 
 import java.util.ArrayList;
 
@@ -41,5 +43,15 @@ public class HedgehogRobotArm extends RobotArm {
     @Override
     public Axis getAxis(int i) {
         return this.axes.get(i);
+    }
+
+    @Override
+    public int getSensorValue(int sensorPort) {
+        try {
+            return new HedgehogSensorAnalog(sensorPort).getCurrentValue();
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

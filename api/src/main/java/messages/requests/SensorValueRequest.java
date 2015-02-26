@@ -8,7 +8,7 @@ import messages.SerializableMessage;
  */
 public class SensorValueRequest extends SerializableMessage {
     private static final long serialVersionUID = 1L;
-    private int sensorPort;
+    private final int sensorPort;
 
     /**
      * Defines a request for a sensor value
@@ -33,7 +33,4 @@ public class SensorValueRequest extends SerializableMessage {
      *
      * @param sensorPort Value to set for property 'sensorPort'.
      */
-    public void setSensorPort(int sensorPort) {
-        this.sensorPort = sensorPort;
-    }
 }

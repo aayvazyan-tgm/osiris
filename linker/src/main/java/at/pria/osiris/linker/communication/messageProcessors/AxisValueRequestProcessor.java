@@ -1,6 +1,7 @@
 package at.pria.osiris.linker.communication.messageProcessors;
 
 import at.pria.osiris.linker.controllers.RobotArm;
+import messages.requests.AxisValueRequest;
 import messages.requests.SensorValueRequest;
 import messages.responses.SensorValueResponse;
 
@@ -8,19 +9,19 @@ import messages.responses.SensorValueResponse;
  * @author Ari Michael Ayvazyan
  * @version 16.02.2015
  */
-public class SensorValueRequestProcessor implements MessageProcessor {
+public class AxisValueRequestProcessor implements MessageProcessor {
     private RobotArm robotArm;
 
-    public SensorValueRequestProcessor(RobotArm robotArm) {
+    public AxisValueRequestProcessor(RobotArm robotArm) {
         this.robotArm = robotArm;
     }
 
     @Override
     public void processMessage(Object msg) {
-        if (msg instanceof SensorValueRequest) {
-            SensorValueRequest request = (SensorValueRequest) msg;
-            int sensorVal=robotArm.getSensorValue(request.getSensorPort());
-            SensorValueResponse response = new SensorValueResponse(request.getSensorPort(),sensorVal);
+        if (msg instanceof AxisValueRequest) {
+            AxisValueRequest request = (AxisValueRequest) msg;
+            int sensorVal=robotArm.getAxis(request.getAxisNumber()).getSensorValue();
+            SensorValueResponse response = new SensorValueResponse(request.getAxisNumber(),sensorVal);
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }
