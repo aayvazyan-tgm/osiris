@@ -49,8 +49,7 @@ public class HedgehogRobotArm extends RobotArm {
     public int getSensorValue(int sensorPort) {
         try {
             return new HedgehogSensorAnalog(sensorPort).getCurrentValue();
-        } catch (NotConnectedException e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return -1;
     }
