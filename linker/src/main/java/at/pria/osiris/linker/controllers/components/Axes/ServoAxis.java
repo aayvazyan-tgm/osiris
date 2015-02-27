@@ -31,6 +31,8 @@ public abstract class ServoAxis extends Axis {
         return servo.getPosition();
     }
 
-    public Servo getServo() { return servo; }
+    public Servo getServo() {
+        return servo;
+    }
 
 }

@@ -12,7 +12,6 @@ import org.andrix.sensors.Analog;
  */
 public class HedgehogSensorAnalog extends Analog implements Sensor {
     /**
-     *
      * @param port the port to get the data from
      * @throws NotConnectedException
      */
@@ -21,7 +20,6 @@ public class HedgehogSensorAnalog extends Analog implements Sensor {
     }
 
     /**
-     *
      * @return returns the current value of the sensor
      */
     @Override

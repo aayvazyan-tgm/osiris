@@ -2,7 +2,6 @@ package at.pria.osiris.linker.communication.messageProcessors;
 
 import at.pria.osiris.linker.controllers.RobotArm;
 import messages.requests.AxisValueRequest;
-import messages.requests.SensorValueRequest;
 import messages.responses.SensorValueResponse;
 
 /**
@@ -20,8 +19,8 @@ public class AxisValueRequestProcessor implements MessageProcessor {
     public void processMessage(Object msg) {
         if (msg instanceof AxisValueRequest) {
             AxisValueRequest request = (AxisValueRequest) msg;
-            int sensorVal=robotArm.getAxis(request.getAxisNumber()).getSensorValue();
-            SensorValueResponse response = new SensorValueResponse(request.getAxisNumber(),sensorVal);
+            int sensorVal = robotArm.getAxis(request.getAxisNumber()).getSensorValue();
+            SensorValueResponse response = new SensorValueResponse(request.getAxisNumber(), sensorVal);
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }

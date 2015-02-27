@@ -19,8 +19,8 @@ public class SensorValueRequestProcessor implements MessageProcessor {
     public void processMessage(Object msg) {
         if (msg instanceof SensorValueRequest) {
             SensorValueRequest request = (SensorValueRequest) msg;
-            int sensorVal=robotArm.getSensorValue(request.getSensorPort());
-            SensorValueResponse response = new SensorValueResponse(request.getSensorPort(),sensorVal);
+            int sensorVal = robotArm.getSensorValue(request.getSensorPort());
+            SensorValueResponse response = new SensorValueResponse(request.getSensorPort(), sensorVal);
             robotArm.getCommunicationInterface().sendMessage(response);
         }
     }

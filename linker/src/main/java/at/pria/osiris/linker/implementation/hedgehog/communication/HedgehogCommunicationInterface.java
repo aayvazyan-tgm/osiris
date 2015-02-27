@@ -17,6 +17,7 @@ import java.io.Serializable;
 public class HedgehogCommunicationInterface implements CommunicationInterface {
 
     private static Logger logger = org.apache.log4j.Logger.getLogger(HedgehogCommunicationInterface.class);
+
     /**
      * Sends data via the Hedgehog AXCP Controller
      */

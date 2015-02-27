@@ -3,7 +3,6 @@ package at.pria.osiris.linker;
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
-import oldLinker.Starter;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,6 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class Main {
     private static Logger logger = org.apache.log4j.Logger.getLogger(Main.class);
+
     public static void main(String[] args) {
         logger.info("new Linker started");
         //Initialize the MessageProcessorDistributor to handle incoming requests

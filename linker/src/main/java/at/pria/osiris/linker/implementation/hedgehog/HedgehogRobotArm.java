@@ -9,7 +9,6 @@ import at.pria.osiris.linker.implementation.hedgehog.axes.VerticalAxis;
 import at.pria.osiris.linker.implementation.hedgehog.communication.HedgehogCommunicationInterface;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogSensorAnalog;
 import org.andrix.low.NotConnectedException;
-import org.andrix.low.RequestTimeoutException;
 
 import java.util.ArrayList;
 

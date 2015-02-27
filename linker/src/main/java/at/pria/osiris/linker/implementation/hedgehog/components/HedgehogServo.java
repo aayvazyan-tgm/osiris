@@ -18,6 +18,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
 
     /**
      * Moves to a certain position
+     *
      * @param position the system dependent position value
      */
     @Override
