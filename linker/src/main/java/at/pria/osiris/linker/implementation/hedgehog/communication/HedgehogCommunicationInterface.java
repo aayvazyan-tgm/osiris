@@ -37,6 +37,7 @@ public class HedgehogCommunicationInterface implements CommunicationInterface {
     @Override
     public void sendMessage(Serializable message) {
         try {
+            System.out.println("Sending a Message");
             sendData(message);
         } catch (IOException e) {
             throw new RuntimeException(e);
