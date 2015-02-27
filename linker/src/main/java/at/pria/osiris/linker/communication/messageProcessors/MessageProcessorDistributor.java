@@ -43,14 +43,21 @@ public class MessageProcessorDistributor implements MessageProcessor {
      * @param message the message to distribute
      */
     @Override
-    public void processMessage(Object message) {
+    public void processMessage(final Object message) {
         logger.info("Distributing message: "+message.getClass());
-        if(message instanceof SerializableMessage) {
-            SerializableMessage msg=((SerializableMessage) message);
-            logger.info("Distributing Serializable msg ID: " +msg.getMessageID());
-        }
-        for (MessageProcessor messageProcessor : messageProcessors) {
-            messageProcessor.processMessage(message);
-        }
+
+        Thread t=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(message instanceof SerializableMessage) {
+                    SerializableMessage msg=((SerializableMessage) message);
+                    logger.info("Distributing Serializable msg ID: " +msg.getMessageID());
+                }
+                for (MessageProcessor messageProcessor : messageProcessors) {
+                    messageProcessor.processMessage(message);
+                }
+            }
+        });
+        t.start();
     }
 }
