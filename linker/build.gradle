@@ -23,7 +23,7 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 archivesBaseName = 'Osiris-Linker'
-mainClassName = 'oldLinker.Starter'
+mainClassName = 'at.pria.osiris.linker.Main'
 
 task packJarWithLibs(type: Jar, dependsOn: jar) {
     from files(sourceSets.main.output.classesDir)
