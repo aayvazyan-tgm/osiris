@@ -14,6 +14,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
 
     public HedgehogServo(int port) throws NotConnectedException {
         super(port);
+        this.on();
     }
 
     /**
