@@ -6,12 +6,14 @@ import org.andrix.low.CommunicationInterface;
 
 import java.io.IOException;
 
-/*
+/**
  * This class needs to be set as the CommunicationHandler in the Hedgehog core project.-
  * This happens via:
  * AXCPServer.communicationInterface=new SerialPortCommunicationInterface();
  * (HedgehogCore 3.12.2014)
  *
+ * @author Ari Ayvazyan
+ * @version 2015-03-1
  */
 public class HedgehogSerialPortCommunicationInterface implements CommunicationInterface {
 

@@ -6,7 +6,7 @@ import org.andrix.motors.Servo;
 /**
  * A class to control the hedgehog servo
  *
- * @author Helmuth Brunner
+ * @author Ari Ayvazyan
  * @version 2015-01-26
  */
 public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {

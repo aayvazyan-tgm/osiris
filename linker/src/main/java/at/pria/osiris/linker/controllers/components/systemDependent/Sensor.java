@@ -1,7 +1,8 @@
 package at.pria.osiris.linker.controllers.components.systemDependent;
 
 /**
- * Created by helmuthbrunner on 26/01/15.
+ * @author Ari Michael Ayvazyan
+ * @version 21.02.2015
  */
 public interface Sensor {
 

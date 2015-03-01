@@ -42,7 +42,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * The Class Serializer.
+ * Serialized and Deserializes Objects
+ * @author Ari Michael Ayvazyan
+ * @version 21.02.2015
  */
 public class Serializer {
 

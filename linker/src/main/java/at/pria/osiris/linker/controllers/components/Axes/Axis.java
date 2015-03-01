@@ -2,8 +2,8 @@ package at.pria.osiris.linker.controllers.components.Axes;
 
 
 /**
- * @author Helmuth Brunner
- * @version 2015-01-07
+ * @author Ari Michael Ayvazyan
+ * @version 21.02.2015
  */
 public abstract class Axis {
 
@@ -13,6 +13,11 @@ public abstract class Axis {
         this.name = axisName;
     }
 
+    /**
+     * Getter for property 'name'.
+     *
+     * @return Value for property 'name'.
+     */
     public String getName() {
         return name;
     }

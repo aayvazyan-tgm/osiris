@@ -5,6 +5,10 @@ import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.controllers.components.Axes.Axis;
 import at.pria.osiris.linker.kinematics.Kinematic;
 
+/**
+ * @author Ari Ayvazyan
+ * @version 2015-01-26
+ */
 public abstract class RobotArm {
 
     private CommunicationInterface communicationInterface;
