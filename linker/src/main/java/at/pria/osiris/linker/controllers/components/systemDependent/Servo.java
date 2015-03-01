@@ -9,4 +9,6 @@ public interface Servo {
     public void moveToExactPosition(int position);
 
     public int getPosition();
+
+    public int getMaximumAngle();
 }

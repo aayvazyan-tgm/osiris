@@ -34,6 +34,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
         }
     }
 
+    @Override
     public int getMaximumAngle() {
         return maximumAngle;
     }
