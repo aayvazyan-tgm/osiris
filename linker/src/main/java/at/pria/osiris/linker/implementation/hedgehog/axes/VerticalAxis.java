@@ -11,33 +11,33 @@ import org.andrix.low.NotConnectedException;
 public class VerticalAxis extends Axis {
     private final HedgehogServo hedgehogServo2;
     private final HedgehogServo hedgehogServo;
-    private int curentPosition;
+    private int currentPosition;
 
     public VerticalAxis() throws NotConnectedException {
         super("VerticalAxis");
-        hedgehogServo = new HedgehogServo(2);
-        hedgehogServo2 = new HedgehogServo(3);
+        hedgehogServo = new HedgehogServo(2,360);
+        hedgehogServo2 = new HedgehogServo(3,360);
     }
 
     @Override
     public int getSensorValue() {
-        return curentPosition;
+        return currentPosition;
     }
 
     @Override
     public void moveToAngle(int angle) {
         //TODO this is not the angle!
-        curentPosition = angle;
+        currentPosition = angle;
         hedgehogServo.moveToExactPosition(angle);
-        hedgehogServo2.moveToExactPosition(angle);
+        hedgehogServo2.moveToExactPosition(hedgehogServo2.getMaximumAngle()-angle);
     }
 
     @Override
     public void moveAtPower(int power) {
-        //TODO Pfui :stinky:
-        curentPosition = power;
+        //TODO this is no moveAtPower function.
+        currentPosition = power;
         hedgehogServo.moveToExactPosition(power);
-        hedgehogServo2.moveToExactPosition(power);
+        hedgehogServo2.moveToExactPosition(hedgehogServo2.getMaximumAngle()-power);
     }
 
 

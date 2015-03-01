@@ -12,8 +12,11 @@ import org.andrix.motors.Servo;
 public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
 
 
-    public HedgehogServo(int port) throws NotConnectedException {
+    private int maximumAngle;
+
+    public HedgehogServo(int port,int maximumAngle) throws NotConnectedException {
         super(port);
+        this.maximumAngle = maximumAngle;
         this.on();
     }
 
@@ -29,5 +32,9 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int getMaximumAngle() {
+        return maximumAngle;
     }
 }
