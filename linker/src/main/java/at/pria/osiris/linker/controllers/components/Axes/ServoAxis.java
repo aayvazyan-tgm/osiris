@@ -19,7 +19,7 @@ public abstract class ServoAxis extends Axis {
      * @see Axis
      */
     public void moveAtPower(int power) {
-        ServoHelper.pwm(this.servo,power);
+        ServoHelper.pwm(this.servo,power,100);
     }
 
     /**

@@ -22,8 +22,9 @@ public class ServoHelper {
      *
      * @param s The Servo which should move in the end
      * @param power The power it should use
+     * @param steps The amount of steps
      */
-    public static void pwm(Servo s, int power){
+    public static void pwm(Servo s, int power, int steps){
 
         //Defining important Variables
         int maxPower = 100;
@@ -40,8 +41,8 @@ public class ServoHelper {
         double divider = (maxPower - power);
         double mod = maxPower / divider;
 
-        //looping through 100 steps with different wait and go times
-        for (int i = 1; i <= 100; i++) {
+        //looping through the given steps with different wait and go times
+        for (int i = 1; i <= steps; i++) {
             if(i == (int)(count*mod)) {
                 try {
                     Thread.sleep(Math.round(s.getTimePerDegreeInMilli()/100));
