@@ -15,7 +15,7 @@ public class Main {
     private static Logger logger = org.apache.log4j.Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        logger.info("new Linker started");
+        logger.info("Linker started");
         //Initialize the MessageProcessorDistributor to handle incoming requests
         MessageProcessorDistributor msgDistributor = new MessageProcessorDistributor();
 
