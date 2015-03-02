@@ -15,8 +15,8 @@ public class VerticalAxis extends Axis {
 
     public VerticalAxis() throws NotConnectedException {
         super("VerticalAxis");
-        hedgehogServo = new HedgehogServo(2,360);
-        hedgehogServo2 = new HedgehogServo(3,360);
+        hedgehogServo = new HedgehogServo(2,360,2);
+        hedgehogServo2 = new HedgehogServo(3,360,2);
     }
 
     @Override

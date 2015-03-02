@@ -11,4 +11,6 @@ public interface Servo {
     public int getPosition();
 
     public int getMaximumAngle();
+
+    public long getTimePerDegreeInMilli();
 }

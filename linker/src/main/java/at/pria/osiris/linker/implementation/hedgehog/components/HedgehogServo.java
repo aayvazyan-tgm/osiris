@@ -13,10 +13,12 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
 
 
     private int maximumAngle;
+    private final long timePerDegreeInMilli;
 
-    public HedgehogServo(int port,int maximumAngle) throws NotConnectedException {
+    public HedgehogServo(int port,int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
         super(port);
         this.maximumAngle = maximumAngle;
+        this.timePerDegreeInMilli = timePerDegreeInMilli;
         this.on();
     }
 
@@ -37,5 +39,10 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
     @Override
     public int getMaximumAngle() {
         return maximumAngle;
+    }
+
+    @Override
+    public long getTimePerDegreeInMilli() {
+        return timePerDegreeInMilli;
     }
 }

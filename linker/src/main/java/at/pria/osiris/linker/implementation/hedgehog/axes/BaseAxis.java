@@ -10,7 +10,7 @@ import org.andrix.low.NotConnectedException;
  */
 public class BaseAxis extends ServoAxis {
     public BaseAxis() throws NotConnectedException {
-        super("BaseAxis", new HedgehogServo(1,360));
+        super("BaseAxis", new HedgehogServo(1,360,2));
     }
 
     /**
