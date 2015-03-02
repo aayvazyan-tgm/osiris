@@ -34,20 +34,9 @@ public class SensorValueRequestProcessorTest {
      */
     @Before
     public void before() throws Exception {
-
         logger.info("new Linker started");
         //Initialize the MessageProcessorDistributor to handle incoming requests
         msgDistributor = new MessageProcessorDistributor();
-
-//        robotArm = mock(HedgehogRobotArm.class);
-//        when(robotArm.getAxis(
-//                0).getSensorValue()).thenReturn(42);
-
-        //Initialize a RobotArm Implementation
-
-
-
-
 
         //Add the message processors to handle incoming requests
         logger.info("Adding Processors");
@@ -98,6 +87,11 @@ public class SensorValueRequestProcessorTest {
             public Axis getAxis(int i) {
                 return axis;
             }
+
+            @Override
+            public int getSensorValue(int sensorPort) {
+                return 0;
+            }
         };
 
         robotArmSpy = spy(robotArm);
@@ -106,7 +100,6 @@ public class SensorValueRequestProcessorTest {
 
         SensorValueRequestProcessor sensorValueRequestProcessor = new SensorValueRequestProcessor(robotArm);
         sensorValueRequestProcessor.processMessage(new SensorValueRequest(0));
-
     }
 
 }
