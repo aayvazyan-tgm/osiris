@@ -2,15 +2,38 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="at.pria.osiris.osiris.view.ProfileFragment"
+        android:fillViewport="true">
+
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="at.pria.osiris.osiris.view.ProfileFragment" android:fillViewport="true">
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fab="http://schemas.android.com/apk/res-auto">
 
-    <ListView
-            android:id="@+id/listViewProfile"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-    </ListView>
+        <ListView
+                android:id="@+id/listViewProfile"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+        </ListView>
+
+        <com.software.shell.fab.ActionButton
+                android:id="@+id/action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                fab:type="DEFAULT"
+                fab:shadow_color="#757575"
+                fab:shadow_radius="2.0dp"
+                fab:shadow_xOffset="1.0dp"
+                fab:shadow_yOffset="1.5dp"
+                />
+
+    </RelativeLayout>
+
 
 </ScrollView>

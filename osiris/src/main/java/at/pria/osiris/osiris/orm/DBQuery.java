@@ -94,7 +94,7 @@ public class DBQuery {
     /**
      * A method to delete one entry in the orm tool
      *
-     * !!! not test don't use this !!!
+     * !!! not tested don't use this !!!
      *
      * @param context the context
      * @param oldItems a list of objects to be deleted
