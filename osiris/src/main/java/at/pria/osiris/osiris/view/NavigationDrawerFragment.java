@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -105,10 +106,11 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
                 new String[]{
                         getString(R.string.control),
+                        getString(R.string.inversKinecs),
                         getString(R.string.sensor_values),
                         getString(R.string.drawline),
                         getString(R.string.profiles),
-                        getString(R.string.new_profile),
+                        getString(R.string.joystick)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -255,9 +257,10 @@ public class NavigationDrawerFragment extends Fragment {
             Toast.makeText(getActivity(), "Sending Test Data...", Toast.LENGTH_SHORT).show();
             try {
                 AXCPWrapper.sendData(new SensorValueRequest(0));
-                AXCPWrapper.sendData(new SensorValueRequest(1));
+                //AXCPWrapper.sendData(new SensorValueRequest(1));
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("Hedgehog", "Exception in test", e);
                 Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
             }
             /* No more tests

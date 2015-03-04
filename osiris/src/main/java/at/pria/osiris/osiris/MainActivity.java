@@ -18,6 +18,7 @@ import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerFactory;
 import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.view.*;
+import at.pria.osiris.osiris.view.JoyStickFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -66,7 +67,15 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (position + 1 == 2) {
+        if (position + 1 == 1) {        // controller
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
+                    .commit();
+        } else if (position + 1 == 2) { // inverse Kinematics
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, InversKinematicsFragment.getInstance(position + 1))
+                    .commit();
+        } else if (position + 1 == 3) { // sensor Values
             try {
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1, robotController.getRobotArm()))
@@ -75,21 +84,17 @@ public class MainActivity extends ActionBarActivity
                 Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-        } else if (position + 1 == 1) {// controller
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
-                    .commit();
-        } else if (position + 1 == 3) {
+        } else if (position + 1 == 4) { // draw line
             fragmentManager.beginTransaction()
                     .replace(R.id.container, DrawFragment.getInstance(position + 1))
                     .commit();
-        } else if (position + 1 == 4) {
+        } else if (position + 1 == 5) { // profiles
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ProfileFragment.getInstance(position + 1))
+                    .replace(R.id.container, ProfileFragment.getInstance(position + 1, robotController))
                     .commit();
-        } else if (position + 1 == 5) {
+        } else if (position + 1 == 6) { // joystick
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, NewProfileFragment.getInstance(position + 1, null))
+                    .replace(R.id.container, JoyStickFragment.getInstance(position + 1))
                     .commit();
         } else {
             fragmentManager.beginTransaction()
@@ -104,15 +109,20 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.control);
                 break;
             case 2:
-                mTitle = getString(R.string.sensor_values);
+                mTitle = getString(R.string.inversKinecs);
                 break;
             case 3:
-                mTitle = getString(R.string.drawline);
+                mTitle = getString(R.string.sensor_values);
                 break;
             case 4:
-                mTitle = getString(R.string.profiles);
+                mTitle = getString(R.string.drawline);
+                break;
             case 5:
-                mTitle= getString(R.string.new_profile);
+                mTitle= getString(R.string.profiles);
+                break;
+            case 6:
+                mTitle= getString(R.string.joystick);
+                break;
         }
     }
 

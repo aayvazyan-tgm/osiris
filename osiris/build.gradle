@@ -89,5 +89,6 @@ dependencies {
     compile group: 'log4j', name: 'log4j', version:'1.2.17'
     androidTestCompile group: 'junit', name: 'junit', version: '4.12'
     //compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.7'
+    compile 'com.github.shell-software:fab:1.0.5'
     compile project(':api')
 }

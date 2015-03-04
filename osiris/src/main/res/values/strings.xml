@@ -12,6 +12,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="joystick">Joystick</string>
+    <string name="inversKinecs">Inverse Kinematik</string>
+
     <string name="new_profile">New Profile</string>
     <string name="new_profile_host">Hostname</string>
     <string name="new_profile_port">Port</string>
@@ -26,5 +29,6 @@
     <string name="color_0">#FFA000</string> <!-- StatusBar -->
     <string name="color_1">#FE9A2E</string> <!-- ActionBar -->
     <string name="color_2">#FFD54F</string>
+    <string name="execute">Ausfuehren</string>
 
 </resources>

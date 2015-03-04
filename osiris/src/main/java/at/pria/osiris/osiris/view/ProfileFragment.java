@@ -3,6 +3,7 @@ package at.pria.osiris.osiris.view;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,10 @@ import android.widget.*;
 
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers.Controller;
+import at.pria.osiris.osiris.controllers.ControllerFactory;
+import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.orm.DBQuery;
 import at.pria.osiris.osiris.orm.ProfileORM;
 
@@ -20,6 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.software.shell.fab.*;
 /**
  * A fragment which displays all the profiles from the database.
  *
@@ -36,15 +42,19 @@ public class ProfileFragment extends Fragment {
     private int[] to;
     private String[] columns;
     private ListView listView;
+    private Controller robotController;
+
+    private final static String TAG= "Osiris";
 
     private View current_delete_button, current_edit_button;
+    private ActionButton actionButton;
 
     /**
      * Creates a new DrawFragment instance
      * @param sectionNumber the sectionNumber from the fragments collection
      * @return the new instance
      */
-    public static ProfileFragment getInstance(int sectionNumber) {
+    public static ProfileFragment getInstance(int sectionNumber, Controller robot) {
 
         if(INSTANCE==null) {
 
@@ -55,6 +65,7 @@ public class ProfileFragment extends Fragment {
 
             INSTANCE= fragment;
         }
+        INSTANCE.robotController=robot;
 
         return INSTANCE;
     }
@@ -81,6 +92,28 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        actionButton = (ActionButton) rootView.findViewById(R.id.action_button);
+        actionButton.setImageResource(R.drawable.fab_plus_icon);
+        //actionButton.setButtonColor(Color.RED); // red button
+        actionButton.setButtonColor(Color.parseColor(getString(R.string.color_0))); // yellow button
+
+        actionButton.setShadowXOffset(3.5f);
+        actionButton.setShadowYOffset(3.5f);
+
+        actionButton.show();
+        actionButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Log.d(TAG, "Plus Button Pressed");
+
+                // jump to the NewProfileFragment
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.container, NewProfileFragment.getInstance(5, null, robotController)).commit();
+            }
+        });
+
+        Log.d(TAG, "ActionButtonState: " + actionButton.getState());
 
         try {
             cursor= DBQuery.getCursor(getActivity().getBaseContext());
@@ -204,9 +237,9 @@ public class ProfileFragment extends Fragment {
                             Log.d("Osiris", "Exception", e);
                         }
 
-                        // jump to the NewProfileFragmetn
+                        // jump to the NewProfileFragment
                         final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.container, NewProfileFragment.getInstance(5, p)).commit();
+                        ft.replace(R.id.container, NewProfileFragment.getInstance(5, p, robotController)).commit();
                     }
 
                 });
@@ -225,11 +258,47 @@ public class ProfileFragment extends Fragment {
                 // Get the cursor, positioned to the corresponding row in the result set
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
+                ProfileORM po= null;
+
+                try {
+                    po= DBQuery.getStoredPackages(activity.getBaseContext(), String.valueOf(id));
+                } catch (SQLException e) {
+                    Log.d(TAG, "SQLException in onItemClick", e);
+                }
+
+                Log.d(TAG, "Controller Type: " + ControllerType.valueOf(po.controller_type));
+
+                // Not Tested -----
+
+                // Hedgehog Controller
+                if(po.getController_type().equals(ControllerType.Hedgehog.toString())) {
+                    robotController = ControllerFactory.getController(ControllerType.Hedgehog);
+                    try {
+                        robotController.getSetup().setup(robotController.getRobotArm());
+                    } catch (ConnectionNotEstablishedException e) {
+                        e.printStackTrace(); // No exception will be thrown
+                        Log.d(TAG, "Not connected Exception", e);
+                        Toast.makeText(activity.getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // Botball Controller
+                } else if(po.getController_type().equals(ControllerType.Botball.toString())) {
+
+                        robotController= ControllerFactory.getController(ControllerType.Botball);
+                    try {
+                        robotController.getSetup().setup(robotController.getRobotArm());
+                    } catch (ConnectionNotEstablishedException e) {
+                        Log.d(TAG, "Not connected Exception", e);
+                    }
+
+                    Toast.makeText(activity.getBaseContext(), "Controller is Botball", Toast.LENGTH_SHORT).show();
+                }
+
                 // Get the id from this row in the database
-                String selected_id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
-                Toast.makeText(activity.getBaseContext(),
-                        selected_id,
-                        Toast.LENGTH_SHORT).show();
+                //String selected_id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+                //Toast.makeText(activity.getBaseContext(),
+                //        selected_id,
+                //        Toast.LENGTH_SHORT).show();
             }
         });
 

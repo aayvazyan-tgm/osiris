@@ -1,0 +1,114 @@
+package at.pria.osiris.osiris.view;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import android.widget.TextView;
+import at.pria.osiris.osiris.MainActivity;
+import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.view.elements.joystick.*;
+
+/**
+ * Created by helmuthbrunner on 26/02/15.
+ */
+public class JoyStickFragment extends Fragment {
+
+    private static final String TAG= "Osiris";
+
+    private static JoyStickFragment INSTANCE;
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private TextView txtX1, txtY1, txtX2, txtY2;
+    private DualJoystickView joystick;
+
+    public static JoyStickFragment getInstance(int sectionNumber) {
+
+        if(INSTANCE==null) {
+
+            JoyStickFragment fragment= new JoyStickFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+
+            Log.d(TAG, "New Fragment Joystick");
+
+            INSTANCE= fragment;
+        }
+
+        return INSTANCE;
+
+    }
+
+    public JoyStickFragment() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView= inflater.inflate(R.layout.dualjoystick, container, false);
+
+        txtX1= (TextView) rootView.findViewById(R.id.TextViewX1);
+        txtY1= (TextView) rootView.findViewById(R.id.TextViewY1);
+        txtX2= (TextView) rootView.findViewById(R.id.TextViewX2);
+        txtY2= (TextView) rootView.findViewById(R.id.TextViewY2);
+
+        joystick= (DualJoystickView) rootView.findViewById(R.id.dualjoystickView);
+        joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
+
+        return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    private JoystickMovedListener _listenerLeft = new JoystickMovedListener() {
+        @Override
+        public void OnMoved(int pan, int tilt) {
+            txtX1.setText(Integer.toString(pan));
+            txtY1.setText(Integer.toString(tilt));
+        }
+
+        @Override
+        public void OnReleased() {
+            txtX1.setText("released");
+            txtY1.setText("released");
+        }
+
+        public void OnReturnedToCenter() {
+            txtX1.setText("stopped");
+            txtY1.setText("stopped");
+        };
+    };
+
+    private JoystickMovedListener _listenerRight = new JoystickMovedListener() {
+
+        @Override
+        public void OnMoved(int pan, int tilt) {
+            txtX2.setText(Integer.toString(pan));
+            txtY2.setText(Integer.toString(tilt));
+        }
+
+        @Override
+        public void OnReleased() {
+            txtX2.setText("released");
+            txtY2.setText("released");
+        }
+
+        public void OnReturnedToCenter() {
+            txtX2.setText("stopped");
+            txtY2.setText("stopped");
+        };
+    };
+}

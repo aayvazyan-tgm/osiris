@@ -14,6 +14,7 @@ import api.Axis;
 
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.orm.DBQuery;
 import at.pria.osiris.osiris.orm.ProfileORM;
@@ -37,7 +38,9 @@ public class NewProfileFragment extends Fragment {
     private static ProfileORM profile;
     private Integer id;
 
-    public static NewProfileFragment getInstance(int sectionNumber, ProfileORM p) {
+    private Controller controller;
+
+    public static NewProfileFragment getInstance(int sectionNumber, ProfileORM p, Controller controller) {
 
         if(INSTANCE==null) {
 
@@ -48,7 +51,7 @@ public class NewProfileFragment extends Fragment {
 
             INSTANCE= fragment;
         }
-
+        INSTANCE.controller= controller;
         profile= p;
         return INSTANCE;
     }
@@ -121,7 +124,7 @@ public class NewProfileFragment extends Fragment {
 
                 // Jump to the ProfileFragement where all entries are listed.
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, ProfileFragment.getInstance(5)).commit();
+                ft.replace(R.id.container, ProfileFragment.getInstance(5, controller)).commit();
 
                 // clear the textfildes
                 hostname.setText("");
