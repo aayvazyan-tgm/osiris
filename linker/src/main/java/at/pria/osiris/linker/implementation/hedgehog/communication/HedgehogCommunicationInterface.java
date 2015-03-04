@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 
 /**
  * @author Ari Ayvazyan
@@ -52,7 +53,7 @@ public class HedgehogCommunicationInterface implements CommunicationInterface {
     public void setupCommunication(MessageProcessor messageProcessor) {
         logger.info("Setting up communication...");
         AXCPServer.communicationInterface = new HedgehogSerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
-        AXCPAccessor.getInstance().connectController(new HardwareController(null, HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
+        AXCPAccessor.getInstance().connectController(new HardwareController(InetAddress.getLoopbackAddress(), HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
         ExecutionListener._l_exec.add(new HedgehogDataListener(messageProcessor));
     }
 }
