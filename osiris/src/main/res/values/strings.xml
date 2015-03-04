@@ -30,5 +30,7 @@
     <string name="color_1">#FE9A2E</string> <!-- ActionBar -->
     <string name="color_2">#FFD54F</string>
     <string name="execute">Ausfuehren</string>
+    <string name="settings">Settings</string>
+    <string name="wifi_choser">Wifi</string>
 
 </resources>
