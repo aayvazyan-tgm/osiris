@@ -2,8 +2,10 @@ package at.pria.osiris.osiris;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -123,6 +125,9 @@ public class MainActivity extends ActionBarActivity
             case 6:
                 mTitle= getString(R.string.joystick);
                 break;
+            case 7:
+                mTitle= getString(R.string.settings);
+                break;
         }
     }
 
@@ -166,7 +171,15 @@ public class MainActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_wifi_choser) {
+            //FragmentManager fragmentManager = getSupportFragmentManager();
+            //fragmentManager.
+            //        beginTransaction()
+            //        .replace(R.id.container, SettingsFragment.getInstance(7))
+            //        .commit();
+
+            this.startActivity(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
+
             return true;
         }
         return super.onOptionsItemSelected(item);
