@@ -18,7 +18,7 @@ public class JoystickView extends View {
     public static final int INVALID_POINTER_ID = -1;
 
     private final boolean D = false;
-    private String TAG = "JoystickView";
+    String TAG = "JoystickView";
 
     private Paint dbgPaint1;
     private Paint dbgPaint2;
