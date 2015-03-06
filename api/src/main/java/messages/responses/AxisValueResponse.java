@@ -17,6 +17,10 @@ public class AxisValueResponse extends SerializableMessage {
         this.axisValue = axisValue;
     }
 
+    /**
+     *
+     * @return returns the Value of this Axis
+     */
     public int getAxisValue() {
         return axisValue;
     }
