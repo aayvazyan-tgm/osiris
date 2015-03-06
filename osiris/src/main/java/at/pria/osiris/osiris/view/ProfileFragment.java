@@ -25,7 +25,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.pria.osiris.osiris.util.Storeage;
 import com.software.shell.fab.*;
+import org.apache.log4j.chainsaw.Main;
+
 /**
  * A fragment which displays all the profiles from the database.
  *
@@ -275,6 +278,9 @@ public class ProfileFragment extends Fragment {
                     robotController = ControllerFactory.getController(ControllerType.Hedgehog);
                     try {
                         robotController.getSetup().setup(robotController.getRobotArm());
+
+                        Storeage storeage= Storeage.getInstance();
+                        storeage.setRobotController(robotController);
                     } catch (ConnectionNotEstablishedException e) {
                         e.printStackTrace(); // No exception will be thrown
                         Log.d(TAG, "Not connected Exception", e);
@@ -287,6 +293,9 @@ public class ProfileFragment extends Fragment {
                         robotController= ControllerFactory.getController(ControllerType.Botball);
                     try {
                         robotController.getSetup().setup(robotController.getRobotArm());
+
+                        Storeage storeage= Storeage.getInstance();
+                        storeage.setRobotController(robotController);
                     } catch (ConnectionNotEstablishedException e) {
                         Log.d(TAG, "Not connected Exception", e);
                     }

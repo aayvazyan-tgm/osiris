@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers.Controller;
+import org.apache.http.conn.ConnectTimeoutException;
 
 /**
  * A Fragment to insert the invers kinematics values.
@@ -22,10 +26,12 @@ public class InversKinematicsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG= "Osisir";
 
+    private Controller robotController;
+
     private EditText xtext, ytext, ztext;
     private Button execute;
 
-    public static InversKinematicsFragment getInstance(int sectionNumber) {
+    public static InversKinematicsFragment getInstance(int sectionNumber, Controller robot) {
 
         if(INSTANCE==null) {
             InversKinematicsFragment fragment= new InversKinematicsFragment();
@@ -35,6 +41,7 @@ public class InversKinematicsFragment extends Fragment {
 
             INSTANCE= fragment;
         }
+        INSTANCE.robotController=robot;
 
         return INSTANCE;
     }
@@ -58,14 +65,18 @@ public class InversKinematicsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                // check the format of the strings
                 String x= xtext.getText().toString();
                 String y= ytext.getText().toString();
                 String z= ztext.getText().toString();
 
                 Log.d(TAG, "Values x:" + x + " y:" + y + " z:" + z);
 
-                // check the format of the strings
-                // send the values to the inverse kinematics function
+                try {
+                    robotController.getRobotArm().moveTo( Double.valueOf(x), Double.valueOf(y), Double.valueOf(z));
+                } catch (ConnectionNotEstablishedException e) {
+                    Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

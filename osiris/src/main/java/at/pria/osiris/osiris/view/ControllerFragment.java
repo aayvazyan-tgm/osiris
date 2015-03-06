@@ -30,9 +30,6 @@ public class ControllerFragment extends Fragment {
     private static ControllerFragment INSTANCE;
     private ButtonVisualiser buttonPositivePowerVisualiser;
     private ButtonVisualiser buttonNegativePowerVisualiser;
-    private EditText xValue;
-    private EditText yValue;
-    private EditText zValue;
     private Controller robotController;
 
     /**
@@ -133,13 +130,6 @@ public class ControllerFragment extends Fragment {
             }
         });
 
-        //TextFields
-        //
-        //GoToPosition
-        xValue = (EditText) rootView.findViewById(R.id.xValue);
-        yValue = (EditText) rootView.findViewById(R.id.yValue);
-        zValue = (EditText) rootView.findViewById(R.id.zValue);
-
         //Buttons
         //
         //Positive Power
@@ -167,27 +157,6 @@ public class ControllerFragment extends Fragment {
                     doPower(v, false, buttonNegativePowerVisualiser);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     stopPower(v, buttonNegativePowerVisualiser);
-                }
-                return false;
-            }
-        });
-
-        //GoToPosition
-        final Button goToPosition = (Button) rootView.findViewById(R.id.goToPositionButton);
-        goToPosition.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    double xValueActual = Double.parseDouble(xValue.getText().toString());
-                    double yValueActual = Double.parseDouble(yValue.getText().toString());
-                    double zValueActual = Double.parseDouble(zValue.getText().toString());
-                    try {
-                        robotController.getRobotArm().moveTo(xValueActual, yValueActual, zValueActual);
-                    } catch (ConnectionNotEstablishedException e) {
-                        Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
-                    }
                 }
                 return false;
             }

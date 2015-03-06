@@ -19,6 +19,7 @@ import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerFactory;
 import at.pria.osiris.osiris.controllers.ControllerType;
+import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.*;
 import at.pria.osiris.osiris.view.JoyStickFragment;
 
@@ -42,6 +43,8 @@ public class MainActivity extends ActionBarActivity
         robotController = ControllerFactory.getController(ControllerType.Hedgehog);
         try {
             robotController.getSetup().setup(robotController.getRobotArm());
+            Storeage storeage= Storeage.getInstance();
+            storeage.setRobotController(robotController);
         } catch (ConnectionNotEstablishedException e) {
             e.printStackTrace();
             Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
@@ -69,13 +72,16 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        Storeage storeage= Storeage.getInstance();
+        robotController= storeage.getRobotController();
+
         if (position + 1 == 1) {        // controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
                     .commit();
         } else if (position + 1 == 2) { // inverse Kinematics
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, InversKinematicsFragment.getInstance(position + 1))
+                    .replace(R.id.container, InversKinematicsFragment.getInstance(position + 1, robotController))
                     .commit();
         } else if (position + 1 == 3) { // sensor Values
             try {
@@ -171,16 +177,16 @@ public class MainActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_wifi_choser) {
-            //FragmentManager fragmentManager = getSupportFragmentManager();
-            //fragmentManager.
-            //        beginTransaction()
-            //        .replace(R.id.container, SettingsFragment.getInstance(7))
-            //        .commit();
-
+        if (id == R.id.action_wifi) {
+            // jump to the wifi selction screen
             this.startActivity(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
-
-            return true;
+        }
+        if(id == R.id.action_settings) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.
+                    beginTransaction()
+                    .replace(R.id.container, SettingsFragment.getInstance(7))
+                    .commit();
         }
         return super.onOptionsItemSelected(item);
     }
