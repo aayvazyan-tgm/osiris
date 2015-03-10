@@ -44,27 +44,17 @@ public class ServoHelper {
         //looping through the given steps with different wait and go times
         for (int i = 1; i <= steps; i++) {
             if(i == (int)(count*mod)) {
-                try {
-                    Thread.sleep(1000);
+                    s.moveToExactPosition(s.getPosition());
                     //System.out.println(i + ": Stop ...");
                     count++;
-                }
-                //Not useable catch, because it cant see the possibility of an invalid Argument
-                //catch (InvalidArgumentException iae) {
-                //    iae.printStackTrace();
-                //}
-                catch (InterruptedException ie) {
-                    ie.printStackTrace();
-                }
-
             }
             //Moving either to the maximum angle for the time being or the minimum
             else {
                 //System.out.println(i + ": Dreh dich!");
                 if(pos)
-                    s.moveToExactPosition(s.getMaximumAngle());
+                    s.moveToExactPosition(s.getPosition()+1);
                 else
-                    s.moveToExactPosition(0);
+                    s.moveToExactPosition(s.getPosition()-1);
             }
         }
     }
