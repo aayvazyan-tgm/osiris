@@ -2,6 +2,7 @@ package at.pria.osiris.linker;
 
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
+import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
 import org.apache.log4j.Logger;
 
@@ -35,7 +36,7 @@ public class Main {
             try {
                 robotArm.getAxis(1).moveToAngle(0);
                 Thread.sleep(2500);
-                robotArm.getAxis(1).moveToAngle(200);
+                robotArm.getAxis(1).moveToAngle(((ServoAxis)robotArm.getAxis(1)).getMaximumAngle());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

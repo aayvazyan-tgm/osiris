@@ -38,4 +38,8 @@ public class ServoAxis extends Axis {
     public void moveToAngle(int angle) {
         this.servo.moveToExactPosition(angle);
     }
+
+    public int getMaximumAngle() {
+        return servo.getMaximumAngle();
+    }
 }
