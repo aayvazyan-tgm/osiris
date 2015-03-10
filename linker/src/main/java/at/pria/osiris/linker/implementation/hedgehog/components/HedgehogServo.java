@@ -55,8 +55,8 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
      * @return returns the current position in degrees
      */
     @Override
-    public int getPosition(){
+    public int getPositionInDegrees(){
     //Hedgehog servos work with a maximum value of 255
-     return super.getPosition()/255*getMaximumAngle();
+     return (int)((double)super.getPosition()/255d*(double)getMaximumAngle());
     }
 }

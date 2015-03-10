@@ -16,7 +16,7 @@ public interface Servo {
      *
      * @return return the position in degrees
      */
-    public int getPosition();
+    public int getPositionInDegrees();
 
     /**
      *

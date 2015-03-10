@@ -67,9 +67,9 @@ public class HedgehogDoubleServo implements Servo {
      * @return Returns the position of Servo1
      */
     @Override
-    public int getPosition() {
+    public int getPositionInDegrees() {
         //The servo1 is used as a reference for its position
-        return andrixServo1.getPosition();
+        return andrixServo1.getPositionInDegrees();
     }
 
     /**

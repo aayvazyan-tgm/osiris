@@ -27,7 +27,7 @@ public class ServoAxis extends Axis {
      */
     @Override
     public int getSensorValue() {
-        return servo.getPosition();
+        return servo.getPositionInDegrees();
     }
 
     public Servo getServo() {
