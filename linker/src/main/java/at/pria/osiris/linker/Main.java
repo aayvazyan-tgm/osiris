@@ -30,8 +30,17 @@ public class Main {
         msgDistributor.addMessageProcessor(new StringProcessor(robotArm));
         logger.info("All Processors are added");
         //Start to debug
-        if(args.length>0){
-            logger.info("debug Session started");
+        if(args.length>0 &&args[0].equals("debug")){
+            logger.info("Ari debugger");
+            try {
+                robotArm.getAxis(1).moveToAngle(0);
+                Thread.sleep(2500);
+                robotArm.getAxis(1).moveToAngle(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if(args.length>0){
+            logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
             robotArm.getAxis(0).moveToAngle(0);
             try {
