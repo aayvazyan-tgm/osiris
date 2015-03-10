@@ -26,9 +26,9 @@ public class HedgehogRobotArm extends RobotArm {
         //Add the axes
         this.axes = new ArrayList<Axis>();
         try {
-            this.axes.add(new ServoAxis("BaseAxis", new HedgehogServo(1, 720, 2)));
-            this.axes.add(new ServoAxis("VerticalAxis", new HedgehogDoubleServo(2, 3, 60, 3)));
-            this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 360, 3)));
+            this.axes.add(new ServoAxis("BaseAxis", new HedgehogServo(1, 720, 2, 0)));
+            this.axes.add(new ServoAxis("VerticalAxis", new HedgehogDoubleServo(2, 3, 60, 3, 0)));
+            this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 360, 3, 0)));
         } catch (NotConnectedException e) {
             e.printStackTrace();
         }
@@ -49,6 +49,7 @@ public class HedgehogRobotArm extends RobotArm {
         try {
             return new HedgehogSensorAnalog(sensorPort).getCurrentValue();
         } catch (Exception ignored) {
+
         }
         return -1;
     }

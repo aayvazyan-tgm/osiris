@@ -13,10 +13,13 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
     private final long timePerDegreeInMilli;
     private int maximumAngle;
 
-    public HedgehogServo(int port, int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
+    public HedgehogServo(int port, int maximumAngle, long timePerDegreeInMilli, int initialPosition) throws NotConnectedException {
         super(port);
-        this.maximumAngle = maximumAngle;
+        if (maximumAngle == 0) throw new RuntimeException("the maximum Angle may not be 0");
         this.timePerDegreeInMilli = timePerDegreeInMilli;
+        this.maximumAngle = maximumAngle;
+        //Set the servo to its initial position before the startup to prevent unintended movements
+        this.setPosition(initialPosition);
         this.on();
     }
 

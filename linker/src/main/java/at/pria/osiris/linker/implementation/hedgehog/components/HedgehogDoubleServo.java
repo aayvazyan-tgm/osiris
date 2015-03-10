@@ -24,10 +24,10 @@ public class HedgehogDoubleServo implements Servo {
      * @param timePerDegreeInMilli the time this servos take to move by one degree
      * @throws NotConnectedException
      */
-    public HedgehogDoubleServo(int port1, int port2, int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
+    public HedgehogDoubleServo(int port1, int port2, int maximumAngle, long timePerDegreeInMilli, int initialPosition) throws NotConnectedException {
         //The servo1 is used as a reference for its position and is used as a usual servo
-        this.andrixServo1 = new HedgehogServo(port1, maximumAngle, timePerDegreeInMilli);
-        this.andrixServo2 = new HedgehogServo(port2, maximumAngle, timePerDegreeInMilli);
+        this.andrixServo1 = new HedgehogServo(port1, maximumAngle, timePerDegreeInMilli, initialPosition);
+        this.andrixServo2 = new HedgehogServo(port2, maximumAngle, timePerDegreeInMilli, maximumAngle - initialPosition);
         this.maximumAngle = maximumAngle;
         this.timePerDegreeInMilli = timePerDegreeInMilli;
         this.andrixServo1.on();
