@@ -34,7 +34,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
             throw new RuntimeException("The maximum angle: " + maximumAngle + " of this servo has been excessed: " + angle);
         try {
             //The maximum Value for Hedgehog Servos is 255
-            super.setPosition((angle / maximumAngle) * 255);
+            super.setPosition((int) (Math.ceil((double) angle / (double) maximumAngle) * 255d));
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }
