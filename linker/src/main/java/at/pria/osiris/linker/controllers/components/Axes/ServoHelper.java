@@ -46,7 +46,7 @@ public class ServoHelper {
             if(i == (int)(count*mod)) {
                 try {
                     s.moveToExactPosition(s.getPosition());
-                    Thread.sleep(1000);
+                    Thread.sleep(Math.round(s.getTimePerDegreeInMilli()*50));
                     //System.out.println(i + ": Stop ...");
                     count++;
                 }
