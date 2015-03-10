@@ -41,7 +41,7 @@ public abstract class Axis {
     public abstract void moveToAngle(int angle);
 
     /**
-     * moves the Axis at the desired power
+     * moves the Axis at the desired power. May be blocking
      *
      * @param power the power
      */
