@@ -45,7 +45,7 @@ public class ServoHelper {
         for (int i = 1; i <= steps; i++) {
             if(i == (int)(count*mod)) {
                 try {
-                    Thread.sleep(Math.round(s.getTimePerDegreeInMilli()/100));
+                    Thread.sleep(1000);
                     //System.out.println(i + ": Stop ...");
                     count++;
                 }

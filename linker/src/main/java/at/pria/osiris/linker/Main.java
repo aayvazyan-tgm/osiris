@@ -33,9 +33,9 @@ public class Main {
         if(args.length>0){
             logger.info("debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(0).moveToAngle(290);
-            robotArm.getAxis(1).moveToAngle(90);
-            robotArm.getAxis(2).moveToAngle(100);
+            robotArm.getAxis(0).moveAtPower(Integer.parseInt(args[0]));
+            robotArm.getAxis(1).moveAtPower(Integer.parseInt(args[0]));
+            robotArm.getAxis(2).moveAtPower(Integer.parseInt(args[0]));
             logger.info("done");
         }
     }
