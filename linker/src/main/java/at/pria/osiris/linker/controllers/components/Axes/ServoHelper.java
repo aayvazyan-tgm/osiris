@@ -65,7 +65,7 @@ public class ServoHelper {
                 //System.out.println(i + ": Dreh dich!");
                 //Hedgehog only supports 255 steps
                 //TODO this could be improved
-                int oneStep=(int)((1d/255d)*(double)s.getMaximumAngle());
+                int oneStep=(int)Math.ceil((1d/255d)*(double)s.getMaximumAngle());
                 if (pos)
                     s.moveToAngle(s.getPositionInDegrees() + oneStep);
                 else
