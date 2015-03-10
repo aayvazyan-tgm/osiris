@@ -36,9 +36,9 @@ public class Main {
             try {
                 logger.info("Moving to 0");
                 robotArm.getAxis(1).moveToAngle(0);
-                Thread.sleep(5000);
-                robotArm.getAxis(1).moveToAngle(((ServoAxis)robotArm.getAxis(1)).getMaximumAngle());
-                logger.info("Moving to: "+((ServoAxis)robotArm.getAxis(1)).getMaximumAngle());
+                Thread.sleep(2000);
+                logger.info("Moving to: " + 60);
+                robotArm.getAxis(1).moveToAngle(60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

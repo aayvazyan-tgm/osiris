@@ -36,7 +36,7 @@ public class ServoAxis extends Axis {
 
     @Override
     public void moveToAngle(int angle) {
-        this.servo.moveToExactPosition(angle);
+        this.servo.moveToAngle(angle);
     }
 
     public int getMaximumAngle() {

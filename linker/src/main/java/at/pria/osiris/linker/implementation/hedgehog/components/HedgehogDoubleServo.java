@@ -58,9 +58,9 @@ public class HedgehogDoubleServo implements Servo {
      * @param angle
      */
     @Override
-    public void moveToExactPosition(int angle) {
-        andrixServo1.moveToExactPosition(angle);
-        andrixServo2.moveToExactPosition(andrixServo2.getMaximumAngle() - angle);
+    public void moveToAngle(int angle) {
+        andrixServo1.moveToAngle(angle);
+        andrixServo2.moveToAngle(andrixServo2.getMaximumAngle() - angle);
     }
 
     /**

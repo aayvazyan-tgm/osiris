@@ -46,7 +46,7 @@ public class ServoHelper {
         for (int i = 1; i <= steps; i++) {
             if (i == (int) (count * mod)) {
                 try {
-                    s.moveToExactPosition(s.getPosition());
+                    s.moveToAngle(s.getPosition());
                     Thread.sleep(Math.round(s.getTimePerDegreeInMilli() * 50));
                     //System.out.println(i + ": Stop ...");
                     count++;
@@ -64,9 +64,9 @@ public class ServoHelper {
             else {
                 //System.out.println(i + ": Dreh dich!");
                 if (pos)
-                    s.moveToExactPosition(s.getPosition() + 1);
+                    s.moveToAngle(s.getPosition() + 1);
                 else
-                    s.moveToExactPosition(s.getPosition() - 1);
+                    s.moveToAngle(s.getPosition() - 1);
             }
         }
     }
