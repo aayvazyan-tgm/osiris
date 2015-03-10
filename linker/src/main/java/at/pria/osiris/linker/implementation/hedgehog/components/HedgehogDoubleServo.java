@@ -18,16 +18,16 @@ public class HedgehogDoubleServo implements Servo {
      * servo2 is modified to move together with servo1 in one motion
      * if servo 2 would be null, servo 1 will perform as a normal Servo would do.
      *
-     * @param port1 the port for servo1
-     * @param port2 the port for servo2
-     * @param maximumAngle the maximum angle for both
+     * @param port1                the port for servo1
+     * @param port2                the port for servo2
+     * @param maximumAngle         the maximum angle for both
      * @param timePerDegreeInMilli the time this servos take to move by one degree
      * @throws NotConnectedException
      */
     public HedgehogDoubleServo(int port1, int port2, int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
         //The servo1 is used as a reference for its position and is used as a usual servo
-        this.andrixServo1 = new HedgehogServo(port1,maximumAngle,timePerDegreeInMilli);
-        this.andrixServo2 = new HedgehogServo(port2,maximumAngle,timePerDegreeInMilli);
+        this.andrixServo1 = new HedgehogServo(port1, maximumAngle, timePerDegreeInMilli);
+        this.andrixServo2 = new HedgehogServo(port2, maximumAngle, timePerDegreeInMilli);
         this.maximumAngle = maximumAngle;
         this.timePerDegreeInMilli = timePerDegreeInMilli;
         this.andrixServo1.on();
@@ -60,11 +60,10 @@ public class HedgehogDoubleServo implements Servo {
     @Override
     public void moveToExactPosition(int angle) {
         andrixServo1.moveToExactPosition(angle);
-        andrixServo2.moveToExactPosition(andrixServo2.getMaximumAngle()-angle);
+        andrixServo2.moveToExactPosition(andrixServo2.getMaximumAngle() - angle);
     }
 
     /**
-     *
      * @return Returns the position of Servo1
      */
     @Override
@@ -74,7 +73,6 @@ public class HedgehogDoubleServo implements Servo {
     }
 
     /**
-     *
      * @return returns the Maximum angle
      */
     @Override
@@ -83,7 +81,6 @@ public class HedgehogDoubleServo implements Servo {
     }
 
     /**
-     *
      * @return returns the time required for the servo to move by one degree
      */
     @Override

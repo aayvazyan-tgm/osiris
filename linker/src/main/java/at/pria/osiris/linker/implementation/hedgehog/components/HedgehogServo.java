@@ -10,10 +10,10 @@ import org.andrix.motors.Servo;
  * @version 2015-01-26
  */
 public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
-    private int maximumAngle;
     private final long timePerDegreeInMilli;
+    private int maximumAngle;
 
-    public HedgehogServo(int port,int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
+    public HedgehogServo(int port, int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
         super(port);
         this.maximumAngle = maximumAngle;
         this.timePerDegreeInMilli = timePerDegreeInMilli;
@@ -27,10 +27,11 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
      */
     @Override
     public void moveToExactPosition(int angle) {
-        if(angle<0||angle>maximumAngle)throw new RuntimeException("The maximum angle: "+angle+" of this servo has been excesses: "+angle);
+        if (angle < 0 || angle > maximumAngle)
+            throw new RuntimeException("The maximum angle: " + angle + " of this servo has been excesses: " + angle);
         try {
             //The maximum Value for Hedgehog Servos is 255
-            super.setPosition((angle/maximumAngle)*255);
+            super.setPosition((angle / maximumAngle) * 255);
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }

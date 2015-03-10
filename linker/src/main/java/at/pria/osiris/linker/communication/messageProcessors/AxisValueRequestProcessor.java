@@ -3,7 +3,6 @@ package at.pria.osiris.linker.communication.messageProcessors;
 import at.pria.osiris.linker.controllers.RobotArm;
 import messages.requests.AxisValueRequest;
 import messages.responses.AxisValueResponse;
-import messages.responses.SensorValueResponse;
 
 /**
  * @author Ari Michael Ayvazyan
