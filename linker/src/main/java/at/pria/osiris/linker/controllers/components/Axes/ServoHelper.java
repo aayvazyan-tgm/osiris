@@ -12,7 +12,8 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
  */
 public class ServoHelper {
 
-    public ServoHelper(){}
+    public ServoHelper() {
+    }
 
     /**
      * A method which changes the speed of the specified Servo
@@ -20,11 +21,11 @@ public class ServoHelper {
      * this time into 100 steps.
      * The more power it gets the more steps it actually moves.
      *
-     * @param s The Servo which should move in the end
+     * @param s     The Servo which should move in the end
      * @param power The power it should use
      * @param steps The amount of steps
      */
-    public static void pwm(Servo s, int power, int steps){
+    public static void pwm(Servo s, int power, int steps) {
 
         //Defining important Variables
         int maxPower = 100;
@@ -32,7 +33,7 @@ public class ServoHelper {
         boolean pos = true;
 
         //Checking if the power is negativ of positiv
-        if(power < 0) {
+        if (power < 0) {
             power = power * -1;
             pos = false;
         }
@@ -43,9 +44,10 @@ public class ServoHelper {
 
         //looping through the given steps with different wait and go times
         for (int i = 1; i <= steps; i++) {
-            if(i == (int)(count*mod)) {
+            if (i == (int) (count * mod)) {
                 try {
-                    Thread.sleep(Math.round(s.getTimePerDegreeInMilli()/100));
+                    s.moveToAngle(s.getPositionInDegrees());
+                    Thread.sleep(Math.round(s.getTimePerDegreeInMilli() * 50));
                     //System.out.println(i + ": Stop ...");
                     count++;
                 }
@@ -61,10 +63,13 @@ public class ServoHelper {
             //Moving either to the maximum angle for the time being or the minimum
             else {
                 //System.out.println(i + ": Dreh dich!");
-                if(pos)
-                    s.moveToExactPosition(s.getMaximumAngle());
+                //Hedgehog only supports 255 steps
+                //TODO this could be improved
+                int oneStep=(int)Math.ceil((1d/255d)*(double)s.getMaximumAngle());
+                if (pos)
+                    s.moveToAngle(s.getPositionInDegrees() + oneStep);
                 else
-                    s.moveToExactPosition(0);
+                    s.moveToAngle(s.getPositionInDegrees() - oneStep);
             }
         }
     }

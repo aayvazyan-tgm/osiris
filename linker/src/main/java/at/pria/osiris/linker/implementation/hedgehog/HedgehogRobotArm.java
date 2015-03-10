@@ -3,11 +3,11 @@ package at.pria.osiris.linker.implementation.hedgehog;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.controllers.components.Axes.Axis;
-import at.pria.osiris.linker.implementation.hedgehog.axes.BaseAxis;
-import at.pria.osiris.linker.implementation.hedgehog.axes.HorizontalAxis;
-import at.pria.osiris.linker.implementation.hedgehog.axes.VerticalAxis;
+import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
 import at.pria.osiris.linker.implementation.hedgehog.communication.HedgehogCommunicationInterface;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogDoubleServo;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogSensorAnalog;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import org.andrix.low.NotConnectedException;
 
 import java.util.ArrayList;
@@ -26,9 +26,9 @@ public class HedgehogRobotArm extends RobotArm {
         //Add the axes
         this.axes = new ArrayList<Axis>();
         try {
-            this.axes.add(new BaseAxis());
-            this.axes.add(new VerticalAxis());
-            this.axes.add(new HorizontalAxis());
+            this.axes.add(new ServoAxis("BaseAxis", new HedgehogServo(1, 720, 2, 0)));
+            this.axes.add(new ServoAxis("VerticalAxis", new HedgehogDoubleServo(2, 3, 60, 3, 0)));
+            this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 360, 3, 0)));
         } catch (NotConnectedException e) {
             e.printStackTrace();
         }
@@ -49,6 +49,7 @@ public class HedgehogRobotArm extends RobotArm {
         try {
             return new HedgehogSensorAnalog(sensorPort).getCurrentValue();
         } catch (Exception ignored) {
+
         }
         return -1;
     }

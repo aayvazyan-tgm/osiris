@@ -2,6 +2,7 @@ package at.pria.osiris.linker;
 
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
+import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
 import org.apache.log4j.Logger;
 
@@ -30,12 +31,28 @@ public class Main {
         msgDistributor.addMessageProcessor(new StringProcessor(robotArm));
         logger.info("All Processors are added");
         //Start to debug
-        if(args.length>0){
-            logger.info("debug Session started");
+        if (args.length > 0 && args[0].equals("debug")) {
+            logger.info("Ari debugger");
+            try {
+                logger.info("Moving to 0");
+                robotArm.getAxis(1).moveToAngle(0);
+                Thread.sleep(2000);
+                logger.info("Moving to: " + 60);
+                robotArm.getAxis(1).moveToAngle(60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (args.length > 0) {
+            logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(0).moveToAngle(290);
-            robotArm.getAxis(1).moveToAngle(90);
-            robotArm.getAxis(2).moveToAngle(100);
+            robotArm.getAxis(0).moveToAngle(0);
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            logger.info("All Servos set ...");
+            robotArm.getAxis(0).moveAtPower(Integer.parseInt(args[0]));
             logger.info("done");
         }
     }
