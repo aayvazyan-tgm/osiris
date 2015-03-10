@@ -34,9 +34,11 @@ public class Main {
         if (args.length > 0 && args[0].equals("debug")) {
             logger.info("Ari debugger");
             try {
+                logger.info("Moving to 0");
                 robotArm.getAxis(1).moveToAngle(0);
-                Thread.sleep(2500);
+                Thread.sleep(5000);
                 robotArm.getAxis(1).moveToAngle(((ServoAxis)robotArm.getAxis(1)).getMaximumAngle());
+                logger.info("Moving to: "+((ServoAxis)robotArm.getAxis(1)).getMaximumAngle());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
