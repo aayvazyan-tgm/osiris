@@ -34,8 +34,6 @@ public class Main {
             logger.info("debug Session started");
             logger.info("Moving the Axes");
             robotArm.getAxis(0).moveToAngle(0);
-            robotArm.getAxis(1).moveToAngle(0);
-            robotArm.getAxis(2).moveToAngle(0);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
@@ -43,8 +41,6 @@ public class Main {
             }
             logger.info("All Servos set ...");
             robotArm.getAxis(0).moveAtPower(Integer.parseInt(args[0]));
-            robotArm.getAxis(1).moveAtPower(Integer.parseInt(args[0]));
-            robotArm.getAxis(2).moveAtPower(Integer.parseInt(args[0]));
             logger.info("done");
         }
     }
