@@ -2,6 +2,7 @@ package at.pria.osiris.osiris.controllers;
 
 import at.pria.osiris.osiris.controllers.botball.BotballController;
 import at.pria.osiris.osiris.controllers.hedgehog.HedgehogController;
+import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 
 /**
  * @author Ari Ayvazyan
@@ -14,6 +15,8 @@ public class ControllerFactory {
                 return new HedgehogController();
             case Botball:
                 return new BotballController();
+            case HedgehogDirect:
+                return  new HedgehogDirectController();
         }
         throw new RuntimeException("Controller not found: " + controllerType.toString());
     }
