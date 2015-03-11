@@ -54,7 +54,7 @@ public class ServoHelper {
                         s.moveToAngle(startPosition);
                         moving = false;
                     }
-                    Thread.sleep(s.getTimePerDegreeInMilli()*10);
+                    Thread.sleep(s.getTimePerDegreeInMilli());
                     //It stops
                     count++;
                 }
