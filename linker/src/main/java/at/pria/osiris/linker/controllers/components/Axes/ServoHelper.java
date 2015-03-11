@@ -51,7 +51,7 @@ public class ServoHelper {
             if (i == (int) (count * mod)) {
                 try {
                     if (moving == true) {
-                        s.moveToAngle(s.getPositionInDegrees());
+                        s.moveToAngle(startPosition);
                         moving = false;
                     }
                     Thread.sleep(s.getTimePerDegreeInMilli()*10);
@@ -72,18 +72,22 @@ public class ServoHelper {
                 //It Moves
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
-                    if (startPosition < s.getMaximumAngle() - 1) {
+                    if (startPosition < s.getMaximumAngle() - 3) {
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
                     }
+                    else
+                        break;
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 1) {
-                        s.moveToAngle(startPosition - 1);
+                        s.moveToAngle(startPosition - 3);
                         startPosition -= 1;
                         moving = true;
                     }
+                    else
+                        break;
                 }
             }
         }
