@@ -5,10 +5,10 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 
 /**
  * A class which provides methods that changes the behavior of
- * the Servo
+ * the Servo.
  *
  * @author Wolfgang Mair
- * @version 02.03.2015
+ * @version 11.03.2015
  */
 public class ServoHelper {
 
@@ -49,7 +49,7 @@ public class ServoHelper {
                 if (i == (int) (count * mod)) {
                     try {
                         if(moving == true) {
-                            s.moveToExactPosition(s.getPosition());
+                            s.moveToAngle(s.getPositionInDegrees());
                             moving = false;
                         }
                         Thread.sleep(s.getTimePerDegreeInMilli());
@@ -69,12 +69,16 @@ public class ServoHelper {
                 else {
                     //System.out.println(i + ": Dreh dich!");
                     if (pos) {
-                        s.moveToExactPosition(s.getPosition() + 1);
-                        moving = true;
+                        if(s.getPositionInDegrees() < s.getMaximumAngle()) {
+                            s.moveToAngle(s.getPositionInDegrees() + 1);
+                            moving = true;
+                        }
                     }
                     else{
-                        s.moveToExactPosition(s.getPosition() - 1);
-                        moving = true;
+                        if(s.getPositionInDegrees() > 0) {
+                            s.moveToAngle(s.getPositionInDegrees() - 1);
+                            moving = true;
+                        }
                     }
                 }
             }
