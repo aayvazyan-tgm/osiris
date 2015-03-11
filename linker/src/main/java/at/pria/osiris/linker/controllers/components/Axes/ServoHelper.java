@@ -2,6 +2,7 @@ package at.pria.osiris.linker.controllers.components.Axes;
 
 
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
+import org.apache.log4j.Logger;
 
 /**
  * A class which provides methods that changes the behavior of
@@ -26,7 +27,7 @@ public class ServoHelper {
      * @param steps The amount of steps
      */
     public static void pwm(Servo s, int power, int steps) {
-
+        Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
         //Defining important Variables
         int maxPower = 100;
         int count = 1;

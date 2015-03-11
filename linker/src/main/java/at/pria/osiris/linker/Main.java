@@ -35,7 +35,7 @@ public class Main {
             logger.info("Ari debugger");
             try {
                 logger.info("Moving to 0");
-                robotArm.getAxis(1).moveToAngle(0);
+                robotArm.getAxis(1).moveToAngle(3);
                 Thread.sleep(2000);
                 logger.info("Moving to: " + 60);
                 robotArm.getAxis(1).moveToAngle(60);
@@ -45,7 +45,7 @@ public class Main {
         } else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(0).moveToAngle(0);
+            robotArm.getAxis(0).moveToAngle(3);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
