@@ -51,6 +51,7 @@ public class ServoHelper {
             if (i == (int) (count * mod)) {
                 try {
                     if (moving == true) {
+                        logger.info("Stopping ...");
                         s.moveToAngle(startPosition);
                         moving = false;
                     }
@@ -73,6 +74,7 @@ public class ServoHelper {
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition < s.getMaximumAngle() - 3) {
+                        logger.info("Next Position: "+(startPosition + 1));
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
@@ -82,6 +84,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 1) {
+                        logger.info("Next Position: "+(startPosition - 1));
                         s.moveToAngle(startPosition - 3);
                         startPosition -= 1;
                         moving = true;
