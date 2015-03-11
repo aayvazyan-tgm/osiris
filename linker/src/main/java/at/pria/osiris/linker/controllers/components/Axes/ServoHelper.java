@@ -24,15 +24,17 @@ public class ServoHelper {
      * @param power The power it should use
      * @param steps The amount of steps
      */
-    public static void pwm(Servo s, int power, int steps){
+    public static void pwm(Servo s, int power, int steps) {
 
         //Defining important Variables
         int maxPower = 100;
         int count = 1;
         boolean pos = true;
+        boolean interrupt = false;
+        boolean moving = false;
 
         //Checking if the power is negativ of positiv
-        if(power < 0) {
+        if (power < 0) {
             power = power * -1;
             pos = false;
         }
@@ -42,30 +44,39 @@ public class ServoHelper {
         double mod = maxPower / divider;
 
         //looping through the given steps with different wait and go times
-        for (int i = 1; i <= steps; i++) {
-            if(i == (int)(count*mod)) {
-                try {
-                    s.moveToExactPosition(s.getPosition());
-                    Thread.sleep(Math.round(s.getTimePerDegreeInMilli()*50));
-                    //System.out.println(i + ": Stop ...");
-                    count++;
-                }
-                //Not useable catch, because it cant see the possibility of an invalid Argument
-                //catch (InvalidArgumentException iae) {
-                //    iae.printStackTrace();
-                //}
-                catch (InterruptedException ie) {
-                    ie.printStackTrace();
-                }
+        while (!interrupt) {
+            for (int i = 1; i <= steps; i++) {
+                if (i == (int) (count * mod)) {
+                    try {
+                        if(moving == true) {
+                            s.moveToExactPosition(s.getPosition());
+                            moving = false;
+                        }
+                        Thread.sleep(s.getTimePerDegreeInMilli());
+                        //System.out.println(i + ": Stop ...");
+                        count++;
+                    }
+                    //Not useable catch, because it cant see the possibility of an invalid Argument
+                    //catch (InvalidArgumentException iae) {
+                    //    iae.printStackTrace();
+                    //}
+                    catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                    }
 
-            }
-            //Moving either to the maximum angle for the time being or the minimum
-            else {
-                //System.out.println(i + ": Dreh dich!");
-                if(pos)
-                    s.moveToExactPosition(s.getPosition()+1);
-                else
-                    s.moveToExactPosition(s.getPosition()-1);
+                }
+                //Moving either to the maximum angle for the time being or the minimum
+                else {
+                    //System.out.println(i + ": Dreh dich!");
+                    if (pos) {
+                        s.moveToExactPosition(s.getPosition() + 1);
+                        moving = true;
+                    }
+                    else{
+                        s.moveToExactPosition(s.getPosition() - 1);
+                        moving = true;
+                    }
+                }
             }
         }
     }
