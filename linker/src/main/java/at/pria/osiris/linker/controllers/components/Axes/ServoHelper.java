@@ -12,7 +12,8 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
  */
 public class ServoHelper {
 
-    public ServoHelper(){}
+    public ServoHelper() {
+    }
 
     /**
      * A method which changes the speed of the specified Servo
@@ -20,7 +21,7 @@ public class ServoHelper {
      * this time into 100 steps.
      * The more power it gets the more steps it actually moves.
      *
-     * @param s The Servo which should move in the end
+     * @param s     The Servo which should move in the end
      * @param power The power it should use
      * @param steps The amount of steps
      */
@@ -32,6 +33,7 @@ public class ServoHelper {
         boolean pos = true;
         boolean interrupt = false;
         boolean moving = false;
+        int startPosition = s.getPositionInDegrees();
 
         //Checking if the power is negativ of positiv
         if (power < 0) {
@@ -44,41 +46,42 @@ public class ServoHelper {
         double mod = maxPower / divider;
 
         //looping through the given steps with different wait and go times
-        while (!interrupt) {
-            for (int i = 1; i <= steps; i++) {
-                if (i == (int) (count * mod)) {
-                    try {
-                        if(moving == true) {
-                            s.moveToAngle(s.getPositionInDegrees());
-                            moving = false;
-                        }
-                        Thread.sleep(s.getTimePerDegreeInMilli());
-                        //System.out.println(i + ": Stop ...");
-                        count++;
+        for(int i = 0; !interrupt ;i++) {
+            if (i == (int) (count * mod)) {
+                try {
+                    if (moving == true) {
+                        s.moveToAngle(s.getPositionInDegrees());
+                        moving = false;
                     }
-                    //Not useable catch, because it cant see the possibility of an invalid Argument
-                    //catch (InvalidArgumentException iae) {
-                    //    iae.printStackTrace();
-                    //}
-                    catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                    }
-
+                    Thread.sleep(s.getTimePerDegreeInMilli()*10);
+                    //It stops
+                    count++;
                 }
-                //Moving either to the maximum angle for the time being or the minimum
-                else {
-                    //System.out.println(i + ": Dreh dich!");
-                    if (pos) {
-                        if(s.getPositionInDegrees() < s.getMaximumAngle()) {
-                            s.moveToAngle(s.getPositionInDegrees() + 1);
-                            moving = true;
-                        }
+                //Not useable catch, because it cant see the possibility of an invalid Argument
+                //catch (InvalidArgumentException iae) {
+                //    iae.printStackTrace();
+                //}
+                catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
+
+            }
+            //Moving either to the maximum angle for the time being or the minimum
+            else {
+                //It Moves
+                if (pos) {
+                    //Defining a softwarebased limit for the rotationdegree
+                    if (startPosition < s.getMaximumAngle() - 1) {
+                        s.moveToAngle(startPosition + 1);
+                        startPosition += 1;
+                        moving = true;
                     }
-                    else{
-                        if(s.getPositionInDegrees() > 0) {
-                            s.moveToAngle(s.getPositionInDegrees() - 1);
-                            moving = true;
-                        }
+                } else {
+                    //Defining a softwarebased limit for the rotationdegree
+                    if (startPosition > 1) {
+                        s.moveToAngle(startPosition - 1);
+                        startPosition -= 1;
+                        moving = true;
                     }
                 }
             }
