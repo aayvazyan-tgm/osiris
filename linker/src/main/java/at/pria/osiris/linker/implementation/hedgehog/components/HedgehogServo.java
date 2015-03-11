@@ -10,27 +10,31 @@ import org.andrix.motors.Servo;
  * @version 2015-01-26
  */
 public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
-
-
-    private int maximumAngle;
     private final long timePerDegreeInMilli;
+    private int maximumAngle;
 
-    public HedgehogServo(int port,int maximumAngle, long timePerDegreeInMilli) throws NotConnectedException {
+    public HedgehogServo(int port, int maximumAngle, long timePerDegreeInMilli, int initialPosition) throws NotConnectedException {
         super(port);
-        this.maximumAngle = maximumAngle;
+        if (maximumAngle == 0) throw new RuntimeException("the maximum Angle may not be 0");
         this.timePerDegreeInMilli = timePerDegreeInMilli;
+        this.maximumAngle = maximumAngle;
+        //Set the servo to its initial position before the startup to prevent unintended movements
+        this.setPosition(initialPosition);
         this.on();
     }
 
     /**
-     * Moves to a certain position
+     * Moves to a certain angle in degrees
      *
-     * @param position the system dependent position value
+     * @param angle
      */
     @Override
-    public void moveToExactPosition(int position) {
+    public void moveToAngle(int angle) {
+        if (angle < 0 || angle > maximumAngle)
+            throw new RuntimeException("The maximum angle: " + maximumAngle + " of this servo has been excessed: " + angle);
         try {
-            super.setPosition(position);
+            //The maximum Value for Hedgehog Servos is 255
+            super.setPosition((int) (Math.ceil((double) angle / (double) maximumAngle) * 255d));
         } catch (NotConnectedException e) {
             throw new RuntimeException(e);
         }
@@ -44,5 +48,14 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
     @Override
     public long getTimePerDegreeInMilli() {
         return timePerDegreeInMilli;
+    }
+
+    /**
+     * @return returns the current position in degrees
+     */
+    @Override
+    public int getPositionInDegrees() {
+        //Hedgehog servos work with a maximum value of 255
+        return (int) ((double) super.getPosition() / 255d * (double) getMaximumAngle());
     }
 }

@@ -4,9 +4,11 @@ import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.controllers.components.Axes.Axis;
 
 /**
+ * This class is for backwards compatibility
  * @author Ari Ayvazyan
  * @version 03.Dec.14
  */
+@Deprecated
 public class StringProcessor implements MessageProcessor {
     private RobotArm robotarm;
 
@@ -27,7 +29,6 @@ public class StringProcessor implements MessageProcessor {
                 robotarm.getAxis(Integer.parseInt(splitted[1]))
                         .moveAtPower(Integer.parseInt(splitted[2]));
             } catch (NumberFormatException nfe) {
-                // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("turnaxis") && splitted.length == 4) {
@@ -37,7 +38,6 @@ public class StringProcessor implements MessageProcessor {
                         .moveAtPower(Integer.parseInt(splitted[2]));
 
             } catch (NumberFormatException nfe) {
-                // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("stopaxis") && splitted.length == 2) {
@@ -46,7 +46,6 @@ public class StringProcessor implements MessageProcessor {
                 robotarm.getAxis(Integer.parseInt(splitted[1])).moveAtPower(0);
 
             } catch (NumberFormatException nfe) {
-                // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("moveto") && splitted.length == 4) {
@@ -57,7 +56,6 @@ public class StringProcessor implements MessageProcessor {
                         Double.parseDouble(splitted[3]));
 
             } catch (NumberFormatException nfe) {
-                // TODO Auto-generated catch block
                 nfe.printStackTrace();
             }
         } else if (splitted[0].equals("stopall") && splitted.length == 1) {
