@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import at.pria.osiris.osiris.Demo;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.util.AXCPWrapper;
 import messages.requests.SensorValueRequest;
@@ -263,15 +262,6 @@ public class NavigationDrawerFragment extends Fragment {
                 Log.d("Hedgehog", "Exception in test", e);
                 Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
             }
-            /* No more tests
-            try {
-                Demo.getInstance().showSomething();
-                Toast.makeText(getActivity(), "Test done...", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                Toast.makeText(getActivity(), "Error connecting", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-            */
             return true;
         }
 
