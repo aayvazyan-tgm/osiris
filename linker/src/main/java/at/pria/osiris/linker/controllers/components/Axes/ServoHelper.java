@@ -49,9 +49,9 @@ public class ServoHelper {
         //looping through the given steps with different wait and go times
         for(int i = 0; !interrupt ;i++) {
             if (i == (int) (count * mod)) {
+                logger.info("Stopping ...");
                 try {
                     if (moving == true) {
-                        logger.info("Stopping ...");
                         s.moveToAngle(startPosition);
                         moving = false;
                     }
