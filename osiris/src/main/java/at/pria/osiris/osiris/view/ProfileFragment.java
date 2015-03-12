@@ -16,18 +16,15 @@ import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
-import at.pria.osiris.osiris.controllers.ControllerFactory;
-import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.orm.DBQuery;
 import at.pria.osiris.osiris.orm.ProfileORM;
+import at.pria.osiris.osiris.util.Storeage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.pria.osiris.osiris.util.Storeage;
 import com.software.shell.fab.*;
-import org.apache.log4j.chainsaw.Main;
 
 /**
  * A fragment which displays all the profiles from the database.
@@ -269,46 +266,25 @@ public class ProfileFragment extends Fragment {
                     Log.d(TAG, "SQLException in onItemClick", e);
                 }
 
-                Log.d(TAG, "Controller Type: " + ControllerType.valueOf(po.controller_type));
-
                 // Not Tested -----
 
                 // Hedgehog Controller
-                if(po.getController_type().equals(ControllerType.Hedgehog.toString())) {
-                    robotController = ControllerFactory.getController(ControllerType.Hedgehog);
-                    try {
-                        robotController.getSetup().setup(robotController.getRobotArm());
-
-                        Storeage storeage= Storeage.getInstance();
-                        storeage.setRobotController(robotController);
-                    } catch (ConnectionNotEstablishedException e) {
-                        e.printStackTrace(); // No exception will be thrown
-                        Log.d(TAG, "Not connected Exception", e);
-                        Toast.makeText(activity.getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // Botball Controller
-                } else if(po.getController_type().equals(ControllerType.Botball.toString())) {
-
-                        robotController= ControllerFactory.getController(ControllerType.Botball);
-                    try {
-                        robotController.getSetup().setup(robotController.getRobotArm());
-
-                        Storeage storeage= Storeage.getInstance();
-                        storeage.setRobotController(robotController);
-                    } catch (ConnectionNotEstablishedException e) {
-                        Log.d(TAG, "Not connected Exception", e);
-                    }
-
-                    Toast.makeText(activity.getBaseContext(), "Controller is Botball", Toast.LENGTH_SHORT).show();
+                try {
+                    robotController.getSetup().setup(robotController.getRobotArm());
+                    Storeage storeage= Storeage.getInstance();
+                    storeage.setRobotController(robotController);
+                } catch (ConnectionNotEstablishedException e) {
+                    e.printStackTrace(); // No exception will be thrown
+                    Log.d(TAG, "Not connected Exception", e);
+                    Toast.makeText(activity.getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
                 }
+            }
 
                 // Get the id from this row in the database
                 //String selected_id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
                 //Toast.makeText(activity.getBaseContext(),
                 //        selected_id,
                 //        Toast.LENGTH_SHORT).show();
-            }
         });
 
     }
