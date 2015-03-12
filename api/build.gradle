@@ -6,7 +6,7 @@ targetCompatibility = 1.6
 repositories {
     mavenCentral()
 }
-
+//This makes shure that the included libraries are also included in the jar, so that they can be used by other subprojects
 jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
