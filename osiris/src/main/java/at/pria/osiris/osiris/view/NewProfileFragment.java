@@ -15,10 +15,8 @@ import api.Axis;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.Controller;
-import at.pria.osiris.osiris.controllers.ControllerType;
 import at.pria.osiris.osiris.orm.DBQuery;
 import at.pria.osiris.osiris.orm.ProfileORM;
-import at.pria.osiris.osiris.util.EnumUtil;
 
 import java.sql.SQLException;
 
@@ -34,7 +32,6 @@ public class NewProfileFragment extends Fragment {
 
     private EditText hostname, port;
     private String selectedItem;
-    private ControllerType controllerType;
     private static ProfileORM profile;
     private Integer id;
 
@@ -64,22 +61,22 @@ public class NewProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_new_profile, container, false);
 
         Axis.values();
-        final Spinner typeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(ControllerType.class));
-        typeSpinner.setAdapter(spinnerArrayAdapter);
-
-        // setting the listener to the spinner
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedItem = (String) adapterView.getItemAtPosition(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //final Spinner typeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
+        //ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(ControllerType.class));
+        //typeSpinner.setAdapter(spinnerArrayAdapter);
+        //
+        //// setting the listener to the spinner
+        //typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //    @Override
+        //    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        //        selectedItem = (String) adapterView.getItemAtPosition(i);
+        //    }
+        //
+        //    @Override
+        //    public void onNothingSelected(AdapterView<?> adapterView) {
+        //        Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
+        //    }
+        //});
 
         hostname= (EditText) rootView.findViewById(R.id.new_profile_hostname_edit_text);
         port= (EditText) rootView.findViewById(R.id.new_profile_port_edit_text);
@@ -98,23 +95,23 @@ public class NewProfileFragment extends Fragment {
 
                 // TODO check the input, ip - address, port
 
-                if(selectedItem.equals(ControllerType.Botball.toString())) {
-                    controllerType= ControllerType.Botball;
-                }
-                if(selectedItem.equals(ControllerType.Hedgehog.toString())) {
-                    controllerType= ControllerType.Hedgehog;
-                }
+                //if(selectedItem.equals(ControllerType.Botball.toString())) {
+                //    controllerType= ControllerType.Botball;
+                //}
+                //if(selectedItem.equals(ControllerType.Hedgehog.toString())) {
+                //    controllerType= ControllerType.Hedgehog;
+                //}
 
                 final Activity activity = getActivity();
 
                 // check if edit or new
                 if(profile==null) { // create a new profile
                     Log.d("Osiris", "New Profile");
-                    ProfileORM porm= new ProfileORM(0, hostname.getText().toString(), Integer.valueOf(port.getText().toString()), controllerType.name() );
+                    ProfileORM porm= new ProfileORM(0, hostname.getText().toString(), Integer.valueOf(port.getText().toString()));
                     DBQuery.insertProfileItem(activity, porm);
 
                 }else { // update the profile
-                    ProfileORM porm= new ProfileORM(id, hostname.getText().toString(),Integer.valueOf(port.getText().toString()), controllerType.name());
+                    ProfileORM porm= new ProfileORM(id, hostname.getText().toString(),Integer.valueOf(port.getText().toString()));
                     try {
                         DBQuery.updateProfileItem(activity, porm);
                     } catch (SQLException e) {
@@ -135,8 +132,8 @@ public class NewProfileFragment extends Fragment {
 
         // if profile != null, the user has pressed the update button
         if(profile != null) {
-            int spinnerPostion = spinnerArrayAdapter.getPosition(profile.getController_type());
-            typeSpinner.setSelection(spinnerPostion);
+            //int spinnerPostion = spinnerArrayAdapter.getPosition(profile.getController_type());
+            //typeSpinner.setSelection(spinnerPostion);
 
             hostname.setText(profile.getHostname(), TextView.BufferType.EDITABLE);
             port.setText(String.valueOf(profile.getPort()), TextView.BufferType.EDITABLE);

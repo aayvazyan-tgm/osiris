@@ -1,7 +1,5 @@
 package at.pria.osiris.osiris.view.elements;
 
-import at.pria.osiris.osiris.controllers.ControllerType;
-
 /**
  * Created by helmuthbrunner on 10/02/15.
  */
@@ -10,7 +8,6 @@ public class Profile {
     private int id;
     private String host;
     private int port;
-    private ControllerType type;
 
     /**
      * Default constructor never use this
@@ -23,13 +20,11 @@ public class Profile {
      * @param id the unique id for this object
      * @param host the hostname e.q. to 192.168.0.10 or localhost
      * @param port the port
-     * @param type the controller type, Hedgehog or Botball
      */
-    public Profile(int id, String host, int port, ControllerType type) {
+    public Profile(int id, String host, int port) {
         this.id= id;
         this.host= host;
         this.port= port;
-        this.type= type;
     }
 
     /**
@@ -40,8 +35,7 @@ public class Profile {
     public String toString() {
         return  "Id: " + this.id +
                 "\nHost: " + this.host +
-                "\nPort: " + this.port +
-                "\nType: " + this.type.toString();
+                "\nPort: " + this.port;
     }
 
     /*
@@ -70,13 +64,5 @@ public class Profile {
 
     public void setPort(int port) {
         this.port = port;
-    }
-
-    public ControllerType getType() {
-        return type;
-    }
-
-    public void setType(ControllerType type) {
-        this.type = type;
     }
 }

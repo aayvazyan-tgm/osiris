@@ -1,6 +1,9 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -57,6 +60,15 @@ public class ControllerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
+        //
+        //final Activity activity= getActivity();
+        //
+        //WifiManager wifi = (WifiManager) activity.getSystemService(activity.WIFI_SERVICE);
+        //if (wifi.isWifiEnabled()){
+        //    Log.d("Osisir", "Wifi is enabled");
+        //} else {
+        //    wifi.setWifiEnabled(true);
+        //}
 
         //KeyListeners
         View inputListener = rootView.findViewById(R.id.input_fetcher);

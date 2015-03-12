@@ -2,7 +2,7 @@ package at.pria.osiris.osiris.orm;
 
 import android.content.Context;
 import android.database.Cursor;
-import at.pria.osiris.osiris.view.elements.Profile;
+
 import com.j256.ormlite.android.AndroidDatabaseResults;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.CloseableIterator;
@@ -83,7 +83,6 @@ public class DBQuery {
         ub.where().eq("_id", String.valueOf(updateItem.getId()));
         ub.updateColumnValue("hostname", updateItem.getHostname());
         ub.updateColumnValue("port", String.valueOf(updateItem.getPort()));
-        ub.updateColumnValue("controller_type", updateItem.getController_type());
 
         ub.update();
 
