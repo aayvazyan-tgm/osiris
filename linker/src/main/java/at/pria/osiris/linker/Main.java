@@ -42,55 +42,6 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            try {
-                logger.info("Moving to 0");
-                robotArm.getAxis(2).moveToAngle(3);
-                Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(2).moveToAngle(60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                logger.info("Moving to 0");
-                robotArm.getAxis(3).moveToAngle(3);
-                Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(3).moveToAngle(60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                logger.info("Moving to 0");
-                robotArm.getAxis(4).moveToAngle(3);
-                Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(4).moveToAngle(60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                logger.info("Moving to 0");
-                robotArm.getAxis(5).moveToAngle(3);
-                Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(5).moveToAngle(60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                logger.info("Moving to 0");
-                robotArm.getAxis(6).moveToAngle(3);
-                Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(6).moveToAngle(60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         } else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
