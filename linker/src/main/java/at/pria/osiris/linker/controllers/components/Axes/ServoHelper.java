@@ -49,7 +49,7 @@ public class ServoHelper {
         //looping through the given steps with different wait and go times
         for(int i = 0; !interrupt ;i++) {
             if (i == (int) (count * mod)) {
-                logger.info("Stopping ...");
+                //logger.info("Stopping ...");
                 try {
                     if (moving == true) {
                         s.moveToAngle(startPosition);
@@ -59,10 +59,6 @@ public class ServoHelper {
                     //It stops
                     count++;
                 }
-                //Not useable catch, because it cant see the possibility of an invalid Argument
-                //catch (InvalidArgumentException iae) {
-                //    iae.printStackTrace();
-                //}
                 catch (InterruptedException ie) {
                     ie.printStackTrace();
                 }
@@ -74,7 +70,7 @@ public class ServoHelper {
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition < s.getMaximumAngle() - 3) {
-                        logger.info("Next Position: "+(startPosition + 1));
+                        //logger.info("Next Position: "+(startPosition + 1));
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
@@ -84,7 +80,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 1) {
-                        logger.info("Next Position: "+(startPosition - 1));
+                        //logger.info("Next Position: "+(startPosition - 1));
                         s.moveToAngle(startPosition - 3);
                         startPosition -= 1;
                         moving = true;
