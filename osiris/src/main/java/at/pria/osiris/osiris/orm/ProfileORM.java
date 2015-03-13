@@ -18,33 +18,21 @@ public class ProfileORM {
     public String hostname= "";
     @DatabaseField
     public Integer port;
-    @DatabaseField
-    public String controller_type;
 
-    public ProfileORM(Integer id, String hostname, Integer port, String controller_type) {
+    public ProfileORM(Integer id, String hostname, Integer port) {
         this._ID= id;
         this.hostname= hostname;
         this.port= port;
-        this.controller_type= controller_type;
     }
 
     @Override
     public  String toString() {
         return  "id: " + _ID +
                 "\nhostname: " + hostname +
-                "\nport: " + port +
-                "\ncontroller_type: " + controller_type;
+                "\nport: " + port;
     }
 
     public ProfileORM() {
-    }
-
-    public String getController_type() {
-        return controller_type;
-    }
-
-    public void setController_type(String controller_type) {
-        this.controller_type = controller_type;
     }
 
     public String getHostname() {

@@ -17,11 +17,9 @@ import android.view.*;
 import android.widget.Toast;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
-import at.pria.osiris.osiris.controllers.ControllerFactory;
-import at.pria.osiris.osiris.controllers.ControllerType;
+import at.pria.osiris.osiris.controllers.hedgehog.HedgehogController;
 import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.*;
-import at.pria.osiris.osiris.view.JoyStickFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -40,18 +38,12 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        robotController = ControllerFactory.getController(ControllerType.Hedgehog);
-        try {
-            robotController.getSetup().setup(robotController.getRobotArm());
-            Storeage storeage= Storeage.getInstance();
-            storeage.setRobotController(robotController);
-        } catch (ConnectionNotEstablishedException e) {
-            e.printStackTrace();
-            Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Start by using a HedgehogController
+        robotController = new HedgehogController();
+        setUpController(robotController);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -67,13 +59,25 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void setUpController(Controller controller) {
+        try {
+            controller.getSetup().setup(controller.getRobotArm());
+            Storeage storeage = Storeage.getInstance();
+            storeage.setRobotController(controller);
+            this.robotController = controller;
+        } catch (ConnectionNotEstablishedException e) {
+            e.printStackTrace();
+            Toast.makeText(getBaseContext(), "Connection not Established", Toast.LENGTH_LONG).show();
+        }
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Storeage storeage= Storeage.getInstance();
-        robotController= storeage.getRobotController();
+        Storeage storeage = Storeage.getInstance();
+        robotController = storeage.getRobotController();
 
         if (position + 1 == 1) {        // controller
             fragmentManager.beginTransaction()
@@ -89,7 +93,7 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1, robotController.getRobotArm()))
                         .commit();
             } catch (ConnectionNotEstablishedException e) {
-                Toast.makeText(getBaseContext(),"Connection not yet Established",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         } else if (position + 1 == 4) { // draw line
@@ -110,7 +114,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         }
     }
-    
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -126,13 +130,13 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.drawline);
                 break;
             case 5:
-                mTitle= getString(R.string.profiles);
+                mTitle = getString(R.string.profiles);
                 break;
             case 6:
-                mTitle= getString(R.string.joystick);
+                mTitle = getString(R.string.joystick);
                 break;
             case 7:
-                mTitle= getString(R.string.settings);
+                mTitle = getString(R.string.settings);
                 break;
         }
     }
@@ -181,7 +185,7 @@ public class MainActivity extends ActionBarActivity
             // jump to the wifi selction screen
             this.startActivity(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
         }
-        if(id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.
                     beginTransaction()
