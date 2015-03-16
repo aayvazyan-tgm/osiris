@@ -45,7 +45,7 @@ public class Main {
         } else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(0).moveToAngle(3);
+            robotArm.getAxis(0).moveToAngle(6);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
