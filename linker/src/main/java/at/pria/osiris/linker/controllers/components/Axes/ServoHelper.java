@@ -19,8 +19,10 @@ public class ServoHelper implements Runnable{
     private int steps;
     private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
-    public ServoHelper() {
-
+    public ServoHelper(Servo s, int power, int steps) {
+        this.s = s;
+        this.power = power;
+        this.steps = steps;
     }
 
     /**
