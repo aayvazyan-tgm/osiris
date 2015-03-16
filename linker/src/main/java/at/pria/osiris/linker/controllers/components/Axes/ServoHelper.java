@@ -19,6 +19,13 @@ public class ServoHelper implements Runnable{
     private int steps;
     private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
+    /**
+     * A Constructor which allows the User to define the servo and the power in which said servo should spin.
+     *
+     * @param s The Servo that is supposed to spin
+     * @param power The power in which the servo should spin
+     * @param steps A modifier which decides how fast the servo will run
+     */
     public ServoHelper(Servo s, int power, int steps) {
         this.s = s;
         this.power = power;
@@ -100,10 +107,16 @@ public class ServoHelper implements Runnable{
         }
     }
 
+    /**
+     * A Method which stops the Thread by stopping the PWM method
+     */
     public void stop(){
         interrupt = true;
     }
 
+    /**
+     * A Method which starts the pwm algorithm
+     */
     @Override
     public void run() {
         interrupt = false;
