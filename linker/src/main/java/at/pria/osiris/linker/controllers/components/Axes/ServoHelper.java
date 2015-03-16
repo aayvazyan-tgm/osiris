@@ -96,9 +96,9 @@ public class ServoHelper implements Runnable{
                         break;
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
-                    if (startPosition > 1) {
+                    if (startPosition > 3) {
                         //logger.info("Next Position: "+(startPosition - 1));
-                        s.moveToAngle(startPosition - 3);
+                        s.moveToAngle(startPosition - 1);
                         startPosition -= 1;
                         moving = true;
                         try {
