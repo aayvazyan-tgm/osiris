@@ -15,7 +15,6 @@ public class ServoHelper {
 
     private boolean interrupt = false;
     private Servo s;
-    private int power;
     private int steps;
     private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
@@ -34,7 +33,7 @@ public class ServoHelper {
         logger.info("moveAtPower: "+power);
         this.interrupt = true;
         if (power == 0) return;
-        final int powerFinal = this.power;
+        final int powerFinal = power;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -146,24 +145,6 @@ public class ServoHelper {
      */
     public void setServo(Servo s) {
         this.s = s;
-    }
-
-    /**
-     * A Method which returns the currently configured power
-     *
-     * @return The current Power of the Servo
-     */
-    public int getPower() {
-        return power;
-    }
-
-    /**
-     * A Method which changes the current power of the servo
-     *
-     * @param power The power which the servo should now use
-     */
-    public void setPower(int power) {
-        this.power = power;
     }
 
     /**
