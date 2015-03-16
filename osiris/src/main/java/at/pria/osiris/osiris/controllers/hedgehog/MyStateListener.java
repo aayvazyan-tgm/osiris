@@ -6,12 +6,18 @@ import org.andrix.low.HardwareController;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Ari Ayvazyan
  * @version 03.Dec.14
  */
 public class MyStateListener implements StateListener{
 
+    private Map<InetAddress, HardwareController> nearControllers = new HashMap<InetAddress, HardwareController>();
     private ConnectionState connectionState = ConnectionState.DISCONNECTED;
     @Override
     public void connectionStateChange(ConnectionState connectionState, HardwareController hardwareController) {
@@ -30,9 +36,23 @@ public class MyStateListener implements StateListener{
     }
 
     @Override
-    public void scanUpdate(HardwareController hardwareController) {
-        if(connectionState == ConnectionState.DISCONNECTED)
-        hardwareController.connect();
+    public void scanUpdate(HardwareController hwc) {
+        if (!nearControllers.containsKey(hwc.address)) {
+            nearControllers.put(hwc.address, hwc);
+            System.out.println("received new controller");
+            if (!hwc.connect())
+                return;
+            try {
+                if (!hwc.authenticate(""));
+            } catch (IOException ex) {
+                System.out.println(ex);
+//                loger.warn("Default authenticate against controller failed!", ex);
+            }
+        } else {
+            nearControllers.get(hwc.address).lastUpdate = System.currentTimeMillis();
+        }
+//        if(connectionState == ConnectionState.DISCONNECTED)
+//        hardwareController.connect();
     }
 
     @Override
