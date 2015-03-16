@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
     private Controller robotController;
+    private boolean setupDone=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         //Start by using a HedgehogController
-        robotController = new HedgehogController();
-        setUpController(robotController);
+        setUpController();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -59,26 +59,32 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    public void setUpController(Controller controller) {
-        try {
-            controller.getSetup().setup(controller.getRobotArm());
-            Storeage storeage = Storeage.getInstance();
-            storeage.setRobotController(controller);
-            this.robotController = controller;
-        } catch (ConnectionNotEstablishedException e) {
-            e.printStackTrace();
-            Toast.makeText(getBaseContext(), "Connection not Established", Toast.LENGTH_LONG).show();
+    public synchronized void setUpController() {
+        if(setupDone==false) {
+            try {
+                Controller controller = new HedgehogController();
+                this.setupDone = true;
+                controller.getSetup().setup(controller.getRobotArm());
+                Storeage storeage = Storeage.getInstance();
+                storeage.setRobotController(controller);
+                this.robotController = controller;
+            } catch (ConnectionNotEstablishedException e) {
+                e.printStackTrace();
+                Toast.makeText(getBaseContext(), "Connection not Established", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        setUpController();
         // update the main content by replacing fragments
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Storeage storeage = Storeage.getInstance();
         robotController = storeage.getRobotController();
-
+        System.err.println("OSIRIS SETUP DONE:" + setupDone);
         if (position + 1 == 1) {        // controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
