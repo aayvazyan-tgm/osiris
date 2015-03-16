@@ -64,7 +64,7 @@ public class ServoHelper implements Runnable{
             if (i == (int) (count * mod)) {
                 //logger.info("Stopping ...");
                 try {
-                    if (moving == true) {
+                    if (moving) {
                         s.moveToAngle(startPosition);
                         moving = false;
                     }
