@@ -9,11 +9,18 @@ import org.apache.log4j.Logger;
  * the Servo.
  *
  * @author Wolfgang Mair
- * @version 11.03.2015
+ * @version 16.03.2015
  */
-public class ServoHelper {
+public class ServoHelper implements Runnable{
+
+    private boolean interrupt = false;
+    private Servo s;
+    private int power;
+    private int steps;
+    private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
     public ServoHelper() {
+
     }
 
     /**
@@ -26,13 +33,12 @@ public class ServoHelper {
      * @param power The power it should use
      * @param steps The amount of steps
      */
-    public static void pwm(Servo s, int power, int steps) {
-        Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
+    private void pwm(Servo s, int power, int steps) {
+
         //Defining important Variables
         int maxPower = 100;
         int count = 1;
         boolean pos = true;
-        boolean interrupt = false;
         boolean moving = false;
         int startPosition = s.getPositionInDegrees();
 
@@ -90,5 +96,15 @@ public class ServoHelper {
                 }
             }
         }
+    }
+
+    public void stop(){
+        interrupt = true;
+    }
+
+    @Override
+    public void run() {
+        interrupt = false;
+        this.pwm(this.s,this.power,this.steps);
     }
 }
