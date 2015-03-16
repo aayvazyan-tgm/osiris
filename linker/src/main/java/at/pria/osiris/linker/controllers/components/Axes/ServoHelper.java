@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
  * @author Wolfgang Mair
  * @version 16.03.2015
  */
-public class ServoHelper implements Runnable{
+public class ServoHelper {
 
     private boolean interrupt = false;
     private Servo s;
@@ -23,24 +23,32 @@ public class ServoHelper implements Runnable{
      * A Constructor which allows the User to define the servo and the power in which said servo should spin.
      *
      * @param s The Servo that is supposed to spin
-     * @param power The power in which the servo should spin
      * @param steps A modifier which decides how fast the servo will run
      */
-    public ServoHelper(Servo s, int power, int steps) {
+    public ServoHelper(Servo s, int steps) {
         this.s = s;
-        this.power = power;
         this.steps = steps;
+    }
+    public void moveAtPower(int power){
+        this.interrupt=true;
+        if(power==0)return;
+        final int powerFinal = this.power;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pwm(powerFinal);
+            }
+        }).start();
     }
 
     /**
      * A method which changes the speed of the specified Servo.
      * The more power it gets the more steps it actually moves.
      *
-     * @param s The Servo which should move in the end
      * @param power The power(speed) it should use
-     * @param steps A modifier which decides how fast the servo will run
      */
-    private void pwm(Servo s, int power, int steps) {
+    private synchronized void pwm(int power) {
+        this.interrupt=false;
         //Defining important Variables
         int maxPower = 100;
         int count = 1;
@@ -119,17 +127,6 @@ public class ServoHelper implements Runnable{
      */
     public void stop(){
         interrupt = true;
-    }
-
-    /**
-     * A Method which starts the pwm algorithm
-     */
-    @Override
-    public void run() {
-        if(power != 0) {
-            interrupt = false;
-            this.pwm(this.s, this.power, this.steps);
-        }
     }
 
     /**

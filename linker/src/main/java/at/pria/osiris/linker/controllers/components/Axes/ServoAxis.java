@@ -8,18 +8,20 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
  */
 public class ServoAxis extends Axis {
 
+    private final ServoHelper servoHelper;
     private Servo servo;
 
     public ServoAxis(String axisName, Servo servo) {
         super(axisName);
         this.servo = servo;
+        this.servoHelper=new ServoHelper(this.servo,1);
     }
 
     /**
      * @see Axis
      */
     public synchronized void moveAtPower(int power) {
-        new Thread(new ServoHelper(this.servo,power,1)).start();
+        servoHelper.moveAtPower(power);
     }
 
     /**
