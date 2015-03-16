@@ -33,14 +33,12 @@ public class ServoHelper implements Runnable{
     }
 
     /**
-     * A method which changes the speed of the specified Servo
-     * It uses the time it takes the servo to move 1 degree and splits
-     * this time into 100 steps.
+     * A method which changes the speed of the specified Servo.
      * The more power it gets the more steps it actually moves.
      *
-     * @param s     The Servo which should move in the end
-     * @param power The power it should use
-     * @param steps The amount of steps
+     * @param s The Servo which should move in the end
+     * @param power The power(speed) it should use
+     * @param steps A modifier which decides how fast the servo will run
      */
     private void pwm(Servo s, int power, int steps) {
 
@@ -89,6 +87,11 @@ public class ServoHelper implements Runnable{
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
+                        try {
+                            Thread.sleep(s.getTimePerDegreeInMilli()*steps);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else
                         break;
@@ -99,6 +102,11 @@ public class ServoHelper implements Runnable{
                         s.moveToAngle(startPosition - 3);
                         startPosition -= 1;
                         moving = true;
+                        try {
+                            Thread.sleep(s.getTimePerDegreeInMilli()*steps);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                     else
                         break;
