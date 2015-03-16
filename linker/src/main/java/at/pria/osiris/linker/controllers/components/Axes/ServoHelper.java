@@ -41,7 +41,6 @@ public class ServoHelper implements Runnable{
      * @param steps A modifier which decides how fast the servo will run
      */
     private void pwm(Servo s, int power, int steps) {
-
         //Defining important Variables
         int maxPower = 100;
         int count = 1;
@@ -127,7 +126,9 @@ public class ServoHelper implements Runnable{
      */
     @Override
     public void run() {
-        interrupt = false;
-        this.pwm(this.s,this.power,this.steps);
+        if(power != 0) {
+            interrupt = false;
+            this.pwm(this.s, this.power, this.steps);
+        }
     }
 }
