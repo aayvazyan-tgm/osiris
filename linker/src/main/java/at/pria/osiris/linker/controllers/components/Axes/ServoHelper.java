@@ -131,4 +131,58 @@ public class ServoHelper implements Runnable{
             this.pwm(this.s, this.power, this.steps);
         }
     }
+
+    /**
+     * A Method which returns the Servo currently selected in the Thread
+     *
+     * @return   The currently selected Servo
+     */
+    public Servo getServo() {
+        return s;
+    }
+
+    /**
+     * A Method which changes the currently selected Servo in the Thread
+     *
+     * @param s The new Servo which should be selected
+     */
+    public void setServo(Servo s) {
+        this.s = s;
+    }
+
+    /**
+     * A Method which returns the currently configured power
+     *
+     * @return   The current Power of the Servo
+     */
+    public int getPower() {
+        return power;
+    }
+
+    /**
+     * A Method which changes the current power of the servo
+     *
+     * @param power The power which the servo should now use
+     */
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    /**
+     * A Method which returns the modifier of the speed
+     *
+     * @return   The speed modifier
+     */
+    public int getSteps() {
+        return steps;
+    }
+
+    /**
+     * A Method which changes the modifier of the speed
+     *
+     * @param steps The new speed modifier
+     */
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
 }
