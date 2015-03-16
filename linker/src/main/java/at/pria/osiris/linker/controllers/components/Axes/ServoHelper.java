@@ -22,16 +22,18 @@ public class ServoHelper {
     /**
      * A Constructor which allows the User to define the servo and the power in which said servo should spin.
      *
-     * @param s The Servo that is supposed to spin
+     * @param s     The Servo that is supposed to spin
      * @param steps A modifier which decides how fast the servo will run
      */
     public ServoHelper(Servo s, int steps) {
         this.s = s;
         this.steps = steps;
     }
-    public void moveAtPower(int power){
-        this.interrupt=true;
-        if(power==0)return;
+
+    public void moveAtPower(int power) {
+        logger.info("moveAtPower: "+power);
+        this.interrupt = true;
+        if (power == 0) return;
         final int powerFinal = this.power;
         new Thread(new Runnable() {
             @Override
@@ -48,7 +50,8 @@ public class ServoHelper {
      * @param power The power(speed) it should use
      */
     private synchronized void pwm(int power) {
-        this.interrupt=false;
+        logger.info("starting pwm: "+power);
+        this.interrupt = false;
         //Defining important Variables
         int maxPower = 100;
         int count = 1;
@@ -67,7 +70,7 @@ public class ServoHelper {
         double mod = maxPower / divider;
 
         //looping through the given steps with different wait and go times
-        for(int i = 0; !interrupt ;i++) {
+        for (int i = 0; !interrupt; i++) {
             if (i == (int) (count * mod)) {
                 //logger.info("Stopping ...");
                 try {
@@ -78,8 +81,7 @@ public class ServoHelper {
                     Thread.sleep(s.getTimePerDegreeInMilli());
                     //It stops
                     count++;
-                }
-                catch (InterruptedException ie) {
+                } catch (InterruptedException ie) {
                     ie.printStackTrace();
                 }
 
@@ -95,12 +97,11 @@ public class ServoHelper {
                         startPosition += 1;
                         moving = true;
                         try {
-                            Thread.sleep(s.getTimePerDegreeInMilli()*steps);
+                            Thread.sleep(s.getTimePerDegreeInMilli() * steps);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else
+                    } else
                         break;
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
@@ -110,29 +111,29 @@ public class ServoHelper {
                         startPosition -= 1;
                         moving = true;
                         try {
-                            Thread.sleep(s.getTimePerDegreeInMilli()*steps);
+                            Thread.sleep(s.getTimePerDegreeInMilli() * steps);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else
+                    } else
                         break;
                 }
             }
         }
+        if (interrupt) logger.info("interrupted");
     }
 
     /**
      * A Method which stops the Thread by stopping the PWM method
      */
-    public void stop(){
+    public void stop() {
         interrupt = true;
     }
 
     /**
      * A Method which returns the Servo currently selected in the Thread
      *
-     * @return   The currently selected Servo
+     * @return The currently selected Servo
      */
     public Servo getServo() {
         return s;
@@ -150,7 +151,7 @@ public class ServoHelper {
     /**
      * A Method which returns the currently configured power
      *
-     * @return   The current Power of the Servo
+     * @return The current Power of the Servo
      */
     public int getPower() {
         return power;
@@ -168,7 +169,7 @@ public class ServoHelper {
     /**
      * A Method which returns the modifier of the speed
      *
-     * @return   The speed modifier
+     * @return The speed modifier
      */
     public int getSteps() {
         return steps;
