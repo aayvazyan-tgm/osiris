@@ -6,7 +6,8 @@ import com.google.zxing.Result;
 import com.welcu.android.zxingfragmentlib.BarCodeScannerFragment;
 
 /**
- * Created by joyarzun on 4/8/14.
+ * @author Ari Michael Ayvazyan
+ * @version 29.10.2014
  */
 public class QRReaderFragment extends BarCodeScannerFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
