@@ -187,5 +187,5 @@ dependencies {
     compile 'com.github.shell-software:fab:1.0.5'
 //    compile 'com.google.zxing:core:3.2.0'
     compile project(':api')
-    //compile project(':qrlibrary')
+    compile project(':qrlibrary')
 }

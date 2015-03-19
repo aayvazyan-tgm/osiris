@@ -114,6 +114,10 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, JoyStickFragment.getInstance(position + 1))
                     .commit();
+        } else if (position + 1 == 7) { // QRReader
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, QRReaderFragment.getInstance(position + 1))
+                    .commit();
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -143,6 +147,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 7:
                 mTitle = getString(R.string.settings);
+                break;
+            case 8:
+                mTitle = getString(R.string.QRReader);
                 break;
         }
     }
