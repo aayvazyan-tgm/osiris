@@ -2,6 +2,7 @@ package at.pria.osiris.osiris.view;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import at.pria.osiris.osiris.util.WIFIConnector;
 import com.google.zxing.Result;
 import com.welcu.android.zxingfragmentlib.BarCodeScannerFragment;
 
@@ -37,7 +38,10 @@ public class QRReaderFragment extends BarCodeScannerFragment {
         this.setmCallBack(new IResultCallback() {
             @Override
             public void result(Result lastResult) {
-                Toast.makeText(getActivity(), "Scan: " + lastResult.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Connecting to: " + lastResult.toString(), Toast.LENGTH_SHORT).show();
+                if(WIFIConnector.connectToOpenWifi(lastResult.getText(),getActivity()))
+                    Toast.makeText(getActivity(), "Connected to: " + lastResult.toString(), Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getActivity(), "Could not connect to: " + lastResult.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         //cameraManager.setManualFramingRect(450, 349, 100, 50);
