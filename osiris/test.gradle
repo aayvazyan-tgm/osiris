@@ -1,52 +1,18 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
-    }
-}
-
-apply plugin: 'android-library'
-
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:21.0.3'
-	compile files('libs/zxing-core-2.3.jar')
-	
-}
-
-android {
-    compileSdkVersion highestSdkAvailable(21)
-    buildToolsVersion latestBuildToolsAvailable("21.1.2")
-
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-
-        instrumentTest.setRoot('tests')
-    }
-
-    defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 21
-    }
-}
 //
 // get the installed SDK and build tools version
 // based on: http://www.egeek.me/2013/12/07/gradle-auto-detect-android-sdk-and-build-tools-versions/
 // modified by Ari Ayvazyan
 import org.codehaus.groovy.runtime.StackTraceUtils
+
+project.ext.set("getSDKIfPossible",
+        {preferred ->
+            return highestSdkAvailable(preferred)
+        });
+
+project.ext.set("getHighestAvailableTools",
+        {preferred ->
+            return latestBuildToolsAvailable(preferred)
+        });
 
 public String androidSDKDir() {
     def sdkDir = android.getSdkDirectory().toString()
