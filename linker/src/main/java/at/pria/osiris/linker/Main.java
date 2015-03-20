@@ -45,14 +45,14 @@ public class Main {
         } else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(0).moveToAngle(6);
+            robotArm.getAxis(1).moveToAngle(6);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             logger.info("All Servos set ...");
-            robotArm.getAxis(0).moveAtPower(Integer.parseInt(args[0]));
+            robotArm.getAxis(1).moveAtPower(Integer.parseInt(args[0]));
             logger.info("done");
         }
     }
