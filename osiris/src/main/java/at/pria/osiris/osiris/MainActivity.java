@@ -27,7 +27,7 @@ import at.pria.osiris.osiris.view.*;
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private final String TAG= "MAIN";
+    private final String TAG= "MAIN-Osiris";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
     private Controller robotController;
     private boolean setupDone=false;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +94,12 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
                     .commit();
+            mTitle= getString(R.string.control);
         } else if (position + 1 == 2) { // inverse Kinematics
             fragmentManager.beginTransaction()
                     .replace(R.id.container, InversKinematicsFragment.getInstance(position + 1, robotController))
                     .commit();
+            mTitle= getString(R.string.inversKinecs);
         } else if (position + 1 == 3) { // sensor Values
             try {
                 fragmentManager.beginTransaction()
@@ -106,27 +109,34 @@ public class MainActivity extends ActionBarActivity
                 Toast.makeText(getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            mTitle= getString(R.string.sensor_values);
         } else if (position + 1 == 4) { // draw line
             fragmentManager.beginTransaction()
                     .replace(R.id.container, DrawFragment.getInstance(position + 1))
                     .commit();
+            mTitle= getString(R.string.drawline);
         } else if (position + 1 == 5) { // profiles
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ProfileFragment.getInstance(position + 1, robotController))
                     .commit();
+            mTitle= getString(R.string.profiles);
         } else if (position + 1 == 6) { // joystick
             fragmentManager.beginTransaction()
                     .replace(R.id.container, JoyStickFragment.getInstance(position + 1))
                     .commit();
+            mTitle= getString(R.string.joystick);
         } else if (position + 1 == 7) { // QRReader
             fragmentManager.beginTransaction()
                     .replace(R.id.container, QRReaderFragment.getInstance(position + 1))
                     .commit();
+            mTitle= getString(R.string.QRReader);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                     .commit();
         }
+        if(actionBar!=null)
+            actionBar.setTitle(mTitle);
     }
 
     public void onSectionAttached(int number) {
@@ -162,7 +172,7 @@ public class MainActivity extends ActionBarActivity
         Resources res = getResources();
         int color= res.getColor(R.color.background_menu);
 
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
