@@ -4,14 +4,18 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
-public class Kinematics3D implements Kinematic {
+/**
+ * @author Adrian Bergler
+ * @version 2015-03-23
+ */
+public class ThreeAxisKinematics implements Kinematic {
 
-    private static Logger logger = Logger.getLogger(Kinematics3D.class);
+    private static Logger logger = Logger.getLogger(ThreeAxisKinematics.class);
     private double a, b, beta, gamma, delta, eta, c, r, phi, x, y, z;
     private double[] fragmentLengths;
     private double[][] padding;
 
-    public Kinematics3D(double x, double y, double z, double[] fragmentLengths, double[][] padding) {
+    public ThreeAxisKinematics(double x, double y, double z, double[] fragmentLengths, double[][] padding) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -20,21 +24,14 @@ public class Kinematics3D implements Kinematic {
             this.a = fragmentLengths[0];
             this.b = fragmentLengths[1];
         } else {
-            throw new RuntimeException("Kinematics3D, das FragmentLengths-Array darf nicht leer sein!");
+            throw new RuntimeException("ThreeAxisKinematics, das FragmentLengths-Array darf nicht leer sein!");
         }
         if (padding.length != 0) {
             this.padding = padding;
         } else {
-            throw new RuntimeException("Kinematics3D, das Padding-Array darf nicht leer sein!");
+            throw new RuntimeException("ThreeAxisKinematics, das Padding-Array darf nicht leer sein!");
         }
         logger.info("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
-    }
-
-    /**
-     * @see at.pria.osiris.linker.kinematics.Kinematic#moveToConfiguredPosition()
-     */
-    public void moveToConfiguredPosition() {
-        //TODO use the solution list
     }
 
     /**
@@ -42,7 +39,7 @@ public class Kinematics3D implements Kinematic {
      *
      * @return solution, ArrayList with Double values(Base, AxisOne, AxisTwo)
      */
-    private ArrayList<Double> calculateValues() {
+    public ArrayList<Double> calculateValues() {
 
         this.r = Math.sqrt(x * x + y * y);
         this.phi = Math.toDegrees(Math.asin(y / r));
