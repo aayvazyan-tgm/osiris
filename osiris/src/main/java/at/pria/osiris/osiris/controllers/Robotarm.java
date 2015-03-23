@@ -1,4 +1,6 @@
-package api;
+package at.pria.osiris.osiris.controllers;
+
+import api.Axis;
 
 import java.io.Serializable;
 
