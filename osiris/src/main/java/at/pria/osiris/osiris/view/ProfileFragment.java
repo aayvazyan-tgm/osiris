@@ -2,8 +2,10 @@ package at.pria.osiris.osiris.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -96,7 +98,11 @@ public class ProfileFragment extends Fragment {
         actionButton = (ActionButton) rootView.findViewById(R.id.action_button);
         actionButton.setImageResource(R.drawable.fab_plus_icon);
         //actionButton.setButtonColor(Color.RED); // red button
-        actionButton.setButtonColor(Color.parseColor(getString(R.string.color_0))); // yellow button
+
+
+        Resources res = getResources();
+        int color= res.getColor(R.color.background_menu);
+        actionButton.setButtonColor(color); // button color
 
         actionButton.setShadowXOffset(3.5f);
         actionButton.setShadowYOffset(3.5f);

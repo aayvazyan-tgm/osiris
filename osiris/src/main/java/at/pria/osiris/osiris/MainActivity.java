@@ -3,6 +3,7 @@ package at.pria.osiris.osiris;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiManager;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
@@ -24,6 +26,8 @@ import at.pria.osiris.osiris.view.*;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private final String TAG= "MAIN";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -84,7 +88,7 @@ public class MainActivity extends ActionBarActivity
 
         Storeage storeage = Storeage.getInstance();
         robotController = storeage.getRobotController();
-        System.err.println("OSIRIS SETUP DONE:" + setupDone);
+        Log.d(TAG, "OSIRIS SETUP DONE:" + setupDone);
         if (position + 1 == 1) {        // controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
@@ -155,23 +159,28 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void restoreActionBar() {
+        Resources res = getResources();
+        int color= res.getColor(R.color.background_menu);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFC107")));
+        actionBar.setBackgroundDrawable(new ColorDrawable(color));
 
-        this.setStatusBarColor(getString(R.string.color_0));
+        int status_color= res.getColor(R.color.statusbar_color);
+
+        this.setStatusBarColor(status_color);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor(String color) {
+    public void setStatusBarColor(int color) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.parseColor(color));
+            window.setStatusBarColor(color);
         }
     }
 
