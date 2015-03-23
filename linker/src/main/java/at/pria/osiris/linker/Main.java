@@ -48,7 +48,7 @@ public class Main {
                 logger.info("Start debugger");
                 try {
                     logger.info("Moving to 0");
-                    robotArm.getAxis(1).moveToAngle(2);
+                    robotArm.getAxis(0).moveToAngle(2);
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -58,10 +58,10 @@ public class Main {
             logger.info("Start debugger");
             try {
                 logger.info("Moving to 0");
-                robotArm.getAxis(1).moveToAngle(2);
+                robotArm.getAxis(0).moveToAngle(2);
                 Thread.sleep(2000);
                 logger.info("Moving to: " + args[1]);
-                robotArm.getAxis(1).moveToAngle(Integer.parseInt(args[1]));
+                robotArm.getAxis(0).moveToAngle(Integer.parseInt(args[1]));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -69,14 +69,14 @@ public class Main {
         else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(1).moveToAngle(2);
+            robotArm.getAxis(0).moveToAngle(2);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             logger.info("All Servos set ...");
-            robotArm.getAxis(1).moveAtPower(Integer.parseInt(args[0]));
+            robotArm.getAxis(0).moveAtPower(Integer.parseInt(args[0]));
             logger.info("done");
         }
     }
