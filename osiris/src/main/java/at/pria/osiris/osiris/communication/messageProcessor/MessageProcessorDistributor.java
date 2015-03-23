@@ -1,7 +1,6 @@
 package at.pria.osiris.osiris.communication.messageProcessor;
 
 import Util.Serializer;
-import api.Robotarm;
 
 import java.io.IOException;
 import java.util.LinkedList;

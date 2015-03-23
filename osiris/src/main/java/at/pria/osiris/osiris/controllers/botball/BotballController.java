@@ -1,6 +1,6 @@
 package at.pria.osiris.osiris.controllers.botball;
 
-import api.Robotarm;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerSetup;
@@ -23,9 +23,9 @@ public class BotballController implements Controller {
     }
 
     @Override
-    public Robotarm getRobotArm() throws ConnectionNotEstablishedException {
+    public RobotArm getRobotArm() throws ConnectionNotEstablishedException {
         try {
-            return BotballRemoteRobotarm.getInstance();
+            return BotballRemoteRobotArm.getInstance();
         } catch (NoSetupException e) {
             throw new ConnectionNotEstablishedException(e);
         }

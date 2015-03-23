@@ -1,9 +1,6 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,7 +8,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import api.Axis;
-import api.Robotarm;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
@@ -75,9 +72,9 @@ public class ControllerFragment extends Fragment {
         inputListener.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Robotarm remoteRobotarm;
+                RobotArm remoteRobotArm;
                 try {
-                    remoteRobotarm = robotController.getRobotArm();
+                    remoteRobotArm = robotController.getRobotArm();
                 } catch (ConnectionNotEstablishedException e) {
                     Toast.makeText(getActivity(), "Not connected", Toast.LENGTH_SHORT).show();
                     return true;
@@ -114,27 +111,27 @@ public class ControllerFragment extends Fragment {
                             break;
                         //Backside Buttons
                         case KeyEvent.KEYCODE_BUTTON_L1:
-                            remoteRobotarm.turnAxis(Axis.BASE,100);
+                            remoteRobotArm.turnAxis(0,100);
                         break;
                         case KeyEvent.KEYCODE_BUTTON_R1:
-                            remoteRobotarm.turnAxis(Axis.BASE,-100);
+                            remoteRobotArm.turnAxis(0,-100);
                         break;
                         case KeyEvent.KEYCODE_BUTTON_L2:
-                            remoteRobotarm.turnAxis(Axis.AXISTWO,100);
+                            remoteRobotArm.turnAxis(1,100);
                         break;
                         case KeyEvent.KEYCODE_BUTTON_R2:
-                            remoteRobotarm.turnAxis(Axis.AXISTWO,-100);
+                            remoteRobotArm.turnAxis(1,-100);
                         break;
                     }
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_BUTTON_L1:
                         case KeyEvent.KEYCODE_BUTTON_R1:
-                            remoteRobotarm.stopAxis(Axis.BASE);
+                            remoteRobotArm.stopAxis(0);
                             break;
                         case KeyEvent.KEYCODE_BUTTON_L2:
                         case KeyEvent.KEYCODE_BUTTON_R2:
-                            remoteRobotarm.stopAxis(Axis.AXISTWO);
+                            remoteRobotArm.stopAxis(1);
                             break;
                     }
                 }
@@ -182,7 +179,7 @@ public class ControllerFragment extends Fragment {
         motorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedItem = (String) adapterView.getItemAtPosition(i);
+                int selectedItem = i; //This requires the list to be sorted from servo 0 to the last one available
                 RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
@@ -229,7 +226,7 @@ public class ControllerFragment extends Fragment {
     public void stopPower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            Robotarm robotArm = robotController.getRobotArm();
+            RobotArm robotArm = robotController.getRobotArm();
 
             robotArm.stopAxis(cfg.getSelectedAxis());
 
@@ -248,12 +245,12 @@ public class ControllerFragment extends Fragment {
         if (!positive) direction = -1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
-            Robotarm robotArm = robotController.getRobotArm();
+            RobotArm robotArm = robotController.getRobotArm();
 
             robotArm.turnAxis(cfg.getSelectedAxis(),
                     direction *
                             ((int) (
-                                    robotArm.getMaxMovePower() *
+                                    100 *
                                             ((double) cfg.getPercentPower() / 100d)
                             ))
             );

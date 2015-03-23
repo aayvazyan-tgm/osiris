@@ -1,6 +1,5 @@
 package at.pria.osiris.osiris.communication;
 
-import api.Robotarm;
 import at.pria.osiris.osiris.communication.messageProcessor.MessageProcessor;
 import at.pria.osiris.osiris.communication.messageProcessor.MessageProcessorDistributor;
 import org.andrix.deployment.Program;

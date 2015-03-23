@@ -6,19 +6,19 @@ import messages.SerializableMessage;
  * @author Ari Ayvazyan
  * @version 13.02.2015
  */
-public class MoveAxisToangleRequest extends SerializableMessage {
+public class MoveAxisToAngleRequest extends SerializableMessage {
     private static final long serialVersionUID = 1L;
     private final int axisPort;
-    private final int power;
+    private final int angle;
     /**
      * Defines a request for a sensor value
      *
      * @param requestedAxis axis id to request the value for.
-     * @param power
+     * @param angle
      */
-    public MoveAxisToangleRequest(int requestedAxis, int power) {
+    public MoveAxisToAngleRequest(int requestedAxis, int angle) {
         this.axisPort = requestedAxis;
-        this.power = power;
+        this.angle = angle;
     }
 
     /**
@@ -31,10 +31,10 @@ public class MoveAxisToangleRequest extends SerializableMessage {
     }
 
     /**
-     * Setter for property 'power'
+     * Setter for property 'angle'
      * @return
      */
-    public int getPower() {
-        return power;
+    public int getAngle() {
+        return angle;
     }
 }

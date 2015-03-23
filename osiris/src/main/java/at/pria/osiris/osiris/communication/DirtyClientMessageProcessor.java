@@ -1,7 +1,7 @@
 package at.pria.osiris.osiris.communication;
 
 import android.util.Log;
-import api.Robotarm;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 
 /**
@@ -9,12 +9,12 @@ import at.pria.osiris.osiris.sensors.SensorRefreshable;
  */
 public class DirtyClientMessageProcessor {
 
-    private Robotarm robotarm;
+    private RobotArm robotArm;
     private SensorRefreshable sensorRefresher;
 
 
-    public DirtyClientMessageProcessor(Robotarm robotarm, SensorRefreshable sensorRefresher) {
-        this.robotarm = robotarm;
+    public DirtyClientMessageProcessor(RobotArm robotArm, SensorRefreshable sensorRefresher) {
+        this.robotArm = robotArm;
         this.sensorRefresher = sensorRefresher;
     }
 

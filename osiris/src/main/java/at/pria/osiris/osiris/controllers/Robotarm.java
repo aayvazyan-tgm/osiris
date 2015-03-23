@@ -1,81 +1,55 @@
 package at.pria.osiris.osiris.controllers;
 
-import api.Axis;
-
 import java.io.Serializable;
 
 /**
- * A Robotarm
+ * The Robot arm interface defines actions a Robotarm should be able to perform
  *
- * @author Adrian Bergler
- * @version 2014-10-17
+ * @author Ari Ayvazyan
+ * @version 23.03.2015
  */
-@Deprecated
-public interface Robotarm {
+public interface RobotArm {
 
     /**
      * Turns an axis of the robotarm with the given power
      * (turns until the axis gets stopped)
      *
-     * @param axis  the axis (use the enum)
-     * @param power the power
+     * @param axis  the axis
+     * @param power the power may contain values from 0 to 100, 0 is defined as a stop and 100 is defined as the maximum power
      */
-    public void turnAxis(Axis axis, int power);
+    public void turnAxis(int axis, int power);
+
+    public void stopAxis(int axis);
+    /**
+     * Turns an axis of the robotarm with the given power
+     * (turns until the axis gets stopped)
+     *
+     * @param axis  the axis
+     * @param angle the angle in degrees
+     */
+    public void moveToAngle(int axis, int angle);
 
     /**
-     * Turns an axis of the robotarm with the given power for the given time
-     * (can also be stopped using stop)
+     * Turns an axis of the robotarm with the given power
+     * (turns until the axis gets stopped)
      *
-     * @param axis       the axis (use the enum)
-     * @param power      the power
-     * @param timemillis the time
+     * @param axis  the axis
      */
-    public void turnAxis(Axis axis, int power, long timemillis);
-
-    /**
-     * Stops an axis
-     *
-     * @param axis the axis (use the enum)
-     */
-    public void stopAxis(Axis axis);
+    public void getMaximumAngle(int axis);
 
     /**
      * Moves to the given position
-     * (can be stopped using stop)
      *
      * @param x the x-coordinate
      * @param y the y-coordinate
      * @param z the z-coordinate
-     * @return if the position can be reached
+     * @return false if the position cant be reached, true if the robot arm is able to move there and starts to move
      */
     public boolean moveTo(double x, double y, double z);
 
     /**
-     * Stops all motors
+     * sends a message to the controller
+     * @param msg the message
      */
-    public void stopAll();
-
-    /**
-     * Kills the sensor-watchdog
-     */
-    public void close();
-
-    /**
-     * Tests the connection
-     */
-    public void test();
-
-    /**
-     * Exits the Linker
-     * TODO probably move this somewhere else as it isnt really related to the Robotarm
-     */
-    public void exit();
-
-    /**
-     *
-     * @return returns the Maximum Possible Power
-     */
-    public double getMaxMovePower();
-
     public void sendMessage(Serializable msg);
 }

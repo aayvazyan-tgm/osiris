@@ -2,8 +2,9 @@ package at.pria.osiris.osiris.controllers.hedgehogdirect;
 
 import android.util.Log;
 import api.Axis;
-import api.Robotarm;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.util.AXCPWrapper;
+import messages.requests.MoveAxisToAngleRequest;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 
@@ -16,7 +17,7 @@ import java.io.Serializable;
  * @author Adrian Bergler, Ari Ayvazyan
  * @version 3.11.2014
  */
-public class DirectCommunicationRobotArm extends Thread implements Robotarm {
+public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     private static final int MAX_POWER = 100;
     private static DirectCommunicationRobotArm INSTANCE;
@@ -34,19 +35,23 @@ public class DirectCommunicationRobotArm extends Thread implements Robotarm {
     }
 
     @Override
-    public void turnAxis(Axis axis, int power) {
-        sendMessage("turnaxis/" + axis.ordinal() + "/" + power);
+    public void turnAxis(int axis, int power) {
+        sendMessage("turnaxis/" + axis + "/" + power);
     }
 
     @Override
-    public void turnAxis(Axis axis, int power, long timemillis) {
-        sendMessage("turnaxis/" + axis.ordinal() + "/" + power + "/" + timemillis);
-
+    public void stopAxis(int axis) {
+        sendMessage("stopaxis/" + axis);
     }
 
     @Override
-    public void stopAxis(Axis axis) {
-        sendMessage("stopaxis/" + axis.ordinal());
+    public void moveToAngle(int axis, int angle) {
+        sendMessage(new MoveAxisToAngleRequest(axis,angle));
+    }
+
+    @Override
+    public void getMaximumAngle(int axis) {
+        //TODO Request the value and wait for the result
     }
 
     @Override
@@ -55,29 +60,6 @@ public class DirectCommunicationRobotArm extends Thread implements Robotarm {
         return true;
     }
 
-    @Override
-    public void stopAll() {
-        sendMessage("stopall");
-    }
-
-    /**
-     * Close sockets, kill watchdogs
-     */
-    @Override
-    public void close() {
-        sendMessage("close");
-    }
-
-    @Override
-    public void test() {
-        sendMessage("test");
-    }
-
-    public void exit() {
-        sendMessage("exit");
-    }
-
-    @Override
     public double getMaxMovePower() {
         return MAX_POWER;
     }

@@ -1,7 +1,6 @@
 package at.pria.osiris.osiris.communication.messageProcessor;
 
 import android.util.Log;
-import api.Robotarm;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 import messages.responses.SensorValueResponse;
 

@@ -49,7 +49,7 @@ public class HedgehogRobotArm extends Thread implements RobotArm {
 
     @Override
     public void getMaximumAngle(int axis) {
-        //TODO Not yet implementedw
+        //TODO Request the value and wait for the result
     }
 
     @Override

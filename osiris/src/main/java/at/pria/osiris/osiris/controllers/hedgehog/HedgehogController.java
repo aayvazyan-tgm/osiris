@@ -1,9 +1,9 @@
 package at.pria.osiris.osiris.controllers.hedgehog;
 
-import api.Robotarm;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.ControllerSetup;
+import at.pria.osiris.osiris.controllers.RobotArm;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import java.io.IOException;
  */
 public class HedgehogController implements Controller {
     private ControllerSetup hedgehogSetup;
+    private RobotArm robotArm;
 //    private CommunicationClassWithSendDataMethod something;
 
     public HedgehogController(/*Configuration*/) {
@@ -25,11 +26,14 @@ public class HedgehogController implements Controller {
     }
 
     @Override
-    public Robotarm getRobotArm() throws ConnectionNotEstablishedException {
-        try {
-            return OldLinkerHedgehogRemoteRobotarm.getInstance();
-        } catch (IOException e) {
-            throw new ConnectionNotEstablishedException(e);
+    public RobotArm getRobotArm() throws ConnectionNotEstablishedException {
+        if (robotArm == null) {
+            try {
+                robotArm = HedgehogRobotArm.getInstance();
+            } catch (IOException e) {
+                throw new ConnectionNotEstablishedException(e);
+            }
         }
+        return robotArm;
     }
 }

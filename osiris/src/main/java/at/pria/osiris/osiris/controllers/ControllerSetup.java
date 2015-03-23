@@ -1,6 +1,5 @@
 package at.pria.osiris.osiris.controllers;
 
-import api.Robotarm;
 import at.pria.osiris.osiris.communication.DataListener;
 
 /**
@@ -8,6 +7,6 @@ import at.pria.osiris.osiris.communication.DataListener;
  * @version 03.Dec.14
  */
 public interface ControllerSetup {
-    public void setup(Robotarm robotarm);
+    public void setup(RobotArm robotArm);
     public DataListener getDataListener();
 }

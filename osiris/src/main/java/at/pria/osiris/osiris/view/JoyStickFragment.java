@@ -81,7 +81,7 @@ public class JoyStickFragment extends Fragment {
         spinner_left.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedItem = (String) adapterView.getItemAtPosition(i);
+                int selectedItem = i;
                 RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
@@ -98,7 +98,7 @@ public class JoyStickFragment extends Fragment {
         spinner_right.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedItem = (String) adapterView.getItemAtPosition(i);
+                int selectedItem = i;
                 RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }

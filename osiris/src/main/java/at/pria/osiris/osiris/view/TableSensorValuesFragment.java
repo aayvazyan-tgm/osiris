@@ -1,9 +1,7 @@
 package at.pria.osiris.osiris.view;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,18 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 
-import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import api.Robotarm;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.communication.DataListener;
-import at.pria.osiris.osiris.communication.messageProcessor.SensorValueResponseProcessor;
-import at.pria.osiris.osiris.communication.messageProcessor.StringProcessor;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
 import at.pria.osiris.osiris.view.elements.SensorRow;
-import org.andrix.listeners.ExecutionListener;
 
 /**
  *
@@ -36,7 +29,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
 
     private static TableSensorValuesFragment INSTANCE;
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Robotarm robotarm;
+    private RobotArm robotArm;
     private Thread sensorRefresher;
     private TableLayout table;
     final private ConcurrentHashMap<String, SensorRow> sensorMap;
@@ -48,10 +41,10 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
      * @param sectionNumber the sectionnumber
      * @return a instance from this class
      */
-    public static TableSensorValuesFragment getInstance(int sectionNumber, @NonNull Robotarm robotarm) {
+    public static TableSensorValuesFragment getInstance(int sectionNumber, @NonNull RobotArm robotArm) {
         if (INSTANCE == null) {
             TableSensorValuesFragment fragment = new TableSensorValuesFragment();
-            fragment.robotarm = robotarm;
+            fragment.robotArm = robotArm;
 
             //save the args in the Bundle
             Bundle args = new Bundle();
@@ -60,7 +53,7 @@ public class TableSensorValuesFragment extends Fragment implements SensorRefresh
 
             INSTANCE = fragment;
         } else {
-            INSTANCE.robotarm = robotarm;
+            INSTANCE.robotArm = robotArm;
         }
         return INSTANCE;
     }
