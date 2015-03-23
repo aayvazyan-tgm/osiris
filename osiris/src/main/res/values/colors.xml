@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_fragment">#2196F3</color> <!-- Naviagation drawer -->
+    <color name="background_menu">#1E88E5</color> <!-- Menu-Background -->
+    <color name="statusbar_color">#1976D2</color> <!-- Statusbar -->
+</resources>
