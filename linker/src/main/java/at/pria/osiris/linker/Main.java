@@ -37,8 +37,8 @@ public class Main {
                 logger.info("Moving to 0");
                 robotArm.getAxis(1).moveToAngle(2);
                 Thread.sleep(2000);
-                logger.info("Moving to: " + 61);
-                robotArm.getAxis(1).moveToAngle(61);
+                logger.info("Moving to: " + 59);
+                robotArm.getAxis(1).moveToAngle(59);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
