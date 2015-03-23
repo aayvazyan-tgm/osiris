@@ -1,17 +1,5 @@
 package client;
 
-import client.model.Vendor;
-import client.network.RemoteRobotarm;
-import client.userinterface.ExitController;
-import client.userinterface.UserInterface;
-import client.userinterface.control.ClientMessageProcessor;
-import client.userinterface.control.KeyInput;
-
-import javax.swing.*;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 /**
  * Starts the remote control program
  * Run this on a computer within the network of the LinkJVM-Controller
@@ -22,56 +10,6 @@ import java.io.ObjectInputStream;
 public class ClientStarter {
 
     public static void main(String[] args) {
-
-        RemoteRobotarm ra = Vendor.get().getRobotarm();
-        ObjectInputStream ois = ra.getOis();
-
-        //Key input
-        KeyInput ki = new KeyInput();
-
-        //Close Controller
-        ExitController ec = new ExitController();
-
-        UserInterface ui = new UserInterface();
-
-        ui.addWindowListener(ec);
-        ui.addKeyListener(ki);
-
-        ui.setVisible(true);
-
-        ui.setLocationRelativeTo(null);
-        ui.setSize(300, 250);
-        ui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        ClientMessageProcessor cmp = new ClientMessageProcessor(ra, ui);
-
-        boolean running = true;
-
-        while (running) {
-
-            //convert ObjectInputStream object to String
-            String message = "failmessage";
-            try {
-                message = (String) ois.readObject();
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Closing connection...");
-                running=false;
-            }
-            //System.out.println("Message Received: " + message);
-
-            cmp.callMethod(message);
-        }
-
-        try {
-            ois.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
