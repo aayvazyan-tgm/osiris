@@ -35,10 +35,10 @@ public class Main {
             logger.info("Ari debugger");
             try {
                 logger.info("Moving to 0");
-                robotArm.getAxis(1).moveToAngle(3);
+                robotArm.getAxis(1).moveToAngle(2);
                 Thread.sleep(2000);
-                logger.info("Moving to: " + 60);
-                robotArm.getAxis(1).moveToAngle(60);
+                logger.info("Moving to: " + 45);
+                robotArm.getAxis(1).moveToAngle(45);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -48,7 +48,7 @@ public class Main {
                 logger.info("Start debugger");
                 try {
                     logger.info("Moving to 0");
-                    robotArm.getAxis(1).moveToAngle(6);
+                    robotArm.getAxis(1).moveToAngle(2);
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -57,7 +57,7 @@ public class Main {
         else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
             logger.info("Moving the Axes");
-            robotArm.getAxis(1).moveToAngle(6);
+            robotArm.getAxis(1).moveToAngle(2);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
