@@ -8,9 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import api.Axis;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.util.EnumUtil;
+import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.view.elements.joystick.*;
 
 /**
@@ -18,13 +26,14 @@ import at.pria.osiris.osiris.view.elements.joystick.*;
  */
 public class JoyStickFragment extends Fragment {
 
-    private static final String TAG= "Osiris";
+    private static final String TAG= "JOYSTICK";
 
     private static JoyStickFragment INSTANCE;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private TextView txtX1, txtY1, txtX2, txtY2;
     private DualJoystickView joystick;
+    private Spinner spinner_left, spinner_right;
 
     public static JoyStickFragment getInstance(int sectionNumber) {
 
@@ -56,8 +65,49 @@ public class JoyStickFragment extends Fragment {
         txtX2= (TextView) rootView.findViewById(R.id.TextViewX2);
         txtY2= (TextView) rootView.findViewById(R.id.TextViewY2);
 
+        txtX1.setVisibility(View.INVISIBLE);
+        txtY1.setVisibility(View.INVISIBLE);
+        txtX2.setVisibility(View.INVISIBLE);
+        txtY2.setVisibility(View.INVISIBLE);
+
         joystick= (DualJoystickView) rootView.findViewById(R.id.dualjoystickView);
         joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
+
+        joystick.invalidate();
+
+        spinner_left= (Spinner) rootView.findViewById(R.id.spinner_left);
+        ArrayAdapter<String> spinnerArrayAdapter_left = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(Axis.class));
+        spinner_left.setAdapter(spinnerArrayAdapter_left);
+        spinner_left.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedItem = (String) adapterView.getItemAtPosition(i);
+                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
+                Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        spinner_right= (Spinner) rootView.findViewById(R.id.spinner_right);
+        ArrayAdapter<String> spinnerArrayAdapter_right = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(Axis.class));
+        spinner_right.setAdapter(spinnerArrayAdapter_right);
+        spinner_right.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedItem = (String) adapterView.getItemAtPosition(i);
+                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
+                Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
