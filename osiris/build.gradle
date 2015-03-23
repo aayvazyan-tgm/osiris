@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'android-command'
-apply from: 'test.gradle'
+apply from: 'https://github.com/aayvazyan-tgm/autodetect_android_sdk_and_buildTools/releases/download/1.0/sdktools.gradle'
 
 archivesBaseName = 'Osiris-App-'+version
 boolean releaseAvailable=false
@@ -19,7 +19,7 @@ repositories {
 }
 
 android {
-//    use the newest SDK automatically if the given one is not available
+    //use the newest SDK automatically if the given one is not available
     compileSdkVersion project.getSDKIfPossible(21)
     //Use the lastest BuildTool Version available, default to the given value on error
     buildToolsVersion project.getHighestAvailableTools("21.1.2")
