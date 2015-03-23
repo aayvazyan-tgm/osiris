@@ -2,6 +2,7 @@ package at.pria.osiris.linker.implementation.hedgehog.components;
 
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 import org.andrix.low.NotConnectedException;
+import org.apache.log4j.Logger;
 
 /**
  * @author Ari Ayvazyan
@@ -12,6 +13,7 @@ public class HedgehogDoubleServo implements Servo {
     private HedgehogServo andrixServo1;
     private HedgehogServo andrixServo2;
     private int maximumAngle;
+    private Logger logger = org.apache.log4j.Logger.getLogger(HedgehogDoubleServo.class);
 
     /**
      * servo1 is used as the reference servo
@@ -60,6 +62,7 @@ public class HedgehogDoubleServo implements Servo {
     @Override
     public void moveToAngle(int angle) {
         if(angle != andrixServo1.getPositionInDegrees()) {
+            logger.debug("angle wanted: " + angle + ", angle current: "+andrixServo1.getPositionInDegrees());
             andrixServo1.moveToAngle(angle);
             andrixServo2.moveToAngle(andrixServo2.getMaximumAngle() - angle);
         }
