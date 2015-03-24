@@ -28,7 +28,7 @@ public class HedgehogRobotArm extends RobotArm {
         try {
             this.axes.add(new ServoAxis("BaseAxis", new HedgehogServo(1, 720, 2, 2)));
             this.axes.add(new ServoAxis("VerticalAxis", new HedgehogDoubleServo(2, 3, 60, 3, 2)));
-            this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 360, 3, 2)));
+            this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 180, 3, 2)));
         } catch (NotConnectedException e) {
             e.printStackTrace();
         }

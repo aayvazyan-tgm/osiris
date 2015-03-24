@@ -57,7 +57,7 @@ public class Main {
         else if (args.length > 0 && args[0].equals("move")) {
             logger.info("Start move");
             logger.info("Moving to: " + args[1]);
-            robotArm.getAxis(1).moveToAngle(Integer.parseInt(args[1]));
+            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(Integer.parseInt(args[2]));
         }
         else if (args.length > 0) {
             logger.info("wolfgang debug Session started");
