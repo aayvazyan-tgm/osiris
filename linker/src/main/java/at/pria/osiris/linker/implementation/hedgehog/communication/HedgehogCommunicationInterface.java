@@ -18,6 +18,11 @@ import java.net.InetAddress;
 public class HedgehogCommunicationInterface implements CommunicationInterface {
 
     private static Logger logger = org.apache.log4j.Logger.getLogger(HedgehogCommunicationInterface.class);
+    private final boolean useSerialConnection;
+
+    public HedgehogCommunicationInterface(boolean useSerialConnection) {
+        this.useSerialConnection = useSerialConnection;
+    }
 
     /**
      * Sends data via the Hedgehog AXCP Controller
@@ -52,8 +57,10 @@ public class HedgehogCommunicationInterface implements CommunicationInterface {
     @Override
     public void setupCommunication(MessageProcessor messageProcessor) {
         logger.info("Setting up communication...");
-        AXCPServer.communicationInterface = new HedgehogSerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
-        AXCPAccessor.getInstance().connectController(new HardwareController(InetAddress.getLoopbackAddress(), HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
-        ExecutionListener._l_exec.add(new HedgehogDataListener(messageProcessor));
+        if (useSerialConnection) {
+            AXCPServer.communicationInterface = new HedgehogSerialPortCommunicationInterface(); // The Serial Port Communication Interface for the Pi
+            AXCPAccessor.getInstance().connectController(new HardwareController(InetAddress.getLoopbackAddress(), HardwareController.TYPE_V3, "hedgehog-osiris")); // Initialise the AXCPAccessor
+            ExecutionListener._l_exec.add(new HedgehogDataListener(messageProcessor));
+        }
     }
 }

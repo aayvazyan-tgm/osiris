@@ -33,7 +33,7 @@ public class DirectCommunicationRobotArm extends Thread implements RobotArm {
         this.linkerMsgDistributor = new MessageProcessorDistributor();
 
         //Initialize a RobotArm Implementation
-        this.linkerRobotArm = new HedgehogRobotArm(this.linkerMsgDistributor);
+        this.linkerRobotArm = new HedgehogRobotArm(this.linkerMsgDistributor, false);
 
         //Add the message processors to handle incoming requests
         MessageProcessorRegister.setupMessageDisstributor(this.linkerRobotArm, this.linkerMsgDistributor);

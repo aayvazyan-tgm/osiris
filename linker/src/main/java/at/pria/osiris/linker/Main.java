@@ -21,7 +21,7 @@ public class Main {
         MessageProcessorDistributor msgDistributor = new MessageProcessorDistributor();
 
         //Initialize a RobotArm Implementation
-        RobotArm robotArm = new HedgehogRobotArm(msgDistributor);
+        RobotArm robotArm = new HedgehogRobotArm(msgDistributor,true);
 
         //Add the message processors to handle incoming requests
         MessageProcessorRegister.setupMessageDisstributor(robotArm,msgDistributor);
