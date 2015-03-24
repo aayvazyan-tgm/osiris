@@ -20,9 +20,9 @@ public class HedgehogRobotArm extends RobotArm {
 
     private final ArrayList<Axis> axes;
 
-    public HedgehogRobotArm(MessageProcessor messageProcessor) {
+    public HedgehogRobotArm(MessageProcessor messageProcessor,boolean useSerialConnection) {
         //Add the Communication Interface
-        super(new HedgehogCommunicationInterface(), messageProcessor);
+        super(new HedgehogCommunicationInterface(useSerialConnection), messageProcessor);
         //Add the axes
         this.axes = new ArrayList<Axis>();
         try {
