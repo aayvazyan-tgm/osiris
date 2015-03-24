@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Distributes messages to listeners.
+ * The register, containing all the Processors is found at at.pria.osiris.linker.communication.MessageProcessorRegister
  *
  * @author Ari Ayvazyan
  * @version 13.02.2015

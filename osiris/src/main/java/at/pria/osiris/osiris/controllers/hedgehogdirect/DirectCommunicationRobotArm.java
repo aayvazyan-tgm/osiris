@@ -1,12 +1,11 @@
 package at.pria.osiris.osiris.controllers.hedgehogdirect;
 
-import android.util.Log;
-import api.Axis;
+import at.pria.osiris.linker.communication.MessageProcessorRegister;
+import at.pria.osiris.linker.communication.messageProcessors.MessageProcessorDistributor;
+import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
 import at.pria.osiris.osiris.controllers.RobotArm;
-import at.pria.osiris.osiris.util.AXCPWrapper;
 import messages.requests.MoveAxisToAngleRequest;
-import org.andrix.low.NotConnectedException;
-import org.andrix.low.RequestTimeoutException;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,11 +19,24 @@ import java.io.Serializable;
 public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     private static final int MAX_POWER = 100;
+    private static Logger logger = org.apache.log4j.Logger.getLogger(DirectCommunicationRobotArm.class);
     private static DirectCommunicationRobotArm INSTANCE;
+    private MessageProcessorDistributor linkerMsgDistributor;
+    private at.pria.osiris.linker.controllers.RobotArm linkerRobotArm;
+
 
     private DirectCommunicationRobotArm() throws IOException {
         this.start();
 
+        logger.info("Direct Linker started");
+        //Initialize the MessageProcessorDistributor to handle incoming requests
+        this.linkerMsgDistributor = new MessageProcessorDistributor();
+
+        //Initialize a RobotArm Implementation
+        this.linkerRobotArm = new HedgehogRobotArm(this.linkerMsgDistributor);
+
+        //Add the message processors to handle incoming requests
+        MessageProcessorRegister.setupMessageDisstributor(this.linkerRobotArm, this.linkerMsgDistributor);
     }
 
     public static DirectCommunicationRobotArm getInstance() throws IOException {
@@ -46,7 +58,7 @@ public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     @Override
     public void moveToAngle(int axis, int angle) {
-        sendMessage(new MoveAxisToAngleRequest(axis,angle));
+        sendMessage(new MoveAxisToAngleRequest(axis, angle));
     }
 
     @Override
@@ -66,14 +78,6 @@ public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     @Override
     public void sendMessage(Serializable message) {
-        try {
-            AXCPWrapper.sendData(message);
-        } catch (RequestTimeoutException e) {
-            Log.d("Connection", e.toString());
-        } catch (NotConnectedException e) {
-            Log.d("Connection", e.toString());
-        } catch (IOException e){
-            Log.d("Connection", e.toString());
-        }
+        this.linkerMsgDistributor.processMessage(message);
     }
 }
