@@ -11,12 +11,12 @@ import org.andrix.motors.Servo;
  */
 public class HedgehogServo extends Servo implements at.pria.osiris.linker.controllers.components.systemDependent.Servo {
     private final long timePerDegreeInMilli;
+    private final Object lock = false;
     private int offsetFrom0;
     private int offsetFromTop;
     private int maximumAngle;
     private int positionInDegrees;
-    private int offset=0;
-    private final Object lock = false;
+    private int offset = 0;
 
     public HedgehogServo(int port, int maximumAngle, long timePerDegreeInMilli, int initialPosition) throws NotConnectedException {
         super(port);
@@ -43,12 +43,12 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
      */
     @Override
     public void moveToAngle(int angle) {
-        synchronized (lock){
+        synchronized (lock) {
             if (angle < 0 || angle > maximumAngle)
                 throw new RuntimeException("The maximum angle: " + maximumAngle + " of this servo has been excessed: " + angle);
             try {
                 //The maximum Value for Hedgehog Servos is 255
-                double maxHardwarePosition=255d;
+                double maxHardwarePosition = 255d;
                 int positionWithoutOffset = (int) (((double) angle / (double) getMaximumAngle()) * maxHardwarePosition);
                 //if(positionWithoutOffset <= (int)Math.ceil(offsetFrom0*(maxHardwarePosition/getMaximumAngle())))
                 //    super.setPosition(positionWithoutOffset + (int)Math.ceil(offsetFrom0*(maxHardwarePosition/getMaximumAngle())));
@@ -56,7 +56,11 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
                 //    super.setPosition(positionWithoutOffset - (int)Math.ceil(offsetFromTop*(maxHardwarePosition/getMaximumAngle())));
                 //else
                 //TODO No If should be used
-                super.setPosition(positionWithoutOffset);
+                //This could work :)
+                double resultingRange = maxHardwarePosition - offsetFrom0 - offsetFromTop;
+                double resultingPosWithoutMinOffset = (((double) positionWithoutOffset) / 255d) * resultingRange;
+                double resultPos = resultingPosWithoutMinOffset + offsetFrom0;
+                super.setPosition((int) resultPos);
                 this.positionInDegrees = angle;
             } catch (NotConnectedException e) {
                 throw new RuntimeException(e);
