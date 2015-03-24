@@ -65,6 +65,11 @@ public class AxisValueRequestProcessorTest {
             public void moveAtPower(int power) {
 
             }
+
+            @Override
+            public double getMaximumAngle() {
+                return 0.0;
+            }
         };
 
         communicationInterface = new CommunicationInterface() {
