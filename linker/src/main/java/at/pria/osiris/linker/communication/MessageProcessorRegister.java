@@ -16,6 +16,7 @@ public class MessageProcessorRegister {
         msgDistributor.addMessageProcessor(new SensorValueRequestProcessor(robotArm));
         msgDistributor.addMessageProcessor(new AxisValueRequestProcessor(robotArm));
         msgDistributor.addMessageProcessor(new MoveAxisRequestProcessor(robotArm));
+        msgDistributor.addMessageProcessor(new AvailableAxesProcessor(robotArm));
         msgDistributor.addMessageProcessor(new StringProcessor(robotArm));
         logger.info("All Processors are added");
     }
