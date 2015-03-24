@@ -50,7 +50,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
                 //The maximum Value for Hedgehog Servos is 255
                 double maxHardwarePosition=255d;
                 int positionWithoutOffset = (int) (((double) angle / (double) getMaximumAngle()) * maxHardwarePosition);
-                super.setPosition(positionWithoutOffset/*The offset needs to be used*/);
+                super.setPosition(positionWithoutOffset + (int)Math.ceil(offset*(maxHardwarePosition/getMaximumAngle())));
                 this.positionInDegrees = angle;
             } catch (NotConnectedException e) {
                 throw new RuntimeException(e);
