@@ -13,7 +13,7 @@ public class HedgehogDoubleServo implements Servo {
     private HedgehogServo andrixServo1;
     private HedgehogServo andrixServo2;
     private int maximumAngle;
-    private Logger logger = org.apache.log4j.Logger.getLogger(HedgehogDoubleServo.class);
+//    private Logger logger = org.apache.log4j.Logger.getLogger(HedgehogDoubleServo.class);
 
     /**
      * servo1 is used as the reference servo
@@ -64,7 +64,7 @@ public class HedgehogDoubleServo implements Servo {
     @Override
     public void moveToAngle(int angle) {
         if(angle != andrixServo1.getPositionInDegrees()) {
-            logger.info("s1: "+angle+", s2: "+(andrixServo2.getMaximumAngle() - angle));
+            System.out.println("s1: " + angle + ", s2: " + (andrixServo2.getMaximumAngle() - angle));
             andrixServo1.moveToAngle(angle);
             andrixServo2.moveToAngle(andrixServo2.getMaximumAngle() - angle);
         }

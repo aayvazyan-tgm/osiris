@@ -16,7 +16,7 @@ public class ServoHelper {
     private boolean interrupt = false;
     private Servo s;
     private int steps;
-    private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
+//    private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
     /**
      * A Constructor which allows the User to define the servo and the power in which said servo should spin.
@@ -30,7 +30,7 @@ public class ServoHelper {
     }
 
     public void moveAtPower(int power) {
-        logger.info("moveAtPower: "+power);
+        System.out.println("moveAtPower: "+power);
         this.interrupt = true;
         if (power == 0) return;
         final int powerFinal = power;
@@ -49,7 +49,7 @@ public class ServoHelper {
      * @param power The power(speed) it should use
      */
     private synchronized void pwm(int power) {
-        logger.info("starting pwm: "+power);
+        System.out.println("starting pwm: "+power);
         this.interrupt = false;
         //Defining important Variables
         int maxPower = 100;
@@ -71,7 +71,7 @@ public class ServoHelper {
         //looping through the given steps with different wait and go times
         for (int i = 0; !interrupt; i++) {
             if (i == (int) (count * mod)) {
-                //logger.info("Stopping ...");
+                //System.out.println("Stopping ...");
                 try {
                     if (moving) {
                         s.moveToAngle(startPosition);
@@ -91,7 +91,7 @@ public class ServoHelper {
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition < s.getMaximumAngle() - 3) {
-                        //logger.info("Next Position: "+(startPosition + 1));
+                        //System.out.println("Next Position: "+(startPosition + 1));
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
@@ -105,7 +105,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 3) {
-                        //logger.info("Next Position: "+(startPosition - 1));
+                        //System.out.println("Next Position: "+(startPosition - 1));
                         s.moveToAngle(startPosition - 1);
                         startPosition -= 1;
                         moving = true;
@@ -119,7 +119,7 @@ public class ServoHelper {
                 }
             }
         }
-        if (interrupt) logger.info("interrupted");
+        if (interrupt) System.out.println("interrupted");
     }
 
     /**

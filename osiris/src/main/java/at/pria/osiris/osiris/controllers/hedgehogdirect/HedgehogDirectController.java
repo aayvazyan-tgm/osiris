@@ -9,8 +9,8 @@ import at.pria.osiris.osiris.controllers.ControllerSetup;
 import at.pria.osiris.osiris.controllers.hedgehog.HedgehogSetup;
 
 /**
- * Smartphone --> Hedgehog
- * @author Samuel Schmidt
+ * Use the Hedgehog directly without a linker device
+ * @author Ari Ayvazyan
  * @version 3/10/2015
  */
 public class HedgehogDirectController implements Controller {

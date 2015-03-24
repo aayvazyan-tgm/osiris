@@ -41,7 +41,7 @@ public class ServoAxis extends Axis {
         this.servo.moveToAngle(angle);
     }
 
-    public int getMaximumAngle() {
+    public double getMaximumAngle() {
         return servo.getMaximumAngle();
     }
 }

@@ -47,4 +47,9 @@ public abstract class Axis {
      */
     public abstract void moveAtPower(int power);
 
+    /**
+     * @return Returns the maximum Angle of this axis in degrees
+     * returns -1 if there are no limits
+     */
+    public abstract double getMaximumAngle();
 }

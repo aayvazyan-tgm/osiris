@@ -20,6 +20,7 @@ import android.widget.Toast;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.hedgehog.HedgehogController;
+import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.*;
 
@@ -67,13 +68,14 @@ public class MainActivity extends ActionBarActivity
     public synchronized void setUpController() {
         if(setupDone==false) {
             try {
-                Controller controller = new HedgehogController();
-                this.setupDone = true;
+                Controller controller = new HedgehogDirectController();
                 controller.getSetup().setup(controller.getRobotArm());
                 Storeage storeage = Storeage.getInstance();
                 storeage.setRobotController(controller);
                 this.robotController = controller;
+                this.setupDone = true;
             } catch (ConnectionNotEstablishedException e) {
+                setupDone=false;
                 e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Connection not Established", Toast.LENGTH_LONG).show();
             }

@@ -256,6 +256,8 @@ public class ControllerFragment extends Fragment {
             );
         } catch (ConnectionNotEstablishedException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(view.getContext(), "Could not perform action", Toast.LENGTH_SHORT).show();
         }
     }
 }

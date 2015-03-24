@@ -1,14 +1,16 @@
 package at.pria.osiris.osiris.controllers.hedgehogdirect;
 
-import at.pria.osiris.linker.communication.MessageProcessorRegister;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessorDistributor;
-import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
+import at.pria.osiris.linker.controllers.components.Axes.Axis;
+import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogDoubleServo;
+import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import at.pria.osiris.osiris.controllers.RobotArm;
-import messages.requests.MoveAxisToAngleRequest;
-import org.apache.log4j.Logger;
+import org.andrix.low.NotConnectedException;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * This class Provides a simple Interface to Send commands to the Robot
@@ -16,27 +18,18 @@ import java.io.Serializable;
  * @author Adrian Bergler, Ari Ayvazyan
  * @version 3.11.2014
  */
-public class DirectCommunicationRobotArm extends Thread implements RobotArm {
+public class DirectCommunicationRobotArm implements RobotArm {
 
     private static final int MAX_POWER = 100;
-    private static Logger logger = org.apache.log4j.Logger.getLogger(DirectCommunicationRobotArm.class);
     private static DirectCommunicationRobotArm INSTANCE;
+    private ArrayList<Axis> axes;
+    private boolean connected=false;
     private MessageProcessorDistributor linkerMsgDistributor;
     private at.pria.osiris.linker.controllers.RobotArm linkerRobotArm;
 
 
     private DirectCommunicationRobotArm() throws IOException {
-        this.start();
-
-        logger.info("Direct Linker started");
-        //Initialize the MessageProcessorDistributor to handle incoming requests
-        this.linkerMsgDistributor = new MessageProcessorDistributor();
-
-        //Initialize a RobotArm Implementation
-        this.linkerRobotArm = new HedgehogRobotArm(this.linkerMsgDistributor);
-
-        //Add the message processors to handle incoming requests
-        MessageProcessorRegister.setupMessageDisstributor(this.linkerRobotArm, this.linkerMsgDistributor);
+        isConnected();
     }
 
     public static DirectCommunicationRobotArm getInstance() throws IOException {
@@ -48,27 +41,32 @@ public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     @Override
     public void turnAxis(int axis, int power) {
-        sendMessage("turnaxis/" + axis + "/" + power);
+        if(!isConnected())return;
+        axes.get(axis).moveAtPower(power);
     }
 
     @Override
     public void stopAxis(int axis) {
-        sendMessage("stopaxis/" + axis);
+        if(!isConnected())return;
+        axes.get(axis).moveAtPower(0);
     }
 
     @Override
     public void moveToAngle(int axis, int angle) {
-        sendMessage(new MoveAxisToAngleRequest(axis, angle));
+        if(!isConnected())return;
+        axes.get(axis).moveToAngle(angle);
     }
 
     @Override
     public void getMaximumAngle(int axis) {
-        //TODO Request the value and wait for the result
+        if(!isConnected())return;
+        axes.get(axis).getMaximumAngle();
     }
 
     @Override
     public boolean moveTo(double x, double y, double z) {
-        sendMessage("moveto/" + x + "/" + y + "/" + z);
+        if(!isConnected())return false;
+        System.out.println("I am not yet implemented");
         return true;
     }
 
@@ -78,6 +76,22 @@ public class DirectCommunicationRobotArm extends Thread implements RobotArm {
 
     @Override
     public void sendMessage(Serializable message) {
-        this.linkerMsgDistributor.processMessage(message);
+        if(!isConnected())return;
+        System.out.println(message.toString());
+    }
+    public synchronized boolean isConnected(){
+        if(!connected) {
+            try {
+                this.axes = new ArrayList<Axis>();
+                this.axes.add(new ServoAxis("BaseAxis", new HedgehogServo(1, 720, 2, 2)));
+                this.axes.add(new ServoAxis("VerticalAxis", new HedgehogDoubleServo(2, 3, 25, 0, 60, 3, 2)));
+                this.axes.add(new ServoAxis("HorizontalAxis", new HedgehogServo(4, 180, 3, 2)));
+                this.connected = true;
+            } catch (Exception e) {
+                this.connected = false;
+                e.printStackTrace();
+            }
+        }
+        return connected;
     }
 }
