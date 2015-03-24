@@ -35,7 +35,7 @@ public class SerialLatencyTest {
 
         //Initialize a RobotArm Implementation
         try{
-            robotArm = new HedgehogRobotArm(msgDistributor);
+            robotArm = new HedgehogRobotArm(msgDistributor,true);
         } catch (Exception e){
             e.printStackTrace();
             configuredPi = false;
