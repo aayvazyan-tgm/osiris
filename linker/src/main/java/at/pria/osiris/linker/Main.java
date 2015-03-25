@@ -50,19 +50,19 @@ public class Main {
             }
         } else if (args.length > 0 && args[0].equals("move")) {
             logger.info("Start move");
-            logger.info("Moving to: " + args[1]);
+            logger.info("Moving Axis: " + args[1]);
             robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(Integer.parseInt(args[2]));
-        } else if (args.length > 0) {
-            logger.info("wolfgang debug Session started");
-            logger.info("Moving the Axes");
-            robotArm.getAxis(1).moveToAngle(2);
+        }else if (args.length > 0 && args[0].equals("pwm")) {
+            logger.info("wolfgang pwm debug Session started");
+            logger.info("Moving Axis: " + args[1]);
+            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(Integer.parseInt(args[2]));
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             logger.info("All Servos set ...");
-            robotArm.getAxis(1).moveAtPower(Integer.parseInt(args[0]));
+            robotArm.getAxis(Integer.parseInt(args[1])).moveAtPower(Integer.parseInt(args[2]));
             logger.info("done");
         }
     }
