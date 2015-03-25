@@ -55,7 +55,7 @@ public class Main {
         }else if (args.length > 0 && args[0].equals("pwm")) {
             logger.info("wolfgang pwm debug Session started");
             logger.info("Moving Axis: " + args[1]);
-            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(Integer.parseInt(args[2]));
+            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(5);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
