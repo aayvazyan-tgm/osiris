@@ -105,7 +105,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 3) {
-                        //System.out.println("Next Position: "+(startPosition - 1));
+                        System.out.println("Next Position: "+(startPosition - 1));
                         s.moveToAngle(startPosition - 1);
                         startPosition -= 1;
                         moving = true;
