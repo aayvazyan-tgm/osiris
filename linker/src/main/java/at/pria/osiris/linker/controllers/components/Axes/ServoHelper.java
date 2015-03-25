@@ -16,7 +16,7 @@ public class ServoHelper {
     private boolean interrupt = false;
     private Servo s;
     private int steps;
-//    private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
+    private Logger logger = org.apache.log4j.Logger.getLogger(ServoHelper.class);
 
     /**
      * A Constructor which allows the User to define the servo and the power in which said servo should spin.
@@ -91,7 +91,7 @@ public class ServoHelper {
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition < s.getMaximumAngle() - 3) {
-                        //System.out.println("Next Position: "+(startPosition + 1));
+                        logger.info("Next Position: "+(startPosition + 1));
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
@@ -105,7 +105,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 3) {
-                        System.out.println("Next Position: "+(startPosition - 1));
+                        logger.info("Next Position: "+(startPosition - 1));
                         s.moveToAngle(startPosition - 1);
                         startPosition -= 1;
                         moving = true;
