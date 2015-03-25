@@ -25,8 +25,7 @@ public class HedgehogServo extends Servo implements at.pria.osiris.linker.contro
         this.maximumAngle = maximumAngle;
         this.positionInDegrees = initialPosition;
         //Set the servo to its initial position before the startup to prevent unintended movements
-        //TODO: Bug - servo only moves to certain range (0-54|6-60) set initial pos irritates tests
-        // this.setPosition(initialPosition);
+        this.setPosition(initialPosition);
         this.on();
     }
 
