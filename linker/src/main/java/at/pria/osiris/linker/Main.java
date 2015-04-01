@@ -4,7 +4,11 @@ import at.pria.osiris.linker.communication.MessageProcessorRegister;
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
+import at.pria.osiris.linker.kinematics.Kinematic;
+import at.pria.osiris.linker.kinematics.ThreeAxisKinematics;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
 
 /**
  * Starts the Linker and sets up its communication.
@@ -63,6 +67,29 @@ public class Main {
             }
             logger.info("All Servos set ...");
             robotArm.getAxis(Integer.parseInt(args[1])).moveAtPower(Integer.parseInt(args[2]));
+            logger.info("done");
+        }
+        else if (args.length > 0 && args[0].equals("kin")) {
+            logger.info("adrian kin debug Session started");
+            robotArm.getAxis(0).moveToAngle(5);
+            robotArm.getAxis(1).moveToAngle(5);
+            robotArm.getAxis(2).moveToAngle(5);
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            logger.info("All Servos set ...");
+            double[] fragmentlengths = {26, 23};
+            double[][] padding = {{0,0,0},{0,0,0},{0,0,0}};
+
+            Kinematic kinematics = new ThreeAxisKinematics(32, 0, 24, fragmentlengths, padding);
+
+            ArrayList<Double> solution = kinematics.calculateValues();
+
+            robotArm.getAxis(0).moveToAngle((int)Math.round(solution.get(0)));
+            robotArm.getAxis(1).moveToAngle((int)Math.round(solution.get(1)));
+            robotArm.getAxis(2).moveToAngle((int)Math.round(solution.get(2)));
             logger.info("done");
         }
     }
