@@ -31,6 +31,9 @@ public class Main {
         MessageProcessorRegister.setupMessageDisstributor(robotArm,msgDistributor);
 
         //Start to debug
+        /*
+        This if moves axis 1 to 2 degree and moves the same axis to 59 degrees afterwards
+         */
         if (args.length > 0 && args[0].equals("debug")) {
             logger.info("Ari debugger");
             try {
@@ -43,7 +46,11 @@ public class Main {
                 e.printStackTrace();
             }
 
-        } else if (args.length > 0 && args[0].equals("start")) {
+        }
+        /*
+        This test moves the axis 1 to 2 degree
+         */
+        else if (args.length > 0 && args[0].equals("start")) {
             logger.info("Start debugger");
             try {
                 logger.info("Moving to 0");
@@ -52,14 +59,23 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            /*
+            This test moves the axis tho the specified position
+             */
         } else if (args.length > 0 && args[0].equals("move")) {
             logger.info("Start move");
             logger.info("Moving Axis: " + args[1]);
             robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(Integer.parseInt(args[2]));
-        }else if (args.length > 0 && args[0].equals("pwm")) {
+        }
+        /*
+        This if tests de pwm of the robot.
+        It moves the angle which is defined by the user to a start position.
+        After this movement it starts the pwm method of the axis
+         */
+        else if (args.length > 0 && args[0].equals("pwm")) {
             logger.info("wolfgang pwm debug Session started");
             logger.info("Moving Axis: " + args[1]);
-            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle(5);
+            robotArm.getAxis(Integer.parseInt(args[1])).moveToAngle((int)robotArm.getAxis(Integer.parseInt(args[1])).getMaximumAngle()/2);
             try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
@@ -69,6 +85,12 @@ public class Main {
             robotArm.getAxis(Integer.parseInt(args[1])).moveAtPower(Integer.parseInt(args[2]));
             logger.info("done");
         }
+        /*
+        This if tests the inverse kinematic.
+        It moves before the test starts all Axes to 5 degree.
+        After the initial movement it calculates the position he needs to reach.
+        At least he moves to the calculated positions.
+         */
         else if (args.length > 0 && args[0].equals("kin")) {
             logger.info("adrian kin debug Session started");
             robotArm.getAxis(0).moveToAngle(5);
