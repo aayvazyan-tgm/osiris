@@ -2,10 +2,10 @@ package at.pria.osiris.osiris.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
-import at.pria.osiris.osiris.util.WIFIConnector;
-import com.google.zxing.Result;
-import com.welcu.android.zxingfragmentlib.BarCodeScannerFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import at.pria.osiris.osiris.view.elements.EmulatorView;
 
 /**
  * @author Ari Michael Ayvazyan
@@ -14,9 +14,15 @@ import com.welcu.android.zxingfragmentlib.BarCodeScannerFragment;
 public class RobotArmEmulatorFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static RobotArmEmulatorFragment INSTANCE;
+    private EmulatorView emulatorView;
 
     public RobotArmEmulatorFragment() {
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.emulatorView = new EmulatorView(getActivity());
     }
 
     public static RobotArmEmulatorFragment getInstance(int sectionNumber) {
@@ -33,7 +39,8 @@ public class RobotArmEmulatorFragment extends Fragment {
 
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return emulatorView;
     }
 }
