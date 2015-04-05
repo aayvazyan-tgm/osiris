@@ -32,5 +32,6 @@
     <!--QR Reader-->
     <string name="menu_settings">Settings</string>
     <string name="QRReader">QR-Scanner</string>
+    <string name="Emulator">Emulator</string>
 
 </resources>

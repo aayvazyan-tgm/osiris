@@ -132,6 +132,11 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.container, QRReaderFragment.getInstance(position + 1))
                     .commit();
             mTitle= getString(R.string.QRReader);
+        } else if (position + 1 == 8) { // QRReader
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, RobotArmEmulatorFragment.getInstance(position + 1))
+                    .commit();
+            mTitle= getString(R.string.Emulator);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -166,6 +171,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 8:
                 mTitle = getString(R.string.QRReader);
+                break;
+            case 9:
+                mTitle = getString(R.string.Emulator);
                 break;
         }
     }
