@@ -63,6 +63,11 @@ public class MainActivity extends ActionBarActivity
         /* Setup the Andrix/Hedgehog controller */
         //Setup the network
 
+        //Create the overlay
+//        FragmentManager supportFragmentManager = getSupportFragmentManager();
+//        supportFragmentManager.beginTransaction()
+//                .replace(R.id.overlay_fragment, RobotArmEmulatorFragment.getInstance(0))
+//                .commit();
     }
 
     public synchronized void setUpController() {
@@ -132,11 +137,11 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.container, QRReaderFragment.getInstance(position + 1))
                     .commit();
             mTitle= getString(R.string.QRReader);
-        } else if (position + 1 == 8) { // QRReader
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, RobotArmEmulatorFragment.getInstance(position + 1))
-                    .commit();
-            mTitle= getString(R.string.Emulator);
+        } else if (position + 1 == 8) { // Emulator
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, RobotArmEmulatorFragment.getInstance(position + 1))
+//                    .commit();
+//            mTitle= getString(R.string.Emulator);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
