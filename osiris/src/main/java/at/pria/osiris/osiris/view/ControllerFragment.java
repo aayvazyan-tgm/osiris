@@ -16,6 +16,7 @@ import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.util.EnumUtil;
 import at.pria.osiris.osiris.view.elements.ButtonVisualiser;
+import at.pria.osiris.osiris.view.elements.EmulatorView;
 
 /**
  * @author Ari Michael Ayvazyan
@@ -172,7 +173,6 @@ public class ControllerFragment extends Fragment {
         });
 
         //Axis selection
-        Axis.values();
         final Spinner motorSpinner = (Spinner) rootView.findViewById(R.id.motorSelectionSpinner);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(Axis.class));
         motorSpinner.setAdapter(spinnerArrayAdapter);
@@ -226,6 +226,10 @@ public class ControllerFragment extends Fragment {
     public void stopPower(View view) {
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
+            //Emulator
+            RobotArm emulator = EmulatorView.getInstance(view.getContext());
+            emulator.stopAxis(cfg.getSelectedAxis());
+            //Real RobotArm
             RobotArm robotArm = robotController.getRobotArm();
 
             robotArm.stopAxis(cfg.getSelectedAxis());
@@ -245,14 +249,18 @@ public class ControllerFragment extends Fragment {
         if (!positive) direction = -1;
         try {
             RoboArmConfig cfg = RoboArmConfig.getInstance();
+
+            //Emulator
+            RobotArm emulator = EmulatorView.getInstance(view.getContext());
+            emulator.turnAxis(cfg.getSelectedAxis(),
+                    direction * ((int) (100 * ((double) cfg.getPercentPower() / 100d)))
+            );
+
+            //Real robotArm
             RobotArm robotArm = robotController.getRobotArm();
 
             robotArm.turnAxis(cfg.getSelectedAxis(),
-                    direction *
-                            ((int) (
-                                    100 *
-                                            ((double) cfg.getPercentPower() / 100d)
-                            ))
+                    direction * ((int) (100 * ((double) cfg.getPercentPower() / 100d)))
             );
         } catch (ConnectionNotEstablishedException e) {
             Toast.makeText(view.getContext(), "Not connected", Toast.LENGTH_SHORT).show();

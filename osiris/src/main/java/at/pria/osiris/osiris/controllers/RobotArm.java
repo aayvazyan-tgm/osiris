@@ -35,7 +35,7 @@ public interface RobotArm {
      *
      * @param axis  the axis
      */
-    public void getMaximumAngle(int axis);
+    public double getMaximumAngle(int axis);
 
     /**
      * Moves to the given position
@@ -52,4 +52,11 @@ public interface RobotArm {
      * @param msg the message
      */
     public void sendMessage(Serializable msg);
+
+    /**
+     *
+     * @param axis the axis to request the position for
+     * @return the current position in degrees
+     */
+    public double getPosition(int axis);
 }

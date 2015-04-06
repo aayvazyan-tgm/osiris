@@ -43,8 +43,8 @@ public class BotballRemoteRobotArm extends Thread implements RobotArm {
     }
 
     @Override
-    public void getMaximumAngle(int axis) {
-
+    public double getMaximumAngle(int axis) {
+        return 0;
     }
 
     @Override
@@ -56,6 +56,12 @@ public class BotballRemoteRobotArm extends Thread implements RobotArm {
     public void sendMessage(Serializable msg) {
 
     }
+
+    @Override
+    public double getPosition(int axis) {
+        return 0;
+    }
+
     public static void setup(String host, int port) throws IOException{
 
     }

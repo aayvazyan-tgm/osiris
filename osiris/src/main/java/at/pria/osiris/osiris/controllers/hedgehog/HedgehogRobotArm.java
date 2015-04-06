@@ -48,7 +48,8 @@ public class HedgehogRobotArm extends Thread implements RobotArm {
     }
 
     @Override
-    public void getMaximumAngle(int axis) {
+    public double getMaximumAngle(int axis) {
+        return 0;
         //TODO Request the value and wait for the result
     }
 
@@ -73,5 +74,10 @@ public class HedgehogRobotArm extends Thread implements RobotArm {
         } catch (IOException e){
             Log.d("Connection", e.toString());
         }
+    }
+
+    @Override
+    public double getPosition(int axis) {
+        return 0;
     }
 }

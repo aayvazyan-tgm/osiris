@@ -22,7 +22,7 @@ public class RobotArmEmulatorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.emulatorView = new EmulatorView(getActivity());
+        this.emulatorView = EmulatorView.getInstance(getActivity());
     }
 
     public static RobotArmEmulatorFragment getInstance(int sectionNumber) {

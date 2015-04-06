@@ -5,15 +5,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import at.pria.osiris.linker.controllers.components.Axes.ServoHelper;
+import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
+import at.pria.osiris.osiris.controllers.RobotArm;
+
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * @author Ari Michael Ayvazyan
  * @version 05.04.2015
  */
-public class EmulatorView extends View {
+public class EmulatorView extends View implements RobotArm{
     Paint paint = new Paint();
     private final static int axis1Length = 10; // used for inverse kinematic and scaling
     private final static int axis1AngleCorrection = 180;
@@ -24,10 +28,26 @@ public class EmulatorView extends View {
     private int axis2ScaledLength;
     private Point axis1End;
     private Point axis2End;
-    private int axis1Angle=0;
-    private int axis2Angle=0;
+    private int axis1Angle = 0;
+    private int axis2Angle = 0;
+    private double axis0Angle =0;
 
-    public EmulatorView(Context context) {
+    private static EmulatorView INSTANCE;
+    //the Servo helpers for fluent movement
+    private static HashMap<Integer,ServoHelper> ServoHelperINSTANCES=new HashMap<>();
+
+    private ServoHelper getServoHelperInstance(int axis,EmulatorView emulatorView){
+        if (!ServoHelperINSTANCES.containsKey(axis))
+            ServoHelperINSTANCES.put(axis,new ServoHelper(new VirtualServo(axis,emulatorView),1));
+        return ServoHelperINSTANCES.get(axis);
+    }
+
+    public static EmulatorView getInstance(Context context) {
+        if (INSTANCE == null) INSTANCE = new EmulatorView(context);
+        return INSTANCE;
+    }
+
+    private EmulatorView(Context context) {
         super(context);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
@@ -35,8 +55,9 @@ public class EmulatorView extends View {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                axis1Angle += 10;
-                invalidate();
+                axis1Angle += (10d * Math.random());
+                axis2Angle += (10d * Math.random());
+                postInvalidate();
             }
         });
     }
@@ -54,10 +75,10 @@ public class EmulatorView extends View {
         int longestAxis = Math.max(axis1Length, axis2Length);
         if (axis1Length == longestAxis) {
             axis1ScaledLength = maxAxisLength;
-            axis2ScaledLength = (axis1ScaledLength/axis1Length) * axis2Length;
+            axis2ScaledLength = (axis1ScaledLength / axis1Length) * axis2Length;
         } else {
             axis2ScaledLength = maxAxisLength;
-            axis1ScaledLength = (axis2ScaledLength/axis2Length) * axis1Length;
+            axis1ScaledLength = (axis2ScaledLength / axis2Length) * axis1Length;
         }
 
         //Bottom
@@ -67,7 +88,7 @@ public class EmulatorView extends View {
 
         //Vertical
         {
-            Point p2 = rotate(baseEnd, new Point(baseEnd.x, baseEnd.y + axis1ScaledLength), axis1Angle+axis1AngleCorrection);
+            Point p2 = rotate(baseEnd, new Point(baseEnd.x, baseEnd.y + axis1ScaledLength), axis1Angle + axis1AngleCorrection);
             this.axis1End = p2;
             canvas.drawLine(baseEnd.x, baseEnd.y, p2.x, p2.y, paint);
         }
@@ -76,7 +97,7 @@ public class EmulatorView extends View {
         {
             Point p1 = axis1End;
             Point p2 = new Point(p1.x, p1.y + axis2ScaledLength);
-            p2 = this.axis2End = rotate(p1, p2, axis2Angle+axis2AngleCorrection);
+            p2 = this.axis2End = rotate(p1, p2, axis2Angle + axis2AngleCorrection);
             canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
         }
     }
@@ -100,22 +121,97 @@ public class EmulatorView extends View {
         return new Point((int) newX, (int) newY);
     }
 
-    public void moveToAngle(int axis, int angle){
-        switch (axis){
-            case 1:
-                axis1Angle=angle;
-            case 2:
-                axis2Angle=angle;
-        }
+    @Override
+    public void turnAxis(final int axis, int power) {
+        ServoHelper servoHelper = getServoHelperInstance(axis,this);
+        servoHelper.moveAtPower(power);
     }
 
-    public int getAngle(int axis){
-        switch (axis){
+    @Override
+    public void stopAxis(int axis) {
+        ServoHelper servoHelper = getServoHelperInstance(axis,this);
+        servoHelper.moveAtPower(0);
+    }
+
+    @Override
+    public void moveToAngle(int axis, int angle) {
+        switch (axis) {
+            case 1:
+                axis1Angle = angle;
+            case 2:
+                axis2Angle = angle;
+        }
+        //Update the gui
+        postInvalidate();
+    }
+
+    @Override
+    public double getMaximumAngle(int axis) {
+        switch (axis) {
+            case 0:
+                return 360;
+            case 1:
+                return 90;
+            case 2:
+                return 180;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean moveTo(double x, double y, double z) {
+        //Update the gui
+        postInvalidate();
+        return false;
+    }
+
+    @Override
+    public void sendMessage(Serializable msg) {
+        //Nope
+    }
+
+    @Override
+    public double getPosition(int axis) {
+        switch (axis) {
+            case 0:
+                return axis0Angle;
             case 1:
                 return axis1Angle;
             case 2:
                 return axis2Angle;
         }
         return -1;
+    }
+
+    private class VirtualServo implements Servo{
+        int axis;
+        private EmulatorView emulatorView;
+
+        public VirtualServo(int axis, EmulatorView emulatorView){
+            this.axis=axis;
+            this.emulatorView = emulatorView;
+        }
+
+        @Override
+        public void moveToAngle(int position) {
+            emulatorView.moveToAngle(axis,position);
+            //Update the gui
+            emulatorView.postInvalidate();
+        }
+
+        @Override
+        public int getPositionInDegrees() {
+            return (int) emulatorView.getPosition(axis);
+        }
+
+        @Override
+        public int getMaximumAngle() {
+            return (int) emulatorView.getMaximumAngle(axis);
+        }
+
+        @Override
+        public long getTimePerDegreeInMilli() {
+            return 2;
+        }
     }
 }

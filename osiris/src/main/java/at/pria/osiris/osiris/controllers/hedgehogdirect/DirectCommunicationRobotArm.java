@@ -58,9 +58,9 @@ public class DirectCommunicationRobotArm implements RobotArm {
     }
 
     @Override
-    public void getMaximumAngle(int axis) {
-        if(!isConnected())return;
-        axes.get(axis).getMaximumAngle();
+    public double getMaximumAngle(int axis) {
+        if(!isConnected())return 0;
+        return axes.get(axis).getMaximumAngle();
     }
 
     @Override
@@ -79,6 +79,12 @@ public class DirectCommunicationRobotArm implements RobotArm {
         if(!isConnected())return;
         System.out.println(message.toString());
     }
+
+    @Override
+    public double getPosition(int axis) {
+        return 0;
+    }
+
     public synchronized boolean isConnected(){
         if(!connected) {
             try {
