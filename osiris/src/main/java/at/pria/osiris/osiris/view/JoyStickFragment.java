@@ -82,7 +82,7 @@ public class JoyStickFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
-                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
+//Das ist keine gute Idee! :                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
 
@@ -99,7 +99,7 @@ public class JoyStickFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
-                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
+//Das ist keine gute Idee! :                    RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
 
