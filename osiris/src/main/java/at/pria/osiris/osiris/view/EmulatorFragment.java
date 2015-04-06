@@ -11,12 +11,12 @@ import at.pria.osiris.osiris.view.elements.EmulatorView;
  * @author Ari Michael Ayvazyan
  * @version 29.10.2014
  */
-public class RobotArmEmulatorFragment extends Fragment {
+public class EmulatorFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static RobotArmEmulatorFragment INSTANCE;
+    private static EmulatorFragment INSTANCE;
     private EmulatorView emulatorView;
 
-    public RobotArmEmulatorFragment() {
+    public EmulatorFragment() {
     }
 
     @Override
@@ -25,9 +25,9 @@ public class RobotArmEmulatorFragment extends Fragment {
         this.emulatorView = EmulatorView.getInstance(getActivity());
     }
 
-    public static RobotArmEmulatorFragment getInstance(int sectionNumber) {
+    public static EmulatorFragment getInstance(int sectionNumber) {
         if (INSTANCE == null) {
-            RobotArmEmulatorFragment fragment = new RobotArmEmulatorFragment();
+            EmulatorFragment fragment = new EmulatorFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -42,5 +42,11 @@ public class RobotArmEmulatorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return emulatorView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getView().setBackgroundColor(79);
     }
 }
