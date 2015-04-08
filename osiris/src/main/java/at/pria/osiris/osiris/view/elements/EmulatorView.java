@@ -1,13 +1,18 @@
 package at.pria.osiris.osiris.view.elements;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 import at.pria.osiris.linker.controllers.components.Axes.ServoHelper;
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
+import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.RobotArm;
 
 import java.io.Serializable;
@@ -47,14 +52,12 @@ public class EmulatorView extends View implements RobotArm {
         return INSTANCE;
     }
 
-    private EmulatorView(Context context) {
+    private EmulatorView(final Context context) {
         super(context);
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                axis0Angle += (10d * Math.random());
-                axis1Angle += (10d * Math.random());
-                axis2Angle += (10d * Math.random());
+                Toast.makeText(context, "Beautify me, Sam",Toast.LENGTH_SHORT).show();
                 postInvalidate();
             }
         });
@@ -71,6 +74,7 @@ public class EmulatorView extends View implements RobotArm {
         //Set the Paint for the Robotarm
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
+        paint.setAntiAlias(true);
         paint.setStrokeWidth(5);
 
         //Scale the axes
@@ -242,5 +246,12 @@ public class EmulatorView extends View implements RobotArm {
         public long getTimePerDegreeInMilli() {
             return 2;
         }
+    }
+    private void init(AttributeSet attrs) {
+        TypedArray a=getContext().obtainStyledAttributes(
+                attrs,EMPTY_STATE_SET);
+
+        //Don't forget this
+        a.recycle();
     }
 }

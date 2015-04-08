@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.view.elements.EmulatorView;
 
 /**
@@ -15,6 +17,7 @@ public class EmulatorFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static EmulatorFragment INSTANCE;
     private EmulatorView emulatorView;
+    private FrameLayout containerLayout;
 
     public EmulatorFragment() {
     }
@@ -41,7 +44,20 @@ public class EmulatorFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return emulatorView;
+        this.containerLayout=new FrameLayout(getActivity());
+        ViewGroup viewGroup = (ViewGroup) emulatorView.getParent();
+        viewGroup.removeView(emulatorView);
+        this.containerLayout.addView(emulatorView);
+        return containerLayout;
+    }
+
+    @Override
+    public void onDestroyView() {
+        ViewGroup viewGroup = (ViewGroup) emulatorView.getParent();
+        viewGroup.removeView(emulatorView);
+        ViewGroup overlayLayout = (ViewGroup) getActivity().findViewById(R.id.overlayLayout);
+        overlayLayout.addView(emulatorView);
+        super.onDestroyView();
     }
 
     @Override
