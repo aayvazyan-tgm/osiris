@@ -17,7 +17,7 @@
                  android:layout_marginTop="10dip">
         <TableRow>
             <TextView android:text="X"
-                      android:visibility="invisible"
+                      android:visibility="visible"
                       android:layout_width="50dip"
                       android:layout_height="wrap_content">
             </TextView>
@@ -28,7 +28,7 @@
             </TextView>
 
             <TextView android:text="X"
-                      android:visibility="invisible"
+                      android:visibility="visible"
                       android:layout_width="50dip"
                       android:layout_height="wrap_content">
             </TextView>
@@ -40,7 +40,7 @@
         </TableRow>
         <TableRow>
             <TextView android:text="Y"
-                      android:visibility="invisible"
+                      android:visibility="visible"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content">
             </TextView>
@@ -52,13 +52,13 @@
             </TextView>
 
             <TextView android:text="Y"
-                      android:visibility="invisible"
+                      android:visibility="visible"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content">
             </TextView>
 
             <TextView android:text=""
-                      android:visibility="invisible"
+                      android:visibility="visible"
                       android:id="@+id/TextViewY2"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content">

@@ -149,6 +149,8 @@ public class JoyStickFragment extends Fragment {
         public void OnMoved(int pan, int tilt) {
             txtX1.setText(Integer.toString(pan));
             txtY1.setText(Integer.toString(tilt));
+
+            moveLeft(pan, tilt);
         }
 
         @Override
@@ -171,6 +173,9 @@ public class JoyStickFragment extends Fragment {
         public void OnMoved(int pan, int tilt) {
             txtX2.setText(Integer.toString(pan));
             txtY2.setText(Integer.toString(tilt));
+
+            moveRight(pan, tilt);
+
         }
 
         @Override
@@ -190,22 +195,30 @@ public class JoyStickFragment extends Fragment {
     public void moveLeft(int x, int y) {
         // 0,1,2
 
-        RoboArmConfig cfg = RoboArmConfig.getInstance();
         RobotArm emulator = EmulatorView.getInstance(getActivity().getBaseContext());
-        emulator.stopAxis(cfg.getSelectedAxis());
+        emulator.stopAxis(spinner_pos_left);
+
+        switch(spinner_pos_left) {
+            case 0:
+                emulator.turnAxis(spinner_pos_left, x/2);
+                break;
+            case 1:
+                emulator.turnAxis(spinner_pos_left, y/2);
+                break;
+            case 2:
+                emulator.turnAxis(spinner_pos_left, y/2);
+                break;
+        }
 
         switch(spinner_pos_left) {
             case 0:
                 robotArm.turnAxis(spinner_pos_left, x/2);
-                emulator.turnAxis(spinner_pos_left, x/2);
                 break;
             case 1:
                 robotArm.turnAxis(spinner_pos_left, y/2);
-                emulator.turnAxis(spinner_pos_left, y/2);
                 break;
             case 2:
                 robotArm.turnAxis(spinner_pos_left, y/2);
-                emulator.turnAxis(spinner_pos_left, y/2);
                 break;
         }
 
@@ -213,23 +226,32 @@ public class JoyStickFragment extends Fragment {
 
     public void moveRight(int x, int y) {
 
-        RoboArmConfig cfg = RoboArmConfig.getInstance();
         RobotArm emulator = EmulatorView.getInstance(getActivity().getBaseContext());
-        emulator.stopAxis(cfg.getSelectedAxis());
+        emulator.stopAxis(spinner_pos_right);
+
+        switch(spinner_pos_left) {
+            case 0:
+                emulator.turnAxis(spinner_pos_right, x/2);
+                break;
+            case 1:
+                emulator.turnAxis(spinner_pos_right, y/2);
+                break;
+            case 2:
+                emulator.turnAxis(spinner_pos_right, y/2);
+                break;
+        }
 
         switch(spinner_pos_left) {
             case 0:
                 robotArm.turnAxis(spinner_pos_right, x/2);
-                emulator.turnAxis(spinner_pos_right, x/2);
                 break;
             case 1:
                 robotArm.turnAxis(spinner_pos_right, y/2);
-                emulator.turnAxis(spinner_pos_right, y/2);
                 break;
             case 2:
                 robotArm.turnAxis(spinner_pos_right, y/2);
-                emulator.turnAxis(spinner_pos_right, y/2);
                 break;
         }
+
     }
 }
