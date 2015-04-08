@@ -15,10 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import api.Axis;
+
+import at.pria.osiris.osiris.controllers.RobotArm;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
+import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
+import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.util.EnumUtil;
 import at.pria.osiris.osiris.util.RoboArmConfig;
+import at.pria.osiris.osiris.view.elements.EmulatorView;
 import at.pria.osiris.osiris.view.elements.joystick.*;
 
 /**
@@ -34,8 +39,13 @@ public class JoyStickFragment extends Fragment {
     private TextView txtX1, txtY1, txtX2, txtY2;
     private DualJoystickView joystick;
     private Spinner spinner_left, spinner_right;
+    private Controller robotController;
 
-    public static JoyStickFragment getInstance(int sectionNumber) {
+    private int spinner_pos_left, spinner_pos_right;
+
+    private RobotArm robotArm;
+
+    public static JoyStickFragment getInstance(int sectionNumber, Controller controller) {
 
         if(INSTANCE==null) {
 
@@ -48,9 +58,9 @@ public class JoyStickFragment extends Fragment {
 
             INSTANCE= fragment;
         }
+        INSTANCE.robotController= controller;
 
         return INSTANCE;
-
     }
 
     public JoyStickFragment() {
@@ -60,15 +70,22 @@ public class JoyStickFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.dualjoystick, container, false);
 
+        try {
+            robotArm= robotController.getRobotArm();
+        } catch (ConnectionNotEstablishedException e) {
+            Log.d(TAG, "ConnectionNotEstablishedException", e);
+            Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_SHORT).show();
+        }
+
         txtX1= (TextView) rootView.findViewById(R.id.TextViewX1);
         txtY1= (TextView) rootView.findViewById(R.id.TextViewY1);
         txtX2= (TextView) rootView.findViewById(R.id.TextViewX2);
         txtY2= (TextView) rootView.findViewById(R.id.TextViewY2);
 
-        txtX1.setVisibility(View.INVISIBLE);
-        txtY1.setVisibility(View.INVISIBLE);
-        txtX2.setVisibility(View.INVISIBLE);
-        txtY2.setVisibility(View.INVISIBLE);
+        //txtX1.setVisibility(View.INVISIBLE);
+        //txtY1.setVisibility(View.INVISIBLE);
+        //txtX2.setVisibility(View.INVISIBLE);
+        //txtY2.setVisibility(View.INVISIBLE);
 
         joystick= (DualJoystickView) rootView.findViewById(R.id.dualjoystickView);
         joystick.setOnJostickMovedListener(_listenerLeft, _listenerRight);
@@ -82,6 +99,7 @@ public class JoyStickFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
+                spinner_pos_left= i;
 //Das ist keine gute Idee! :                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
@@ -99,6 +117,7 @@ public class JoyStickFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
+                spinner_pos_right= i;
 //Das ist keine gute Idee! :                    RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
@@ -123,6 +142,8 @@ public class JoyStickFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+    // Implement the functionality
     private JoystickMovedListener _listenerLeft = new JoystickMovedListener() {
         @Override
         public void OnMoved(int pan, int tilt) {
@@ -134,11 +155,13 @@ public class JoyStickFragment extends Fragment {
         public void OnReleased() {
             txtX1.setText("released");
             txtY1.setText("released");
+            robotArm.stopAxis(spinner_pos_left);
         }
 
         public void OnReturnedToCenter() {
             txtX1.setText("stopped");
             txtY1.setText("stopped");
+            robotArm.stopAxis(spinner_pos_left);
         };
     };
 
@@ -154,11 +177,59 @@ public class JoyStickFragment extends Fragment {
         public void OnReleased() {
             txtX2.setText("released");
             txtY2.setText("released");
+            robotArm.stopAxis(spinner_pos_right);
         }
 
         public void OnReturnedToCenter() {
             txtX2.setText("stopped");
             txtY2.setText("stopped");
+            robotArm.stopAxis(spinner_pos_right);
         };
     };
+
+    public void moveLeft(int x, int y) {
+        // 0,1,2
+
+        RoboArmConfig cfg = RoboArmConfig.getInstance();
+        RobotArm emulator = EmulatorView.getInstance(getActivity().getBaseContext());
+        emulator.stopAxis(cfg.getSelectedAxis());
+
+        switch(spinner_pos_left) {
+            case 0:
+                robotArm.turnAxis(spinner_pos_left, x/2);
+                emulator.turnAxis(spinner_pos_left, x/2);
+                break;
+            case 1:
+                robotArm.turnAxis(spinner_pos_left, y/2);
+                emulator.turnAxis(spinner_pos_left, y/2);
+                break;
+            case 2:
+                robotArm.turnAxis(spinner_pos_left, y/2);
+                emulator.turnAxis(spinner_pos_left, y/2);
+                break;
+        }
+
+    }
+
+    public void moveRight(int x, int y) {
+
+        RoboArmConfig cfg = RoboArmConfig.getInstance();
+        RobotArm emulator = EmulatorView.getInstance(getActivity().getBaseContext());
+        emulator.stopAxis(cfg.getSelectedAxis());
+
+        switch(spinner_pos_left) {
+            case 0:
+                robotArm.turnAxis(spinner_pos_right, x/2);
+                emulator.turnAxis(spinner_pos_right, x/2);
+                break;
+            case 1:
+                robotArm.turnAxis(spinner_pos_right, y/2);
+                emulator.turnAxis(spinner_pos_right, y/2);
+                break;
+            case 2:
+                robotArm.turnAxis(spinner_pos_right, y/2);
+                emulator.turnAxis(spinner_pos_right, y/2);
+                break;
+        }
+    }
 }

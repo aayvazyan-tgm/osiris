@@ -15,7 +15,7 @@ public interface RobotArm {
      * (turns until the axis gets stopped)
      *
      * @param axis  the axis
-     * @param power the power may contain values from 0 to 100, 0 is defined as a stop and 100 is defined as the maximum power
+     * @param power the power may contain values from -100 to 100, 0 is defined as a stop and 100 is defined as the maximum power in the positive direction.
      */
     public void turnAxis(int axis, int power);
 

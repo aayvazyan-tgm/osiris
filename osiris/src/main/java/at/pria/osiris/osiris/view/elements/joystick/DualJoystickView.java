@@ -42,9 +42,10 @@ public class DualJoystickView extends LinearLayout {
 		stickL = new JoystickView(context, attrs);
 		stickR = new JoystickView(context, attrs);
 		initDualJoystickView();
-	}
+    }
 
 	private void initDualJoystickView() {
+        removeAllViews();
 		setOrientation(LinearLayout.HORIZONTAL);
 		
 		if ( D ) {
@@ -152,4 +153,20 @@ public class DualJoystickView extends LinearLayout {
     	boolean r = stickR.onTouchEvent(ev);
     	return l || r;
 	}
+
+    public JoystickView getStickL() {
+        return stickL;
+    }
+
+    public void setStickL(JoystickView stickL) {
+        this.stickL = stickL;
+    }
+
+    public JoystickView getStickR() {
+        return stickR;
+    }
+
+    public void setStickR(JoystickView stickR) {
+        this.stickR = stickR;
+    }
 }

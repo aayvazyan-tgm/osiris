@@ -14,7 +14,6 @@ import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
-import org.apache.http.conn.ConnectTimeoutException;
 
 /**
  * A Fragment to insert the invers kinematics values.

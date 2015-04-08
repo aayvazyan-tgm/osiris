@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity
             mTitle= getString(R.string.profiles);
         } else if (position + 1 == 6) { // joystick
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, JoyStickFragment.getInstance(position + 1))
+                    .replace(R.id.container, JoyStickFragment.getInstance(position + 1, robotController))
                     .commit();
             mTitle= getString(R.string.joystick);
         } else if (position + 1 == 7) { // QRReader
