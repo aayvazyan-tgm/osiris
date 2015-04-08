@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
@@ -23,6 +24,7 @@ import at.pria.osiris.osiris.controllers.hedgehog.HedgehogController;
 import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.*;
+import at.pria.osiris.osiris.view.elements.EmulatorView;
 
 
 public class MainActivity extends ActionBarActivity
@@ -68,6 +70,9 @@ public class MainActivity extends ActionBarActivity
 //        supportFragmentManager.beginTransaction()
 //                .replace(R.id.overlay_fragment, RobotArmEmulatorFragment.getInstance(0))
 //                .commit();
+
+        final FrameLayout frameLayout = (FrameLayout) findViewById(R.id.overlayLayout);
+        frameLayout.addView(EmulatorView.getInstance(this));
     }
 
     public synchronized void setUpController() {
@@ -138,10 +143,10 @@ public class MainActivity extends ActionBarActivity
                     .commit();
             mTitle= getString(R.string.QRReader);
         } else if (position + 1 == 8) { // Emulator
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.container, RobotArmEmulatorFragment.getInstance(position + 1))
-//                    .commit();
-//            mTitle= getString(R.string.Emulator);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, EmulatorFragment.getInstance(position + 1))
+                    .commit();
+            mTitle= getString(R.string.Emulator);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))

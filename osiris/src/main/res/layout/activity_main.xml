@@ -13,13 +13,12 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-        <fragment
+        <FrameLayout
                 android:layout_width="100dp"
                 android:layout_height="120dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:name="at.pria.osiris.osiris.view.EmulatorFragment"
-                android:id="@+id/overlay_fragment"/>
+                android:id="@+id/overlayLayout"/>
     </RelativeLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
