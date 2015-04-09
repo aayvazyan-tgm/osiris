@@ -70,9 +70,16 @@ public class MainActivity extends ActionBarActivity
 //        supportFragmentManager.beginTransaction()
 //                .replace(R.id.overlay_fragment, RobotArmEmulatorFragment.getInstance(0))
 //                .commit();
-
         final FrameLayout frameLayout = (FrameLayout) findViewById(R.id.overlayLayout);
-        frameLayout.addView(EmulatorView.getInstance(this));
+        final EmulatorView emulatorView = EmulatorView.getInstance(this);
+        if(emulatorView.getParent()==null) frameLayout.addView(emulatorView);
+        else {
+            ViewGroup viewGroup = (ViewGroup) emulatorView.getParent();
+            if(viewGroup.getId()==frameLayout.getId()){
+                viewGroup.removeView(emulatorView);
+                frameLayout.addView(emulatorView);
+            }
+        }
     }
 
     public synchronized void setUpController() {
