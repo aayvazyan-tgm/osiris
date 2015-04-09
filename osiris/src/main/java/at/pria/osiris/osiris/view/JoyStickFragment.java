@@ -200,25 +200,25 @@ public class JoyStickFragment extends Fragment {
 
         switch(spinner_pos_left) {
             case 0:
-                emulator.turnAxis(spinner_pos_left, x/2);
+                emulator.turnAxis(spinner_pos_left, x * 10);
                 break;
             case 1:
-                emulator.turnAxis(spinner_pos_left, y/2);
+                emulator.turnAxis(spinner_pos_left, y * 10);
                 break;
             case 2:
-                emulator.turnAxis(spinner_pos_left, y/2);
+                emulator.turnAxis(spinner_pos_left, y * 10);
                 break;
         }
 
         switch(spinner_pos_left) {
             case 0:
-                robotArm.turnAxis(spinner_pos_left, x/2);
+                robotArm.turnAxis(spinner_pos_left, x * 10);
                 break;
             case 1:
-                robotArm.turnAxis(spinner_pos_left, y/2);
+                robotArm.turnAxis(spinner_pos_left, y * 10);
                 break;
             case 2:
-                robotArm.turnAxis(spinner_pos_left, y/2);
+                robotArm.turnAxis(spinner_pos_left, y * 10);
                 break;
         }
 
@@ -231,25 +231,25 @@ public class JoyStickFragment extends Fragment {
 
         switch(spinner_pos_left) {
             case 0:
-                emulator.turnAxis(spinner_pos_right, x/2);
+                emulator.turnAxis(spinner_pos_right, x * 10);
                 break;
             case 1:
-                emulator.turnAxis(spinner_pos_right, y/2);
+                emulator.turnAxis(spinner_pos_right, y * 10);
                 break;
             case 2:
-                emulator.turnAxis(spinner_pos_right, y/2);
+                emulator.turnAxis(spinner_pos_right, y * 10);
                 break;
         }
 
         switch(spinner_pos_left) {
             case 0:
-                robotArm.turnAxis(spinner_pos_right, x/2);
+                robotArm.turnAxis(spinner_pos_right, x * 10);
                 break;
             case 1:
-                robotArm.turnAxis(spinner_pos_right, y/2);
+                robotArm.turnAxis(spinner_pos_right, y * 10);
                 break;
             case 2:
-                robotArm.turnAxis(spinner_pos_right, y/2);
+                robotArm.turnAxis(spinner_pos_right, y * 10);
                 break;
         }
 
