@@ -1,5 +1,6 @@
 package at.pria.osiris.osiris.controllers.hedgehog;
 
+import android.util.Log;
 import org.andrix.listeners.StateListener;
 import org.andrix.low.ConnectionState;
 import org.andrix.low.HardwareController;
@@ -39,7 +40,7 @@ public class MyStateListener implements StateListener{
     public void scanUpdate(HardwareController hwc) {
         if (!nearControllers.containsKey(hwc.address)) {
             nearControllers.put(hwc.address, hwc);
-            System.out.println("received new controller");
+            Log.d("DBG","received new controller");
             if (!hwc.connect())
                 return;
             try {
