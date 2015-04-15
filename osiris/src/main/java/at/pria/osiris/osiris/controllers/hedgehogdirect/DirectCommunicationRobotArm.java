@@ -13,10 +13,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * This class Provides a simple Interface to Send commands to the Robot
+ * This RobotArm communicates with the Hedgehog Controller directly
  *
- * @author Adrian Bergler, Ari Ayvazyan
- * @version 3.11.2014
+ * @author Ari Ayvazyan
+ * @version 15.4.2015
  */
 public class DirectCommunicationRobotArm implements RobotArm {
 
