@@ -216,6 +216,11 @@ public class EmulatorView extends View implements RobotArm {
         return -1;
     }
 
+    @Override
+    public String getConnectionState() {
+        return "Connected... its a emulator";
+    }
+
     private class VirtualServo implements Servo {
         int axis;
         private EmulatorView emulatorView;

@@ -4,6 +4,7 @@ import android.util.Log;
 import at.pria.osiris.osiris.util.AXCPWrapper;
 import at.pria.osiris.osiris.controllers.RobotArm;
 import messages.requests.MoveAxisToAngleRequest;
+import org.andrix.low.AXCPAccessor;
 import org.andrix.low.NotConnectedException;
 import org.andrix.low.RequestTimeoutException;
 import java.io.IOException;
@@ -79,5 +80,10 @@ public class HedgehogRobotArm extends Thread implements RobotArm {
     @Override
     public double getPosition(int axis) {
         return 0;
+    }
+
+    @Override
+    public String getConnectionState() {
+        return AXCPAccessor.getInstance().getConnectionState().toString();
     }
 }

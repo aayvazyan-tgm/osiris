@@ -6,7 +6,7 @@ import at.pria.osiris.linker.controllers.components.Axes.ServoAxis;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogDoubleServo;
 import at.pria.osiris.linker.implementation.hedgehog.components.HedgehogServo;
 import at.pria.osiris.osiris.controllers.RobotArm;
-import org.andrix.low.NotConnectedException;
+import org.andrix.low.AXCPAccessor;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -99,5 +99,8 @@ public class DirectCommunicationRobotArm implements RobotArm {
             }
         }
         return connected;
+    }
+    public String getConnectionState(){
+        return AXCPAccessor.getInstance().getConnectionState().toString();
     }
 }

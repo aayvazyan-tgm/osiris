@@ -11,19 +11,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import at.pria.osiris.osiris.R;
-import at.pria.osiris.osiris.util.AXCPWrapper;
 import at.pria.osiris.osiris.view.elements.naviBar.CustomDrawerAdapter;
 import at.pria.osiris.osiris.view.elements.naviBar.DrawerItem;
-import messages.requests.SensorValueRequest;
+import org.andrix.low.AXCPAccessor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -278,16 +274,8 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.start_test) {
-            Toast.makeText(getActivity(), "Sending Test Data...", Toast.LENGTH_SHORT).show();
-            try {
-                AXCPWrapper.sendData(new SensorValueRequest(0));
-                //AXCPWrapper.sendData(new SensorValueRequest(1));
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.d("Hedgehog", "Exception in test", e);
-                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
-            }
+        if (item.getItemId() == R.id.not_connected) {
+            item.setTitle(AXCPAccessor.getInstance().getConnectionState().toString());
             return true;
         }
 

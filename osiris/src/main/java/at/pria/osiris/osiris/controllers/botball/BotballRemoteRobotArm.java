@@ -62,6 +62,11 @@ public class BotballRemoteRobotArm extends Thread implements RobotArm {
         return 0;
     }
 
+    @Override
+    public String getConnectionState() {
+        return "Unknown";
+    }
+
     public static void setup(String host, int port) throws IOException{
 
     }

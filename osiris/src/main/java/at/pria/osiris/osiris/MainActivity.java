@@ -21,24 +21,15 @@ import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 import at.pria.osiris.osiris.util.Storeage;
-import at.pria.osiris.osiris.view.*;
+import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.elements.EmulatorView;
-import at.pria.osiris.osiris.view.fragments.ControllerFragment;
-import at.pria.osiris.osiris.view.fragments.DrawFragment;
-import at.pria.osiris.osiris.view.fragments.EmulatorFragment;
-import at.pria.osiris.osiris.view.fragments.InversKinematicsFragment;
-import at.pria.osiris.osiris.view.fragments.JoyStickFragment;
-import at.pria.osiris.osiris.view.fragments.ProfileFragment;
-import at.pria.osiris.osiris.view.fragments.QRReaderFragment;
-import at.pria.osiris.osiris.view.fragments.SelectionFragment;
-import at.pria.osiris.osiris.view.fragments.SettingsFragment;
-import at.pria.osiris.osiris.view.fragments.TableSensorValuesFragment;
+import at.pria.osiris.osiris.view.fragments.*;
 
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private final String TAG= "MAIN-Osiris";
+    private final String TAG = "MAIN-Osiris";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -50,7 +41,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
     private Controller robotController;
-    private boolean setupDone=false;
+    private boolean setupDone = false;
     private ActionBar actionBar;
 
     @Override
@@ -59,7 +50,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         //Start by using a HedgehogController
-        setUpController();
+//        setUpController(new HedgehogDirectController(),false);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -80,27 +71,27 @@ public class MainActivity extends ActionBarActivity
 //                .commit();
         final FrameLayout frameLayout = (FrameLayout) findViewById(R.id.overlayLayout);
         final EmulatorView emulatorView = EmulatorView.getInstance(this);
-        if(emulatorView.getParent()==null) frameLayout.addView(emulatorView);
+        if (emulatorView.getParent() == null) frameLayout.addView(emulatorView);
         else {
             ViewGroup viewGroup = (ViewGroup) emulatorView.getParent();
-            if(viewGroup.getId()==frameLayout.getId()){
+            if (viewGroup.getId() == frameLayout.getId()) {
                 viewGroup.removeView(emulatorView);
                 frameLayout.addView(emulatorView);
             }
         }
     }
 
-    public synchronized void setUpController() {
-        if(setupDone==false) {
+    public synchronized void setUpController(Controller controller, boolean newSetup) {
+        if (setupDone == false || newSetup) {
             try {
-                Controller controller = new HedgehogDirectController();
                 controller.getSetup().setup(controller.getRobotArm());
                 Storeage storeage = Storeage.getInstance();
                 storeage.setRobotController(controller);
                 this.robotController = controller;
                 this.setupDone = true;
+                Toast.makeText(getBaseContext(), "Setup done: " + controller.getClass().getName(), Toast.LENGTH_LONG).show();
             } catch (ConnectionNotEstablishedException e) {
-                setupDone=false;
+                setupDone = false;
                 e.printStackTrace();
                 Toast.makeText(getBaseContext(), "Connection not Established", Toast.LENGTH_LONG).show();
             }
@@ -109,25 +100,30 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        setUpController();
+//        setUpController(new HedgehogDirectController(), false);
         // update the main content by replacing fragments
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Storeage storeage = Storeage.getInstance();
         robotController = storeage.getRobotController();
-        Log.d(TAG, "OSIRIS SETUP DONE:" + setupDone);
-        if (position + 1 == 1) {        // controller
+        if (robotController == null) {      //ask for a Controller if none is selected
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SelectionFragment.getInstance(position + 1, this))
+                    .commit();
+            mTitle = getString(R.string.selection);
+
+        }else if (position + 1 == 1) {        // controller
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ControllerFragment.getInstance(position + 1, robotController))
                     .commit();
-            mTitle= getString(R.string.control);
-        } else if (position + 1 == 2) { // inverse Kinematics
+            mTitle = getString(R.string.control);
+        } else if (position + 1 == 2) {         // inverse Kinematics
             fragmentManager.beginTransaction()
                     .replace(R.id.container, InversKinematicsFragment.getInstance(position + 1, robotController))
                     .commit();
-            mTitle= getString(R.string.inversKinecs);
-        } else if (position + 1 == 3) { // sensor Values
+            mTitle = getString(R.string.inversKinecs);
+        } else if (position + 1 == 3) {         // sensor Values
             try {
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, TableSensorValuesFragment.getInstance(position + 1, robotController.getRobotArm()))
@@ -136,27 +132,27 @@ public class MainActivity extends ActionBarActivity
                 Toast.makeText(getBaseContext(), "Connection not yet Established", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-            mTitle= getString(R.string.sensor_values);
+            mTitle = getString(R.string.sensor_values);
         } else if (position + 1 == 4) { // draw line
             fragmentManager.beginTransaction()
                     .replace(R.id.container, DrawFragment.getInstance(position + 1))
                     .commit();
-            mTitle= getString(R.string.drawline);
+            mTitle = getString(R.string.drawline);
         } else if (position + 1 == 5) { // profiles
             fragmentManager.beginTransaction()
                     .replace(R.id.container, ProfileFragment.getInstance(position + 1, robotController))
                     .commit();
-            mTitle= getString(R.string.profiles);
+            mTitle = getString(R.string.profiles);
         } else if (position + 1 == 6) { // joystick
             fragmentManager.beginTransaction()
                     .replace(R.id.container, JoyStickFragment.getInstance(position + 1, robotController))
                     .commit();
-            mTitle= getString(R.string.joystick);
+            mTitle = getString(R.string.joystick);
         } else if (position + 1 == 7) { // QRReader
             fragmentManager.beginTransaction()
                     .replace(R.id.container, QRReaderFragment.getInstance(position + 1))
                     .commit();
-            mTitle= getString(R.string.QRReader);
+            mTitle = getString(R.string.QRReader);
         } else if (position + 1 == 8) { // Emulator
             fragmentManager.beginTransaction()
                     .replace(R.id.container, EmulatorFragment.getInstance(position + 1))
@@ -164,15 +160,15 @@ public class MainActivity extends ActionBarActivity
             mTitle = getString(R.string.Emulator);
         } else if (position + 1 == 9) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, SelectionFragment.getInstance(position +1, robotController))
+                    .replace(R.id.container, SelectionFragment.getInstance(position + 1, this))
                     .commit();
-            mTitle= getString(R.string.selection);
+            mTitle = getString(R.string.selection);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                     .commit();
         }
-        if(actionBar!=null)
+        if (actionBar != null)
             actionBar.setTitle(mTitle);
     }
 
@@ -213,7 +209,7 @@ public class MainActivity extends ActionBarActivity
 
     public void restoreActionBar() {
         Resources res = getResources();
-        int color= res.getColor(R.color.background_menu);
+        int color = res.getColor(R.color.background_menu);
 
         actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -221,7 +217,7 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
 
-        int status_color= res.getColor(R.color.statusbar_color);
+        int status_color = res.getColor(R.color.statusbar_color);
 
         this.setStatusBarColor(status_color);
     }

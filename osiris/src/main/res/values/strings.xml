@@ -34,5 +34,6 @@
     <string name="QRReader">QR-Scanner</string>
     <string name="Emulator">Emulator</string>
     <string name="selection">Selection</string>
+    <string name="not_connected">Not Connected</string>
 
 </resources>

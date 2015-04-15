@@ -59,4 +59,10 @@ public interface RobotArm {
      * @return the current position in degrees
      */
     public double getPosition(int axis);
+
+    /**
+     *
+     * @return a String representing the current connection state
+     */
+    public String getConnectionState();
 }
