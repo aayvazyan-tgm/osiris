@@ -22,7 +22,6 @@ import at.pria.osiris.osiris.util.AXCPWrapper;
 import at.pria.osiris.osiris.view.elements.naviBar.CustomDrawerAdapter;
 import at.pria.osiris.osiris.view.elements.naviBar.DrawerItem;
 import messages.requests.SensorValueRequest;
-import org.andrix.AXCP;
 
 import java.io.IOException;
 import java.util.ArrayList;
