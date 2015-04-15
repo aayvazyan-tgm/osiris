@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.view;
+package at.pria.osiris.osiris.view.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -61,22 +61,22 @@ public class NewProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_new_profile, container, false);
 
         Axis.values();
-        //final Spinner typeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
-        //ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, EnumUtil.getEnumNames(ControllerType.class));
-        //typeSpinner.setAdapter(spinnerArrayAdapter);
-        //
-        //// setting the listener to the spinner
-        //typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        //    @Override
-        //    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //        selectedItem = (String) adapterView.getItemAtPosition(i);
-        //    }
-        //
-        //    @Override
-        //    public void onNothingSelected(AdapterView<?> adapterView) {
-        //        Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
-        //    }
-        //});
+        final Spinner typeSpinner = (Spinner) rootView.findViewById(R.id.type_spinner);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, new String[]{"hedgehog", "hedgehogdirect", "botball"});
+        typeSpinner.setAdapter(spinnerArrayAdapter);
+
+        // setting the listener to the spinner
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedItem = (String) adapterView.getItemAtPosition(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getActivity(), "Warning: No axis selected", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         hostname= (EditText) rootView.findViewById(R.id.new_profile_hostname_edit_text);
         port= (EditText) rootView.findViewById(R.id.new_profile_port_edit_text);
@@ -94,13 +94,6 @@ public class NewProfileFragment extends Fragment {
                 }
 
                 // TODO check the input, ip - address, port
-
-                //if(selectedItem.equals(ControllerType.Botball.toString())) {
-                //    controllerType= ControllerType.Botball;
-                //}
-                //if(selectedItem.equals(ControllerType.Hedgehog.toString())) {
-                //    controllerType= ControllerType.Hedgehog;
-                //}
 
                 final Activity activity = getActivity();
 

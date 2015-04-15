@@ -6,7 +6,7 @@ import at.pria.osiris.osiris.communication.messageProcessor.SensorValueResponseP
 import at.pria.osiris.osiris.communication.messageProcessor.StringProcessor;
 import at.pria.osiris.osiris.controllers.ControllerSetup;
 import at.pria.osiris.osiris.sensors.SensorRefreshable;
-import at.pria.osiris.osiris.view.TableSensorValuesFragment;
+import at.pria.osiris.osiris.view.fragments.TableSensorValuesFragment;
 import org.andrix.listeners.ExecutionListener;
 
 /**

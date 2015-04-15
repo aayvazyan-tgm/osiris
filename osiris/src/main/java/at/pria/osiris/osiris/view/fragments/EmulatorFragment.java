@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.view;
+package at.pria.osiris.osiris.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

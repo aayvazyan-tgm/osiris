@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.view;
+package at.pria.osiris.osiris.view.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.util.Storeage;
-import org.apache.log4j.chainsaw.Main;
 
 /**
  * A fragment to controll the user settings in the app.

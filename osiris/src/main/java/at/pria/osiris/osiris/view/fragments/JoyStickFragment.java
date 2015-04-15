@@ -1,4 +1,4 @@
-package at.pria.osiris.osiris.view;
+package at.pria.osiris.osiris.view.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,7 +22,6 @@ import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.util.EnumUtil;
-import at.pria.osiris.osiris.util.RoboArmConfig;
 import at.pria.osiris.osiris.view.elements.EmulatorView;
 import at.pria.osiris.osiris.view.elements.joystick.*;
 

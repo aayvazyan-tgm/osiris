@@ -1,11 +1,9 @@
-package at.pria.osiris.osiris.view;
+package at.pria.osiris.osiris.view.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,7 +50,7 @@ public class ProfileFragment extends Fragment {
     private ActionButton actionButton;
 
     /**
-     * Creates a new DrawFragment instance
+     * Creates a new ProfileFragment instance
      * @param sectionNumber the sectionNumber from the fragments collection
      * @return the new instance
      */
@@ -273,6 +271,12 @@ public class ProfileFragment extends Fragment {
                 }
 
                 // Not Tested -----
+
+                /**
+                 * - "hedgehog"
+                 - "hedgehogdirect"
+                 - "botball"
+                 */
 
                 // Hedgehog Controller
                 try {

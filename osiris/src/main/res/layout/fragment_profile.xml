@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="at.pria.osiris.osiris.view.ProfileFragment"
+        tools:context="at.pria.osiris.osiris.view.fragments.ProfileFragment"
         android:fillViewport="true">
 
     <RelativeLayout

@@ -131,6 +131,7 @@ public class NavigationDrawerFragment extends Fragment {
         datalist.add(new DrawerItem(getString(R.string.joystick), R.drawable.ic_action_gamepad));
         datalist.add(new DrawerItem(getString(R.string.QRReader), R.drawable.ic_action_gamepad));
         datalist.add(new DrawerItem(getString(R.string.Emulator), R.drawable.ic_action_gamepad));
+        datalist.add(new DrawerItem(getString(R.string.selection), R.drawable.ic_action_gamepad));
 
         final Activity activity= getActivity();
         customDrawerAdapter= new CustomDrawerAdapter(activity, R.layout.custom_drawer_item, android.R.id.text1, datalist);

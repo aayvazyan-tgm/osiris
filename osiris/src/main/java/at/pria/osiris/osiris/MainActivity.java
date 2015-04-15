@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -20,11 +19,20 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
-import at.pria.osiris.osiris.controllers.hedgehog.HedgehogController;
 import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.*;
 import at.pria.osiris.osiris.view.elements.EmulatorView;
+import at.pria.osiris.osiris.view.fragments.ControllerFragment;
+import at.pria.osiris.osiris.view.fragments.DrawFragment;
+import at.pria.osiris.osiris.view.fragments.EmulatorFragment;
+import at.pria.osiris.osiris.view.fragments.InversKinematicsFragment;
+import at.pria.osiris.osiris.view.fragments.JoyStickFragment;
+import at.pria.osiris.osiris.view.fragments.ProfileFragment;
+import at.pria.osiris.osiris.view.fragments.QRReaderFragment;
+import at.pria.osiris.osiris.view.fragments.SelectionFragment;
+import at.pria.osiris.osiris.view.fragments.SettingsFragment;
+import at.pria.osiris.osiris.view.fragments.TableSensorValuesFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -146,7 +154,12 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, EmulatorFragment.getInstance(position + 1))
                     .commit();
-            mTitle= getString(R.string.Emulator);
+            mTitle = getString(R.string.Emulator);
+        } else if (position + 1 == 9) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SelectionFragment.getInstance(position +1, robotController))
+                    .commit();
+            mTitle= getString(R.string.selection);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -184,6 +197,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 9:
                 mTitle = getString(R.string.Emulator);
+                break;
+            case 10:
+                mTitle = getString(R.string.selection);
                 break;
         }
     }
