@@ -20,6 +20,8 @@ import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController
 import at.pria.osiris.osiris.util.Storeage;
 
 /**
+ * A fragment to select which controller should be used.
+ *
  * Created by helmuthbrunner on 15/04/15.
  */
 public class SelectionFragment extends Fragment {
