@@ -2,7 +2,6 @@ package at.pria.osiris.linker.controllers.components.Axes;
 
 
 import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
-import org.apache.log4j.Logger;
 
 /**
  * A class which provides methods that changes the behavior of
@@ -29,14 +28,18 @@ public class ServoHelper {
     }
 
     public void moveAtPower(int power) {
-        System.out.println("moveAtPower: "+power);
+        System.out.println("moveAtPower: " + power);
         this.interrupt = true;
         if (power == 0) return;
         final int powerFinal = power;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                pwm(powerFinal);
+                try {
+                    pwm(powerFinal);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -48,7 +51,7 @@ public class ServoHelper {
      * @param power The power(speed) it should use
      */
     private synchronized void pwm(int power) {
-        System.out.println("starting pwm: "+power);
+        System.out.println("starting pwm: " + power);
         this.interrupt = false;
         //Defining important Variables
         int maxPower = 100;
@@ -90,7 +93,7 @@ public class ServoHelper {
                 if (pos) {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition < s.getMaximumAngle() - 3) {
-                        System.out.println("Next Position: "+(startPosition + 1));
+                        System.out.println("Next Position: " + (startPosition + 1));
                         s.moveToAngle(startPosition + 1);
                         startPosition += 1;
                         moving = true;
@@ -104,7 +107,7 @@ public class ServoHelper {
                 } else {
                     //Defining a softwarebased limit for the rotationdegree
                     if (startPosition > 3) {
-                        System.out.println("Next Position: "+(startPosition - 1));
+                        System.out.println("Next Position: " + (startPosition - 1));
                         s.moveToAngle(startPosition - 1);
                         startPosition -= 1;
                         moving = true;

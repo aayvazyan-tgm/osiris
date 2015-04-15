@@ -1,5 +1,6 @@
 package at.pria.osiris.osiris.controllers.hedgehog;
 
+import android.util.Log;
 import org.andrix.listeners.StateListener;
 import org.andrix.low.ConnectionState;
 import org.andrix.low.HardwareController;
@@ -19,6 +20,7 @@ public class MyStateListener implements StateListener{
 
     private Map<InetAddress, HardwareController> nearControllers = new HashMap<InetAddress, HardwareController>();
     private ConnectionState connectionState = ConnectionState.DISCONNECTED;
+
     @Override
     public void connectionStateChange(ConnectionState connectionState, HardwareController hardwareController) {
         if(connectionState == ConnectionState.CONNECTED_NOAUTH){
@@ -39,7 +41,7 @@ public class MyStateListener implements StateListener{
     public void scanUpdate(HardwareController hwc) {
         if (!nearControllers.containsKey(hwc.address)) {
             nearControllers.put(hwc.address, hwc);
-            System.out.println("received new controller");
+            Log.d("DBG","received new controller");
             if (!hwc.connect())
                 return;
             try {
@@ -53,11 +55,6 @@ public class MyStateListener implements StateListener{
         }
 //        if(connectionState == ConnectionState.DISCONNECTED)
 //        hardwareController.connect();
-    }
-
-    @Override
-    public void exceptionThrown(Exception e) {
-        e.printStackTrace();
     }
 
     @Override

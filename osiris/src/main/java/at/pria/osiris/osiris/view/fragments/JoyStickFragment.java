@@ -71,7 +71,7 @@ public class JoyStickFragment extends Fragment {
 
         try {
             robotArm= robotController.getRobotArm();
-        } catch (ConnectionNotEstablishedException e) {
+        } catch (Exception e) {
             Log.d(TAG, "ConnectionNotEstablishedException", e);
             Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_SHORT).show();
         }
@@ -99,7 +99,6 @@ public class JoyStickFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
                 spinner_pos_left= i;
-//Das ist keine gute Idee! :                RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
 
@@ -117,7 +116,6 @@ public class JoyStickFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int selectedItem = i;
                 spinner_pos_right= i;
-//Das ist keine gute Idee! :                    RoboArmConfig.getInstance().setSelectedAxis(selectedItem);
                 Toast.makeText(getActivity(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
 
