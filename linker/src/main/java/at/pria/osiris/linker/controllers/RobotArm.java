@@ -5,6 +5,8 @@ import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.controllers.components.Axes.Axis;
 import at.pria.osiris.linker.kinematics.Kinematic;
 
+import java.util.ArrayList;
+
 /**
  * @author Ari Ayvazyan
  * @version 2015-01-26
@@ -37,6 +39,10 @@ public abstract class RobotArm {
     }
 
     public void moveTo(double x, double y, double z) {
+
+    }
+
+    public void moveSynchronized(ArrayList<Integer> axes){
 
     }
 

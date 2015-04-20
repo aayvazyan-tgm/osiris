@@ -53,4 +53,12 @@ public class HedgehogRobotArm extends RobotArm {
         }
         return -1;
     }
+
+    @Override
+    public void moveSynchronized(ArrayList<Integer> axes) {
+        for(int z = 0; z < axes.size() ;z++){
+            this.getAxis(z).moveToAngle(axes.get(z));
+
+        }
+    }
 }
