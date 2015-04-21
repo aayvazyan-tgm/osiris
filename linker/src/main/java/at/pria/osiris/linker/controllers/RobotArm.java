@@ -42,7 +42,7 @@ public abstract class RobotArm {
 
     }
 
-    public void moveSynchronized(ArrayList<Integer> axes){
+    public void moveSynchronized(ArrayList<Double> axes){
 
     }
 

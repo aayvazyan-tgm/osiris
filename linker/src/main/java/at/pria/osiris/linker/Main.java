@@ -109,9 +109,12 @@ public class Main {
 
             ArrayList<Double> solution = kinematics.calculateValues();
 
+            robotArm.moveSynchronized(solution);
+            /*
             robotArm.getAxis(0).moveToAngle((int)Math.round(solution.get(0)));
             robotArm.getAxis(1).moveToAngle((int)Math.round(solution.get(1)));
             robotArm.getAxis(2).moveToAngle((int)Math.round(solution.get(2)));
+            */
             logger.info("done");
         }
     }
