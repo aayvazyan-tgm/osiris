@@ -42,9 +42,7 @@ public abstract class RobotArm {
 
     }
 
-    public void moveSynchronized(ArrayList<Double> axes){
-
-    }
+    public abstract void moveSynchronized(ArrayList<Double> axes);
 
     public abstract int getSensorValue(int sensorPort);
 }
