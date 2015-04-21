@@ -49,11 +49,12 @@ public class ServoHelper {
         this.interrupt = true;
         if (power == 0) return;
         final int powerFinal = power;
+        final int angleFinal = angle;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    pwm(powerFinal, angle);
+                    pwm(powerFinal, angleFinal);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
