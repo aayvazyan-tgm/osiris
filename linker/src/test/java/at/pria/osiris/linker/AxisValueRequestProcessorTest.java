@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -67,6 +68,11 @@ public class AxisValueRequestProcessorTest {
             }
 
             @Override
+            public void moveAtPower(int power, int angle) {
+
+            }
+
+            @Override
             public double getMaximumAngle() {
                 return 0.0;
             }
@@ -94,6 +100,11 @@ public class AxisValueRequestProcessorTest {
             @Override
             public Axis getAxis(int i) {
                 return axis;
+            }
+
+            @Override
+            public void moveSynchronized(ArrayList<Double> angle) {
+
             }
 
             @Override
