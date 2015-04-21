@@ -4,8 +4,8 @@ import at.pria.osiris.linker.communication.MessageProcessorRegister;
 import at.pria.osiris.linker.communication.messageProcessors.*;
 import at.pria.osiris.linker.controllers.RobotArm;
 import at.pria.osiris.linker.implementation.hedgehog.HedgehogRobotArm;
-import at.pria.osiris.linker.kinematics.Kinematic;
-import at.pria.osiris.linker.kinematics.ThreeAxisKinematics;
+import at.pria.osiris.linker.kinematics.Kinematics;
+import at.pria.osiris.linker.kinematics.GeometricKinematics;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class Main {
             double[] fragmentlengths = {26, 23};
             double[][] padding = {{0,0,0},{0,0,0},{0,0,0}};
 
-            Kinematic kinematics = new ThreeAxisKinematics(32, 0, 24, fragmentlengths, padding);
+            Kinematics kinematics = new GeometricKinematics(32, 0, 24, fragmentlengths, padding);
 
             ArrayList<Double> solution = kinematics.calculateValues();
 

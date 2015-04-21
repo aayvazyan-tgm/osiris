@@ -8,14 +8,14 @@ import java.util.ArrayList;
  * @author Adrian Bergler
  * @version 2015-03-23
  */
-public class ThreeAxisKinematics implements Kinematic {
+public class GeometricKinematics implements Kinematics {
 
-    private static Logger logger = Logger.getLogger(ThreeAxisKinematics.class);
+    private static Logger logger = Logger.getLogger(GeometricKinematics.class);
     private double a, b, beta, gamma, delta, eta, c, r, phi, x, y, z;
     private double[] fragmentLengths;
     private double[][] padding;
 
-    public ThreeAxisKinematics(double x, double y, double z, double[] fragmentLengths, double[][] padding) {
+    public GeometricKinematics(double x, double y, double z, double[] fragmentLengths, double[][] padding) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -24,12 +24,12 @@ public class ThreeAxisKinematics implements Kinematic {
             this.a = fragmentLengths[0];
             this.b = fragmentLengths[1];
         } else {
-            throw new RuntimeException("ThreeAxisKinematics, das FragmentLengths-Array darf nicht leer sein!");
+            throw new RuntimeException("GeometricKinematics, das FragmentLengths-Array darf nicht leer sein!");
         }
         if (padding.length != 0) {
             this.padding = padding;
         } else {
-            throw new RuntimeException("ThreeAxisKinematics, das Padding-Array darf nicht leer sein!");
+            throw new RuntimeException("GeometricKinematics, das Padding-Array darf nicht leer sein!");
         }
         logger.info("Angles: BASE(" + phi + ") AXISONE(" + eta + "*) AXISTWO(" + gamma + ")");
     }

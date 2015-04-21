@@ -2,7 +2,7 @@ package at.pria.osiris.linker.kinematics;
 
 import java.util.ArrayList;
 
-public interface Kinematic {
+public interface Kinematics {
 
     public abstract ArrayList<Double> calculateValues();
 

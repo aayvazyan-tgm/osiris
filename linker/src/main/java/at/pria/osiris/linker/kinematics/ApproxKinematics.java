@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * @author Adrian Bergler
  * @version 23.Mar.2015.
  */
-public class ApproxKinematics implements Kinematic {
+public class ApproxKinematics implements Kinematics {
 
-    private static Logger logger = Logger.getLogger(ThreeAxisKinematics.class);
+    private static Logger logger = Logger.getLogger(GeometricKinematics.class);
     private double a, b, beta, gamma, delta, eta, c, r, phi, x, y, z;
     private double[] fragmentLengths;
     private double[][] padding;

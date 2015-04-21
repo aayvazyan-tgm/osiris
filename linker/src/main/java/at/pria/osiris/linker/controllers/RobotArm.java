@@ -3,7 +3,7 @@ package at.pria.osiris.linker.controllers;
 import at.pria.osiris.linker.communication.CommunicationInterface;
 import at.pria.osiris.linker.communication.messageProcessors.MessageProcessor;
 import at.pria.osiris.linker.controllers.components.Axes.Axis;
-import at.pria.osiris.linker.kinematics.Kinematic;
+import at.pria.osiris.linker.kinematics.Kinematics;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public abstract class RobotArm {
     // Joints
     private Axis joint;
     // KinematicStrategies
-    private Kinematic kinematics;
+    private Kinematics kinematics;
 
     /**
      * Sets up the communication interface with the given messageProcessor

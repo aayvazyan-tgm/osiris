@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author Adrian Bergler
  * @version 2015-03-23
  */
-public class ThreeAxisKinematicsTest {
+public class GeometricKinematicsTest {
 
-    private static Logger logger = Logger.getLogger(ThreeAxisKinematicsTest.class);
+    private static Logger logger = Logger.getLogger(GeometricKinematicsTest.class);
 
     private double[] fragmentlengths = {26, 23};
     private double[][] padding = {{0,0,0},{0,0,0},{0,0,0}};
@@ -27,8 +27,8 @@ public class ThreeAxisKinematicsTest {
      */
     @Test
     public void testP1(){
-        Kinematic kinematics =
-                new ThreeAxisKinematics(32, 0, 24, fragmentlengths, padding);
+        Kinematics kinematics =
+                new GeometricKinematics(32, 0, 24, fragmentlengths, padding);
 
         ArrayList<Double> solution = kinematics.calculateValues();
 
