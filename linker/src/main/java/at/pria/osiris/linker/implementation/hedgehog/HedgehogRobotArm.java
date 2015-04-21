@@ -57,7 +57,7 @@ public class HedgehogRobotArm extends RobotArm {
     @Override
     public void moveSynchronized(ArrayList<Integer> axes) {
         for(int z = 0; z < axes.size() ;z++){
-            this.getAxis(z).moveToAngle(axes.get(z));
+            this.getAxis(z).moveAtPower(100,axes.get(z));
 
         }
     }

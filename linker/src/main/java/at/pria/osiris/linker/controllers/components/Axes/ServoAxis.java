@@ -27,6 +27,13 @@ public class ServoAxis extends Axis {
     /**
      * @see Axis
      */
+    public synchronized void moveAtPower(int power, int angle) {
+        servoHelper.moveAtPower(power, angle);
+    }
+
+    /**
+     * @see Axis
+     */
     @Override
     public int getSensorValue() {
         return servo.getPositionInDegrees();

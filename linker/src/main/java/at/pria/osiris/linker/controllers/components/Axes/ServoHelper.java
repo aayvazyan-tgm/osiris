@@ -44,6 +44,23 @@ public class ServoHelper {
         }).start();
     }
 
+    public void moveAtPower(int power, int angle) {
+        System.out.println("moveAtPower: " + power);
+        this.interrupt = true;
+        if (power == 0) return;
+        final int powerFinal = power;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    pwm(powerFinal, angle);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     /**
      * A method which changes the speed of the specified Servo.
      * The more power it gets the more steps it actually moves.
@@ -124,6 +141,92 @@ public class ServoHelper {
         if (interrupt) System.out.println("interrupted");
     }
 
+    /**
+     * A method which changes the speed of the specified Servo.
+     * The more power it gets the more steps it actually moves.
+     * It moves until it reaches the specified angle
+     *
+     * @param power
+     * @param angle
+     */
+    private synchronized void pwm(int power, int angle) {
+        System.out.println("starting pwm: " + power +", angle: "+angle);
+        this.interrupt = false;
+        //Defining important Variables
+        int maxPower = 100;
+        int count = 1;
+        boolean pos = true;
+        boolean moving = false;
+        int startPosition = s.getPositionInDegrees();
+
+        //Checking if the power is negativ of positiv
+        if (power < 0) {
+            power = power * -1;
+            pos = false;
+        }
+
+        //Checking if the Servo is already out of range
+        if ((pos && startPosition > angle )||(!pos && startPosition < angle))
+            return;
+
+
+        //Calculating the distance between each stop and go
+        double divider = (maxPower - power);
+        double mod = maxPower / divider;
+
+        //looping through the given steps with different wait and go times
+        for (int i = 0; !interrupt; i++) {
+            if (i == (int) (count * mod)) {
+                //System.out.println("Stopping ...");
+                try {
+                    if (moving) {
+                        s.moveToAngle(startPosition);
+                        moving = false;
+                    }
+                    Thread.sleep(s.getTimePerDegreeInMilli());
+                    //It stops
+                    count++;
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
+
+            }
+            //Moving either to the maximum angle for the time being or the minimum
+            else {
+                //It Moves
+                if (pos) {
+                    //Defining a softwarebased limit for the rotationdegree
+                    if (startPosition < angle) {
+                        System.out.println("Next Position: " + (startPosition + 1));
+                        s.moveToAngle(startPosition + 1);
+                        startPosition += 1;
+                        moving = true;
+                        try {
+                            Thread.sleep(s.getTimePerDegreeInMilli() * steps);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        break;
+                } else {
+                    //Defining a softwarebased limit for the rotationdegree
+                    if (startPosition > angle) {
+                        System.out.println("Next Position: " + (startPosition - 1));
+                        s.moveToAngle(startPosition - 1);
+                        startPosition -= 1;
+                        moving = true;
+                        try {
+                            Thread.sleep(s.getTimePerDegreeInMilli() * steps);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        break;
+                }
+            }
+        }
+        if (interrupt) System.out.println("interrupted");
+    }
 
     /**
      * A Method which stops the Thread by stopping the PWM method

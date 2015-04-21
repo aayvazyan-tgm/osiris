@@ -48,6 +48,14 @@ public abstract class Axis {
     public abstract void moveAtPower(int power);
 
     /**
+     * moves the Axis at the desired power until it reaches the specified angle.
+     *
+     * @param power the power
+     * @param angle the angle the actor should reach
+     */
+    public abstract void moveAtPower(int power, int angle);
+
+    /**
      * @return Returns the maximum Angle of this axis in degrees
      * returns -1 if there are no limits
      */
