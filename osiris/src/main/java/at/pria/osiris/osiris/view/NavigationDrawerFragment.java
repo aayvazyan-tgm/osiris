@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import at.pria.osiris.osiris.R;
@@ -100,7 +101,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         //keep this in the case to jump back
-        /*mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        mDrawerListView.setAdapter(new ArrayAdapter<String>(
                getActionBar().getThemedContext(),
                android.R.layout.simple_list_item_1,
                android.R.id.text1,
@@ -112,26 +113,28 @@ public class NavigationDrawerFragment extends Fragment {
                        getString(R.string.profiles),
                        getString(R.string.joystick),
                        getString(R.string.QRReader),
-                }));*/
+                       getString(R.string.Emulator),
+                       getString(R.string.selection)
+                }));
         List<DrawerItem> datalist= new ArrayList<DrawerItem>();
 
         // add new sections for the Navigation Drawer
         // add pics and add them as a drawable
         // TODO fix the layout
-        datalist.add(new DrawerItem(getString(R.string.control), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.inversKinecs), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.sensor_values), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.drawline), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.profiles), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.joystick), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.QRReader), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.Emulator), R.drawable.ic_action_gamepad));
-        datalist.add(new DrawerItem(getString(R.string.selection), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.control), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.inversKinecs), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.sensor_values), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.drawline), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.profiles), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.joystick), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.QRReader), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.Emulator), R.drawable.ic_action_gamepad));
+        //datalist.add(new DrawerItem(getString(R.string.selection), R.drawable.ic_action_gamepad));
 
         final Activity activity= getActivity();
         customDrawerAdapter= new CustomDrawerAdapter(activity, R.layout.custom_drawer_item, android.R.id.text1, datalist);
 
-        mDrawerListView.setAdapter(customDrawerAdapter);
+        //mDrawerListView.setAdapter(customDrawerAdapter);
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

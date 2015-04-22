@@ -54,6 +54,7 @@
             android:layout_toStartOf="@+id/seekBar" android:gravity="center"/>
     <EditText
             android:layout_width="wrap_content"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" android:layout_alignRight="@+id/motorSelectionSpinner"
