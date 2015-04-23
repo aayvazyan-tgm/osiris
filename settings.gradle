@@ -1,2 +1,2 @@
-include 'osiris', 'desktopApp', 'api', 'linker', 'qrlibrary'
+include 'osiris', 'desktopApp', 'api', 'linker', 'qrlibrary', 'simulationCore'
 
