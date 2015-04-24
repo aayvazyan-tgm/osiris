@@ -10,11 +10,10 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
  * @author Ari Michael Ayvazyan
  * @version 23.04.2015
  */
-public class AdvancedSimulator {
-    public static View getGameView(){
+public class AdvancedSimulator extends AndroidApplication{
+    public View getGameView(){
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         OsirisSimulation osirisSimulation = new OsirisSimulation();
-//        return AndroidApplication.initializeForView(osirisSimulation, config); NOPE???
-        return null;
+        return initializeForView(osirisSimulation, config);
     }
 }
