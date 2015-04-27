@@ -24,6 +24,7 @@
 
     <string name="button_delete_item">Delete</string>
     <string name="button_edit_item">Edit</string>
+    <string name="simulation">Simulation</string>
 
     <!-- Colors -->
     <string name="execute">Ausfuehren</string>

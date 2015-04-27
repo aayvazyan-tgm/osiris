@@ -114,7 +114,8 @@ public class NavigationDrawerFragment extends Fragment {
                        getString(R.string.joystick),
                        getString(R.string.QRReader),
                        getString(R.string.Emulator),
-                       getString(R.string.selection)
+                       getString(R.string.selection),
+                       getString(R.string.simulation)
                 }));
         List<DrawerItem> datalist= new ArrayList<DrawerItem>();
 

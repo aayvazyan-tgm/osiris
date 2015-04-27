@@ -17,6 +17,9 @@ import android.util.Log;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
+
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
 import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
@@ -27,7 +30,7 @@ import at.pria.osiris.osiris.view.fragments.*;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, AndroidFragmentApplication.Callbacks {
 
     private final String TAG = "MAIN-Osiris";
 
@@ -158,11 +161,16 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.container, EmulatorFragment.getInstance(position + 1))
                     .commit();
             mTitle = getString(R.string.Emulator);
-        } else if (position + 1 == 9) {
+        } else if (position + 1 == 9) { // Selection
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SelectionFragment.getInstance(position + 1, this))
                     .commit();
             mTitle = getString(R.string.selection);
+        } else if (position + 1 == 10) { // Simulation
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SimulationFragment.getInstance(position + 1))
+                    .commit();
+            mTitle = getString(R.string.simulation);
         } else {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -203,6 +211,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 10:
                 mTitle = getString(R.string.selection);
+                break;
+            case 11:
+                mTitle = getString(R.string.simulation);
                 break;
         }
     }
@@ -266,6 +277,10 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void exit() {
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -294,7 +309,6 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
             return rootView;
         }
 
