@@ -1,5 +1,8 @@
 package at.pria.osiris;
 
+import at.pria.osiris.linker.controllers.components.Axes.ServoHelper;
+import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
+import at.pria.osiris.osiris.controllers.RobotArm;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -14,11 +17,17 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class OsirisSimulation implements ApplicationListener {
+import java.io.Serializable;
+import java.util.HashMap;
+
+/**
+ * @author Samuel Schmidt
+ * @version 27.04.2015
+ */
+public class OsirisSimulation implements ApplicationListener, RobotArm {
     public PerspectiveCamera cam;
     public CameraInputController camController;
     public Model model;
@@ -28,9 +37,22 @@ public class OsirisSimulation implements ApplicationListener {
     public Environment environment;
     public boolean loading;
 
+    private int axis1Angle = 0;
+    private int axis2Angle = 0;
+    private double axis0Angle = 0;
+
     public ModelInstance baseplate, turntable, arm1, arm2;
     public InputMultiplexer inputMultiplexer;
-    public Robotarm robotarm;
+//    public Robotarm robotarm;
+
+    //the Servo helpers for fluent movement
+    private static HashMap<Integer, ServoHelper> ServoHelperINSTANCES = new HashMap<>();
+
+    private ServoHelper getServoHelperInstance(int axis, OsirisSimulation osirisSimulation) {
+        if (!ServoHelperINSTANCES.containsKey(axis))
+            ServoHelperINSTANCES.put(axis, new ServoHelper(new SimulatedServo(axis, osirisSimulation), 1));
+        return ServoHelperINSTANCES.get(axis);
+    }
 
     @Override
     public void create() {
@@ -50,7 +72,7 @@ public class OsirisSimulation implements ApplicationListener {
         camController = new CameraInputController(cam);
 
         inputMultiplexer.addProcessor(0, camController);
-        inputMultiplexer.addProcessor(1, new MyInputProcessor(robotarm));
+//        inputMultiplexer.addProcessor(1, new MyInputProcessor(robotarm));
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -62,7 +84,6 @@ public class OsirisSimulation implements ApplicationListener {
 
     private void doneLoading() {
         model = assets.get("data/osiris-arm.g3db", Model.class);
-//        Node rootNode = null;
         for (int i = 0; i < model.nodes.size; i++) {
             String id = model.nodes.get(i).id;
             ModelInstance instance = new ModelInstance(model, id);
@@ -84,13 +105,11 @@ public class OsirisSimulation implements ApplicationListener {
                 arm2 = instance;
             }
             instances.add(instance);
-//            rootNode.addChild(node);
         }
         loading = false;
         Node arm1Atchm = new Node();
         Node arm2Atchm = new Node();
         Node arm22Atchm = new Node();
-        Matrix4 temp = new Matrix4();
 
         arm1Atchm.globalTransform.translate(-5f, 0f, 5f);
         arm1Atchm.globalTransform.rotate(Vector3.Y, 90f);
@@ -113,8 +132,8 @@ public class OsirisSimulation implements ApplicationListener {
         arm22Atchm.id = "arm22Attachment";
         model.nodes.add(arm22Atchm);
 
-        robotarm = new Robotarm(baseplate, turntable, arm1, arm2, model);
-        inputMultiplexer.addProcessor(1, new MyInputProcessor(robotarm));
+//        robotarm = new Robotarm(baseplate, turntable, arm1, arm2, model);
+//        inputMultiplexer.addProcessor(1, new MyInputProcessor(robotarm));
     }
 
     @Override
@@ -129,14 +148,7 @@ public class OsirisSimulation implements ApplicationListener {
 
         modelBatch.begin(cam);
         modelBatch.render(instances, environment);
-//        if (turntable != null)
-//            modelBatch.render(turntable);
         modelBatch.end();
-
-//        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
-//            System.out.println("A presed");
-//            arm2.transform.setToRotation(Vector3.Y, 20);
-//        }
     }
 
     @Override
@@ -156,5 +168,122 @@ public class OsirisSimulation implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
+    }
+
+    @Override
+    public void turnAxis(final int axis, int power) {
+        // 0.1 has to be adjusted probably
+        int simulationAdjustedPower = (int)(power * 0.1);
+
+        ServoHelper servoHelper = getServoHelperInstance(axis, this);
+        servoHelper.moveAtPower(power);
+
+        switch(axis){
+            case 1:
+                turntable.transform.rotate(Vector3.Z, simulationAdjustedPower);
+                arm1.transform.set(turntable.transform).mul(model.getNode("arm1Attachment").globalTransform);
+                arm2.transform.set(turntable.transform).mul(model.getNode("arm2Attachment").globalTransform);
+                break;
+            case 2:
+                arm1.transform.rotate(Vector3.Z, simulationAdjustedPower);
+                arm2.transform.set(arm1.transform).mul(model.getNode("arm22Attachment").globalTransform);
+                break;
+            case 3:
+                arm2.transform.rotate(Vector3.Z, simulationAdjustedPower);
+                model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, simulationAdjustedPower);
+                break;
+        }
+    }
+
+    @Override
+    public void stopAxis(int axis) {
+        ServoHelper servoHelper = getServoHelperInstance(axis, this);
+        servoHelper.moveAtPower(0);
+    }
+
+    // TODO: (re)euse inverse kinematics
+    @Override
+    public void moveToAngle(int axis, int angle) {
+        switch (axis) {
+            case 0:
+                axis0Angle = angle;
+                break;
+            case 1:
+                axis1Angle = angle;
+                break;
+            case 2:
+                axis2Angle = angle;
+                break;
+        }
+    }
+
+    @Override
+    public double getMaximumAngle(int axis) {
+        switch (axis) {
+            case 0:
+                return 360;
+            case 1:
+                return 90;
+            case 2:
+                return 180;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean moveTo(double x, double y, double z) {
+        return false;
+    }
+
+    @Override
+    public void sendMessage(Serializable msg) {
+    }
+
+    @Override
+    public double getPosition(int axis) {
+        switch (axis) {
+            case 0:
+                return axis0Angle;
+            case 1:
+                return axis1Angle;
+            case 2:
+                return axis2Angle;
+        }
+        return -1;
+    }
+
+    @Override
+    public String getConnectionState() {
+        return "Connected... its a simulation";
+    }
+
+    private class SimulatedServo implements Servo {
+        int axis;
+        private OsirisSimulation osirisSimulation;
+
+        public SimulatedServo(int axis, OsirisSimulation osirisSimulation) {
+            this.axis = axis;
+            this.osirisSimulation = osirisSimulation;
+        }
+
+        @Override
+        public void moveToAngle(int position) {
+            osirisSimulation.moveToAngle(axis, position);
+        }
+
+        @Override
+        public int getPositionInDegrees() {
+            return (int) osirisSimulation.getPosition(axis);
+        }
+
+        @Override
+        public int getMaximumAngle() {
+            return (int) osirisSimulation.getMaximumAngle(axis);
+        }
+
+        @Override
+        public long getTimePerDegreeInMilli() {
+            return 2;
+        }
     }
 }

@@ -7,13 +7,14 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 /**
- * @author Ari Michael Ayvazyan
- * @version 23.04.2015
+ * @author Ari Michael Ayvazyan, Samuel Schmidt
+ * @version 27.04.2015
  */
 public class AdvancedSimulator extends AndroidApplication{
     public View getGameView(){
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         OsirisSimulation osirisSimulation = new OsirisSimulation();
+        // has to be non-static for initializeForView so not sure how to Singleton
         return initializeForView(osirisSimulation, config);
     }
 }

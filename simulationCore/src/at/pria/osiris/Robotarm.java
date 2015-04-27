@@ -61,15 +61,15 @@ public class Robotarm {
             model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, -5);
 //            model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, -5);
         }
-        System.out.println("-------------------------------------");
-        System.out.println("baseplate:\n" + baseplate.transform);
-        System.out.println("turntable:\n" + turntable.transform);
-        System.out.println("arm1:\n" + arm1.transform);
-        System.out.println("arm2:\n" + arm2.transform);
-        System.out.println("arm1atchm:\n" + model.getNode("arm1Attachment").globalTransform);
-        System.out.println("arm2atchm:\n" + model.getNode("arm2Attachment").globalTransform);
-        System.out.println("arm22atchm:\n" + model.getNode("arm22Attachment").globalTransform);
-        System.out.println("-------------------------------------");
+//        System.out.println("-------------------------------------");
+//        System.out.println("baseplate:\n" + baseplate.transform);
+//        System.out.println("turntable:\n" + turntable.transform);
+//        System.out.println("arm1:\n" + arm1.transform);
+//        System.out.println("arm2:\n" + arm2.transform);
+//        System.out.println("arm1atchm:\n" + model.getNode("arm1Attachment").globalTransform);
+//        System.out.println("arm2atchm:\n" + model.getNode("arm2Attachment").globalTransform);
+//        System.out.println("arm22atchm:\n" + model.getNode("arm22Attachment").globalTransform);
+//        System.out.println("-------------------------------------");
     }
 
     //    darkness lays beyond this comment
