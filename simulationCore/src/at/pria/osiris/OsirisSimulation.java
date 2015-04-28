@@ -93,6 +93,13 @@ public class OsirisSimulation implements ApplicationListener {
             }
             instances.add(instance);
         }
+        //kinda blue
+        arm2.materials.get(0).set(ColorAttribute.createDiffuse(0f, 51 / 255f, 153 / 255f, 0f));
+        //kind brown
+        baseplate.materials.get(0).set(ColorAttribute.createDiffuse(126/255f, 74/255f, 34/255f, 0f));
+        turntable.materials.get(0).set(ColorAttribute.createDiffuse(126/255f, 74/255f, 34/255f,0f));
+        arm1.materials.get(0).set(ColorAttribute.createDiffuse(126/255f, 74/255f, 34/255f,0f));
+
         loading = false;
         Node arm1Atchm = new Node();
         Node arm2Atchm = new Node();
