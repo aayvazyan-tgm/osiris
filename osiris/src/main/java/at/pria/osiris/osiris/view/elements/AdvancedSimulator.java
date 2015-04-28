@@ -77,13 +77,13 @@ public class AdvancedSimulator extends AndroidApplication implements RobotArm {
     public void moveToAngle(int axis, int angle) {
         switch (axis) {
             case 0:
-                axis0Angle = angle;
+                osirisSimulation.turnAxis(axis, (float) (angle - axis0Angle));
                 break;
             case 1:
-                axis1Angle = angle;
+                osirisSimulation.turnAxis(axis, (float) (angle - axis1Angle));
                 break;
             case 2:
-                axis2Angle = angle;
+                osirisSimulation.turnAxis(axis, (float) (angle - axis2Angle));
                 break;
         }
     }
