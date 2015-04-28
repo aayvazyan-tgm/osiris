@@ -55,21 +55,7 @@ public class AdvancedSimulator extends AndroidApplication implements RobotArm {
         ServoHelper servoHelper = getServoHelperInstance(axis, this);
         servoHelper.moveAtPower(power);
 
-        switch(axis){
-            case 1:
-                osirisSimulation.turntable.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                osirisSimulation.arm1.transform.set(osirisSimulation.turntable.transform).mul(osirisSimulation.model.getNode("arm1Attachment").globalTransform);
-                osirisSimulation.arm2.transform.set(osirisSimulation.turntable.transform).mul(osirisSimulation.model.getNode("arm2Attachment").globalTransform);
-                break;
-            case 2:
-                osirisSimulation.arm1.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                osirisSimulation.arm2.transform.set(osirisSimulation.arm1.transform).mul(osirisSimulation.model.getNode("arm22Attachment").globalTransform);
-                break;
-            case 3:
-                osirisSimulation.arm2.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                osirisSimulation.model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, simulationAdjustedPower);
-                break;
-        }
+        osirisSimulation.turnAxis(axis, simulationAdjustedPower);
     }
 
     @Override

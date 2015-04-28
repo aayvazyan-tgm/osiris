@@ -138,6 +138,27 @@ public class OsirisSimulation implements ApplicationListener {
         modelBatch.end();
     }
 
+
+    public void turnAxis(final int axis, int power) {
+
+        switch(axis){
+            case 1:
+                turntable.transform.rotate(Vector3.Z, power);
+                arm1.transform.set(turntable.transform).mul(model.getNode("arm1Attachment").globalTransform);
+                arm2.transform.set(turntable.transform).mul(model.getNode("arm2Attachment").globalTransform);
+                break;
+            case 2:
+                arm1.transform.rotate(Vector3.Z, power);
+                arm2.transform.set(arm1.transform).mul(model.getNode("arm22Attachment").globalTransform);
+                break;
+            case 3:
+                arm2.transform.rotate(Vector3.Z, power);
+                model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, power);
+                break;
+        }
+    }
+
+
     @Override
     public void pause() {
     }
