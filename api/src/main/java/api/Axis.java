@@ -10,7 +10,8 @@ package api;
 public enum Axis {
     BASE(-12345678, 12345678),
     AXISONE(150, 800),
-    AXISTWO(10, 1000);
+    AXISTWO(10, 1000),
+    AXISTHREE(10, 1000);
 
     private final int minimumAngle;
     private final int maximumAngle;
