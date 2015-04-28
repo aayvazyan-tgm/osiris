@@ -1,8 +1,5 @@
 package at.pria.osiris;
 
-import at.pria.osiris.linker.controllers.components.Axes.ServoHelper;
-import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
-import at.pria.osiris.osiris.controllers.RobotArm;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -20,39 +17,24 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
 /**
  * @author Samuel Schmidt
  * @version 27.04.2015
  */
-public class OsirisSimulation implements ApplicationListener, RobotArm {
+public class OsirisSimulation implements ApplicationListener {
     public PerspectiveCamera cam;
     public CameraInputController camController;
     public Model model;
     public ModelBatch modelBatch;
     public AssetManager assets;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<ModelInstance> instances = new Array<>();
     public Environment environment;
     public boolean loading;
 
-    private int axis1Angle = 0;
-    private int axis2Angle = 0;
-    private double axis0Angle = 0;
-
     public ModelInstance baseplate, turntable, arm1, arm2;
     public InputMultiplexer inputMultiplexer;
-//    public Robotarm robotarm;
 
-    //the Servo helpers for fluent movement
-    private static HashMap<Integer, ServoHelper> ServoHelperINSTANCES = new HashMap<>();
 
-    private ServoHelper getServoHelperInstance(int axis, OsirisSimulation osirisSimulation) {
-        if (!ServoHelperINSTANCES.containsKey(axis))
-            ServoHelperINSTANCES.put(axis, new ServoHelper(new SimulatedServo(axis, osirisSimulation), 1));
-        return ServoHelperINSTANCES.get(axis);
-    }
 
     @Override
     public void create() {
@@ -95,14 +77,19 @@ public class OsirisSimulation implements ApplicationListener, RobotArm {
             node.rotation.idt();
             instance.calculateTransforms();
 
-            if (id.equals("grundplatte")) {
-                baseplate = instance;
-            } else if (id.equals("drehteller")) {
-                turntable = instance;
-            } else if (id.equals("arm1")) {
-                arm1 = instance;
-            } else if (id.equals("arm2")) {
-                arm2 = instance;
+            switch (id) {
+                case "grundplatte":
+                    baseplate = instance;
+                    break;
+                case "drehteller":
+                    turntable = instance;
+                    break;
+                case "arm1":
+                    arm1 = instance;
+                    break;
+                case "arm2":
+                    arm2 = instance;
+                    break;
             }
             instances.add(instance);
         }
@@ -170,120 +157,5 @@ public class OsirisSimulation implements ApplicationListener, RobotArm {
     public void resize(int width, int height) {
     }
 
-    @Override
-    public void turnAxis(final int axis, int power) {
-        // 0.1 has to be adjusted probably
-        int simulationAdjustedPower = (int)(power * 0.1);
 
-        ServoHelper servoHelper = getServoHelperInstance(axis, this);
-        servoHelper.moveAtPower(power);
-
-        switch(axis){
-            case 1:
-                turntable.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                arm1.transform.set(turntable.transform).mul(model.getNode("arm1Attachment").globalTransform);
-                arm2.transform.set(turntable.transform).mul(model.getNode("arm2Attachment").globalTransform);
-                break;
-            case 2:
-                arm1.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                arm2.transform.set(arm1.transform).mul(model.getNode("arm22Attachment").globalTransform);
-                break;
-            case 3:
-                arm2.transform.rotate(Vector3.Z, simulationAdjustedPower);
-                model.getNode("arm2Attachment").globalTransform.rotate(Vector3.Z, simulationAdjustedPower);
-                break;
-        }
-    }
-
-    @Override
-    public void stopAxis(int axis) {
-        ServoHelper servoHelper = getServoHelperInstance(axis, this);
-        servoHelper.moveAtPower(0);
-    }
-
-    // TODO: (re)euse inverse kinematics
-    @Override
-    public void moveToAngle(int axis, int angle) {
-        switch (axis) {
-            case 0:
-                axis0Angle = angle;
-                break;
-            case 1:
-                axis1Angle = angle;
-                break;
-            case 2:
-                axis2Angle = angle;
-                break;
-        }
-    }
-
-    @Override
-    public double getMaximumAngle(int axis) {
-        switch (axis) {
-            case 0:
-                return 360;
-            case 1:
-                return 90;
-            case 2:
-                return 180;
-        }
-        return 0;
-    }
-
-    @Override
-    public boolean moveTo(double x, double y, double z) {
-        return false;
-    }
-
-    @Override
-    public void sendMessage(Serializable msg) {
-    }
-
-    @Override
-    public double getPosition(int axis) {
-        switch (axis) {
-            case 0:
-                return axis0Angle;
-            case 1:
-                return axis1Angle;
-            case 2:
-                return axis2Angle;
-        }
-        return -1;
-    }
-
-    @Override
-    public String getConnectionState() {
-        return "Connected... its a simulation";
-    }
-
-    private class SimulatedServo implements Servo {
-        int axis;
-        private OsirisSimulation osirisSimulation;
-
-        public SimulatedServo(int axis, OsirisSimulation osirisSimulation) {
-            this.axis = axis;
-            this.osirisSimulation = osirisSimulation;
-        }
-
-        @Override
-        public void moveToAngle(int position) {
-            osirisSimulation.moveToAngle(axis, position);
-        }
-
-        @Override
-        public int getPositionInDegrees() {
-            return (int) osirisSimulation.getPosition(axis);
-        }
-
-        @Override
-        public int getMaximumAngle() {
-            return (int) osirisSimulation.getMaximumAngle(axis);
-        }
-
-        @Override
-        public long getTimePerDegreeInMilli() {
-            return 2;
-        }
-    }
 }
