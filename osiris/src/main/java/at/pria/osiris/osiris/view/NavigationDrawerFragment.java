@@ -15,7 +15,6 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.view.elements.naviBar.CustomDrawerAdapter;
 import at.pria.osiris.osiris.view.elements.naviBar.DrawerItem;
@@ -110,7 +109,7 @@ public class NavigationDrawerFragment extends Fragment {
                        getString(R.string.inversKinecs),
                        getString(R.string.sensor_values),
                        getString(R.string.drawline),
-                       getString(R.string.profiles),
+                       getString(R.string.Teaching),
                        getString(R.string.joystick),
                        getString(R.string.QRReader),
                        getString(R.string.Emulator),

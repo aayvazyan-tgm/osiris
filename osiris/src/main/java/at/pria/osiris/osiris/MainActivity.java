@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
-import at.pria.osiris.osiris.controllers.hedgehogdirect.HedgehogDirectController;
 import at.pria.osiris.osiris.util.Storeage;
 import at.pria.osiris.osiris.view.NavigationDrawerFragment;
 import at.pria.osiris.osiris.view.elements.EmulatorView;
@@ -141,11 +139,11 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.container, DrawFragment.getInstance(position + 1))
                     .commit();
             mTitle = getString(R.string.drawline);
-        } else if (position + 1 == 5) { // profiles
+        } else if (position + 1 == 5) { // Teaching
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, ProfileFragment.getInstance(position + 1, robotController))
+                    .replace(R.id.container, Teaching.getInstance(position + 1, robotController))
                     .commit();
-            mTitle = getString(R.string.profiles);
+            mTitle = getString(R.string.Teaching);
         } else if (position + 1 == 6) { // joystick
             fragmentManager.beginTransaction()
                     .replace(R.id.container, JoyStickFragment.getInstance(position + 1, robotController))
@@ -195,7 +193,7 @@ public class MainActivity extends ActionBarActivity
                 mTitle = getString(R.string.drawline);
                 break;
             case 5:
-                mTitle = getString(R.string.profiles);
+                mTitle = getString(R.string.Teaching);
                 break;
             case 6:
                 mTitle = getString(R.string.joystick);
