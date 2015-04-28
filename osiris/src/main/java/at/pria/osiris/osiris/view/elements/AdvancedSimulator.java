@@ -49,13 +49,22 @@ public class AdvancedSimulator extends AndroidApplication implements RobotArm {
 
     @Override
     public void turnAxis(final int axis, int power) {
-        // 0.1 has to be adjusted probably
-        int simulationAdjustedPower = (int)(power * 0.1);
+//        // 0.1 has to be adjusted probably
+//        int simulationAdjustedPower = (int)(power * 0.1);
 
         ServoHelper servoHelper = getServoHelperInstance(axis, this);
         servoHelper.moveAtPower(power);
+        switch (axis) {
+            case 0:
+                axis0Angle += power;
+            case 1:
+                axis1Angle += power;
+            case 2:
+                axis2Angle += power;
+        }
 
-        osirisSimulation.turnAxis(axis, simulationAdjustedPower);
+
+//        osirisSimulation.turnAxis(axis, simulationAdjustedPower);
     }
 
     @Override
