@@ -18,6 +18,8 @@ import at.pria.osiris.osiris.MainActivity;
 import at.pria.osiris.osiris.R;
 import at.pria.osiris.osiris.controllers.ConnectionNotEstablishedException;
 import at.pria.osiris.osiris.controllers.Controller;
+import at.pria.osiris.osiris.controllers.RobotArm;
+import at.pria.osiris.osiris.view.elements.EmulatorView;
 
 import java.util.ArrayList;
 
@@ -127,9 +129,15 @@ public class Teaching extends Fragment {
     }
 
     private void executeTeachedPositions(ArrayList<Position> savedPositions) throws ConnectionNotEstablishedException {
+        RobotArm emulator = EmulatorView.getInstance(getActivity());
         for (Position pos : savedPositions) {
             for (int i = 0; i < pos.axesPositionInDegrees.length; i++) {
-                robotController.getRobotArm().moveToAngle(i, (int) pos.axesPositionInDegrees[i]);
+                emulator.moveToAngle(i, (int) pos.axesPositionInDegrees[i]);
+                try {
+                    robotController.getRobotArm().moveToAngle(i, (int) pos.axesPositionInDegrees[i]);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }
