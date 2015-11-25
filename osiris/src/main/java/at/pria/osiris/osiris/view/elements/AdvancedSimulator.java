@@ -8,6 +8,7 @@ import at.pria.osiris.linker.controllers.components.systemDependent.Servo;
 import at.pria.osiris.osiris.controllers.RobotArm;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.math.Vector3;
 
 import java.io.Serializable;
 import java.util.HashMap;

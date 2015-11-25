@@ -15,6 +15,55 @@
                  android:layout_height="wrap_content"
                  android:layout_gravity="center_horizontal"
                  android:layout_marginTop="10dip">
+        <TableRow>
+            <TextView android:text="X"
+                      android:visibility="visible"
+                      android:layout_width="50dip"
+                      android:layout_height="wrap_content">
+            </TextView>
+            <TextView android:text=""
+                      android:id="@+id/TextViewX1"
+                      android:layout_width="150dip"
+                      android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView android:text="X"
+                      android:visibility="visible"
+                      android:layout_width="50dip"
+                      android:layout_height="wrap_content">
+            </TextView>
+            <TextView android:text=""
+                      android:id="@+id/TextViewX2"
+                      android:layout_width="100dip"
+                      android:layout_height="wrap_content">
+            </TextView>
+        </TableRow>
+        <TableRow>
+            <TextView android:text="Y"
+                      android:visibility="visible"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView android:text=""
+                      android:id="@+id/TextViewY1"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView android:text="Y"
+                      android:visibility="visible"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView android:text=""
+                      android:visibility="visible"
+                      android:id="@+id/TextViewY2"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            </TextView>
+        </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
@@ -30,23 +79,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner_right"
-                android:layout_gravity="right" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner2left"
-                android:layout_gravity="left" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner2right"
                 android:layout_gravity="right" />
         </TableRow>
     </TableLayout>
