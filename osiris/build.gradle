@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'android-command'
-apply from: 'https://github.com/aayvazyan-tgm/autodetect_android_sdk_and_buildTools/releases/download/1.0/sdktools.gradle'
+apply from: 'https://github.com/aayvazyan-tgm/autodetect_android_sdk_and_buildTools/releases/download/1.2/sdktools.gradle'
 
 archivesBaseName = 'Osiris-App-'+version
 boolean releaseAvailable=false
